@@ -19,4 +19,12 @@ export const leadQueue =
     },
   });
 
+export const escalationQueue = new Queue("escalation", {
+  connection,
+  defaultJobOptions: {
+    priority: 1, // You can give escalation jobs higher priority
+    attempts: 1, // Usually, you don't want to retry an escalation indefinitely
+  },
+});
+
 if (process.env.NODE_ENV !== "production") globalForQueue.leadQueue = leadQueue;
