@@ -2,7 +2,7 @@ type Platform = "whatsapp" | "instagram" | "messenger";
 
 const GRAPH_API = "https://graph.facebook.com/v18.0";
 
-const ACCESS_TOKEN = process.env.META_VERIFY_TOKEN!;
+const ACCESS_TOKEN = process.env.META_APP_SECRET!;
 const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!;
 
 /**

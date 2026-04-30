@@ -50,7 +50,7 @@ function verifySignature(body: string, signature: string | null) {
   const expected =
     "sha256=" +
     crypto
-      .createHmac("sha256", process.env.META_APP_SECRET!)
+      .createHmac("sha256", process.env.META_VERIFY_TOKEN!)
       .update(body)
       .digest("hex");
 
