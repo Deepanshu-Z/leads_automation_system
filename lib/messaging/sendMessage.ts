@@ -1,28 +1,127 @@
-import { leadQueue } from "@/lib/queue";
+type Platform = "whatsapp" | "instagram" | "messenger";
 
-export async function POST(req: Request) {
-  const body = await req.json();
+const GRAPH_API = "https://graph.facebook.com/v18.0";
 
-  // ⚡ respond immediately
-  const res = new Response("OK", { status: 200 });
+const ACCESS_TOKEN = process.env.META_VERIFY_TOKEN!;
+const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!;
 
-  // async processing
-  processWebhook(body).catch(console.error);
+/**
+ * Retry helper (3 retries, 1s delay)
+ */
+async function retry(fn: () => Promise<any>, retries = 3) {
+  let lastError;
 
-  return res;
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      await new Promise((res) => setTimeout(res, 1000));
+    }
+  }
+
+  throw lastError;
 }
 
-export async function processWebhook(body: any) {
-  const msg =
-    body.entry?.[0]?.changes?.[0]?.value?.messages?.[0] ||
-    body.entry?.[0]?.messaging?.[0];
+/**
+ * MAIN FUNCTION
+ */
+export async function sendMessage(
+  platform: Platform,
+  recipientId: string,
+  text: string,
+) {
+  switch (platform) {
+    case "whatsapp":
+      return sendWhatsApp(recipientId, text);
 
-  if (!msg) return;
+    case "instagram":
+      return sendInstagram(recipientId, text);
 
-  await leadQueue.add("incoming-message", {
-    platform:
-      body.object === "whatsapp_business_account" ? "whatsapp" : "messenger",
-    senderId: msg.from || msg.sender?.id,
-    text: msg.text?.body || msg.message?.text,
+    case "messenger":
+      return sendMessenger(recipientId, text);
+
+    default:
+      throw new Error("Unsupported platform");
+  }
+}
+
+//
+// ================= WHATSAPP =================
+//
+async function sendWhatsApp(to: string, text: string) {
+  return retry(async () => {
+    const res = await fetch(`${GRAPH_API}/${PHONE_NUMBER_ID}/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        to,
+        type: "text",
+        text: { body: text },
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`WhatsApp Error: ${err}`);
+    }
+
+    return res.json();
+  });
+}
+
+//
+// ================= INSTAGRAM =================
+//
+async function sendInstagram(recipientId: string, text: string) {
+  return retry(async () => {
+    const res = await fetch(`${GRAPH_API}/me/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipient: { id: recipientId },
+        message: { text },
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Instagram Error: ${err}`);
+    }
+
+    return res.json();
+  });
+}
+
+//
+// ================= MESSENGER =================
+//
+async function sendMessenger(recipientId: string, text: string) {
+  return retry(async () => {
+    const res = await fetch(`${GRAPH_API}/me/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipient: { id: recipientId },
+        message: { text },
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Messenger Error: ${err}`);
+    }
+
+    return res.json();
   });
 }

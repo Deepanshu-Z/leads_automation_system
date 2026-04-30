@@ -1,4 +1,4 @@
-import { leadQueue } from "@/lib/queue";
+import { leadQueue } from "@/lib/queue/queue";
 import { NextResponse } from "next/server";
 
 export async function GET() {
