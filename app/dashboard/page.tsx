@@ -1,5 +1,4 @@
 "use client";
-import { BASE_URL } from "@/config/api";
 import { useEffect } from "react";
 
 export default function page() {
