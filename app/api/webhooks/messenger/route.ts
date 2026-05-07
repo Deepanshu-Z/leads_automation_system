@@ -1,6 +1,5 @@
 import { leadQueue } from "@/lib/queue/queue";
 import { isNewMessage } from "@/lib/redis/dedepulication";
-import { NextResponse } from "next/server";
 
 // ─── GET: Meta Webhook Verification ───
 export async function GET(req: Request) {

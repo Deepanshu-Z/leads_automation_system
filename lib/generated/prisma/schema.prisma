@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -13,53 +8,147 @@ datasource db {
 }
 
 model Lead {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  phone     String
-  source    String
-  createdAt DateTime @default(now())
-
-  conversations Conversation[]
-  payments      Payment[]
+  id              Int             @id @default(autoincrement())
+  name            String?
+  email           String?
+  phone           String?
+  createdAt       DateTime        @default(now())
+  assignedAgentId Int?
+  platform        String
+  sourceId        String          @unique
+  status          LeadStatus      @default(NEW)
+  updatedAt       DateTime        @updatedAt
+  conversations   Conversation[]
+  escalations     EscalationLog[]
+  agent           Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
+  payments        Payment[]
 }
 
 model Agent {
-  id   Int    @id @default(autoincrement())
-  name String
-  type String // ai / human
-
+  id            Int             @id @default(autoincrement())
+  name          String
+  createdAt     DateTime        @default(now())
+  email         String          @unique
+  isOnline      Boolean         @default(false)
+  passwordHash  String
+  role          AgentRole       @default(AGENT)
   conversations Conversation[]
+  escalations   EscalationLog[]
+  leads         Lead[]          @relation("AgentLeads")
 }
 
 model Conversation {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   leadId    Int
-  agentId   Int
-  status    String // active / closed
-  createdAt DateTime @default(now())
-
-  lead     Lead      @relation(fields: [leadId], references: [id])
-  agent    Agent     @relation(fields: [agentId], references: [id])
-  messages Message[]
+  agentId   Int?
+  status    String    @default("active")
+  createdAt DateTime  @default(now())
+  platform  String
+  agent     Agent?    @relation(fields: [agentId], references: [id])
+  lead      Lead      @relation(fields: [leadId], references: [id])
+  messages  Message[]
 }
 
 model Message {
-  id             Int      @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   conversationId Int
-  sender         String // user / ai
   content        String
-  createdAt      DateTime @default(now())
-
-  conversation Conversation @relation(fields: [conversationId], references: [id])
+  createdAt      DateTime     @default(now())
+  confidence     Float?
+  intent         String?
+  role           MessageRole  @default(USER)
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
 }
 
 model Payment {
-  id        Int      @id @default(autoincrement())
-  leadId    Int
-  amount    Float
-  status    String // pending / success / failed
-  createdAt DateTime @default(now())
+  id             Int           @id @default(autoincrement())
+  leadId         Int
+  amount         Float
+  createdAt      DateTime      @default(now())
+  currency       String        @default("INR")
+  paidAt         DateTime?
+  razorpayLinkId String?
+  status         PaymentStatus @default(PENDING)
+  lead           Lead          @relation(fields: [leadId], references: [id])
+}
 
-  lead Lead @relation(fields: [leadId], references: [id])
+model EscalationLog {
+  id          Int       @id @default(autoincrement())
+  leadId      Int
+  agentId     Int?
+  reason      String
+  escalatedAt DateTime  @default(now())
+  resolvedAt  DateTime?
+  agent       Agent?    @relation(fields: [agentId], references: [id])
+  lead        Lead      @relation(fields: [leadId], references: [id])
+}
+
+model conversations {
+  id                 Int        @id @default(autoincrement())
+  platform_thread_id String     @unique(map: "ix_conversations_platform_thread_id") @db.VarChar
+  status             String     @db.VarChar
+  last_message_at    DateTime   @db.Timestamp(6)
+  messages           messages[]
+}
+
+model intent_logs {
+  id         Int      @id @default(autoincrement())
+  sender_id  String   @db.VarChar
+  message    String   @db.VarChar
+  intent     String   @db.VarChar
+  confidence Float
+  reason     String   @db.VarChar
+  escalated  Boolean
+  timestamp  DateTime @db.Timestamp(6)
+
+  @@index([sender_id], map: "ix_intent_logs_sender_id")
+}
+
+model messages {
+  id              Int           @id @default(autoincrement())
+  conversation_id Int
+  sender          String        @db.VarChar
+  content         String        @db.VarChar
+  timestamp       DateTime      @db.Timestamp(6)
+  conversations   conversations @relation(fields: [conversation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model token_logs {
+  id                Int      @id @default(autoincrement())
+  sender_id         String   @db.VarChar
+  model             String   @db.VarChar
+  intent            String   @db.VarChar
+  prompt_tokens     Int
+  completion_tokens Int
+  total_tokens      Int
+  timestamp         DateTime @db.Timestamp(6)
+
+  @@index([sender_id], map: "ix_token_logs_sender_id")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  READY_TO_PAY
+  CONVERTED
+  LOST
+}
+
+enum AgentRole {
+  ADMIN
+  AGENT
+}
+
+enum MessageRole {
+  USER
+  AI
+  AGENT
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
 }
