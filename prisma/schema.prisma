@@ -23,6 +23,7 @@ model Lead {
   conversations Conversation[]
   payments      Payment[]
   escalations   EscalationLog[]
+  auditLogs     AuditLog[]
 }
 
 model Agent {
@@ -73,8 +74,7 @@ model Payment {
   status         PaymentStatus @default(PENDING)
   paidAt         DateTime?
   createdAt      DateTime      @default(now())
-
-  lead Lead @relation(fields: [leadId], references: [id])
+  lead           Lead          @relation(fields: [leadId], references: [id])
 }
 
 model EscalationLog {
@@ -115,12 +115,30 @@ model TokenLog {
   @@index([senderId])
 }
 
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  leadId      Int
+  oldStatus   String
+  newStatus   String
+  reason      String
+  triggeredBy String // "ai" / "agent" / "system" / "razorpay"
+  createdAt   DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id])
+}
+
 enum LeadStatus {
   NEW
   CONTACTED
+  ENGAGED // ← new
   QUALIFIED
+  INFO_COLLECTED // ← new
   READY_TO_PAY
+  PAYMENT_SENT // ← new
+  PAID // ← new
+  ESCALATED // ← new
   CONVERTED
+  CLOSED // ← new
   LOST
 }
 
