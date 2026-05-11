@@ -8,67 +8,72 @@ datasource db {
 }
 
 model Lead {
-  id              Int             @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   name            String?
   email           String?
   phone           String?
-  createdAt       DateTime        @default(now())
-  assignedAgentId Int?
   platform        String
-  sourceId        String          @unique
-  status          LeadStatus      @default(NEW)
-  updatedAt       DateTime        @updatedAt
-  conversations   Conversation[]
-  escalations     EscalationLog[]
-  agent           Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
-  payments        Payment[]
+  sourceId        String     @unique
+  status          LeadStatus @default(NEW)
+  assignedAgentId Int?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  agent         Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
+  conversations Conversation[]
+  payments      Payment[]
+  escalations   EscalationLog[]
+  auditLogs     AuditLog[]
 }
 
 model Agent {
-  id            Int             @id @default(autoincrement())
-  name          String
-  createdAt     DateTime        @default(now())
-  email         String          @unique
-  isOnline      Boolean         @default(false)
-  passwordHash  String
-  role          AgentRole       @default(AGENT)
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         AgentRole @default(AGENT)
+  isOnline     Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+
+  leads         Lead[]          @relation("AgentLeads")
   conversations Conversation[]
   escalations   EscalationLog[]
-  leads         Lead[]          @relation("AgentLeads")
 }
 
 model Conversation {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   leadId    Int
   agentId   Int?
-  status    String    @default("active")
-  createdAt DateTime  @default(now())
   platform  String
-  agent     Agent?    @relation(fields: [agentId], references: [id])
-  lead      Lead      @relation(fields: [leadId], references: [id])
-  messages  Message[]
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+
+  lead     Lead      @relation(fields: [leadId], references: [id])
+  agent    Agent?    @relation(fields: [agentId], references: [id])
+  messages Message[]
 }
 
 model Message {
-  id             Int          @id @default(autoincrement())
+  id             Int         @id @default(autoincrement())
   conversationId Int
+  role           MessageRole @default(USER)
   content        String
-  createdAt      DateTime     @default(now())
-  confidence     Float?
   intent         String?
-  role           MessageRole  @default(USER)
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  confidence     Float?
+  createdAt      DateTime    @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
 }
 
 model Payment {
   id             Int           @id @default(autoincrement())
   leadId         Int
-  amount         Float
-  createdAt      DateTime      @default(now())
-  currency       String        @default("INR")
-  paidAt         DateTime?
   razorpayLinkId String?
+  amount         Float
+  currency       String        @default("INR")
   status         PaymentStatus @default(PENDING)
+  paidAt         DateTime?
+  createdAt      DateTime      @default(now())
   lead           Lead          @relation(fields: [leadId], references: [id])
 }
 
@@ -79,59 +84,61 @@ model EscalationLog {
   reason      String
   escalatedAt DateTime  @default(now())
   resolvedAt  DateTime?
-  agent       Agent?    @relation(fields: [agentId], references: [id])
-  lead        Lead      @relation(fields: [leadId], references: [id])
+
+  lead  Lead   @relation(fields: [leadId], references: [id])
+  agent Agent? @relation(fields: [agentId], references: [id])
 }
 
-model conversations {
-  id                 Int        @id @default(autoincrement())
-  platform_thread_id String     @unique(map: "ix_conversations_platform_thread_id") @db.VarChar
-  status             String     @db.VarChar
-  last_message_at    DateTime   @db.Timestamp(6)
-  messages           messages[]
-}
-
-model intent_logs {
+model IntentLog {
   id         Int      @id @default(autoincrement())
-  sender_id  String   @db.VarChar
-  message    String   @db.VarChar
-  intent     String   @db.VarChar
+  senderId   String
+  message    String
+  intent     String
   confidence Float
-  reason     String   @db.VarChar
-  escalated  Boolean
-  timestamp  DateTime @db.Timestamp(6)
+  reason     String
+  escalated  Boolean  @default(false)
+  timestamp  DateTime @default(now())
 
-  @@index([sender_id], map: "ix_intent_logs_sender_id")
+  @@index([senderId])
 }
 
-model messages {
-  id              Int           @id @default(autoincrement())
-  conversation_id Int
-  sender          String        @db.VarChar
-  content         String        @db.VarChar
-  timestamp       DateTime      @db.Timestamp(6)
-  conversations   conversations @relation(fields: [conversation_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model TokenLog {
+  id               Int      @id @default(autoincrement())
+  senderId         String
+  model            String
+  intent           String
+  promptTokens     Int
+  completionTokens Int
+  totalTokens      Int
+  timestamp        DateTime @default(now())
+
+  @@index([senderId])
 }
 
-model token_logs {
-  id                Int      @id @default(autoincrement())
-  sender_id         String   @db.VarChar
-  model             String   @db.VarChar
-  intent            String   @db.VarChar
-  prompt_tokens     Int
-  completion_tokens Int
-  total_tokens      Int
-  timestamp         DateTime @db.Timestamp(6)
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  leadId      Int
+  oldStatus   String
+  newStatus   String
+  reason      String
+  triggeredBy String // "ai" / "agent" / "system" / "razorpay"
+  createdAt   DateTime @default(now())
 
-  @@index([sender_id], map: "ix_token_logs_sender_id")
+  lead Lead @relation(fields: [leadId], references: [id])
 }
 
 enum LeadStatus {
   NEW
   CONTACTED
+  ENGAGED // ← new
   QUALIFIED
+  INFO_COLLECTED // ← new
   READY_TO_PAY
+  PAYMENT_SENT // ← new
+  PAID // ← new
+  ESCALATED // ← new
   CONVERTED
+  CLOSED // ← new
   LOST
 }
 

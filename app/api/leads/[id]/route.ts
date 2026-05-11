@@ -35,3 +35,23 @@ export async function GET(
 
   return NextResponse.json(lead);
 }
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const body = await req.json();
+
+  const updatedLead = await prisma.lead.update({
+    where: {
+      id: Number(params.id),
+    },
+
+    data: {
+      status: body.status,
+      assignedAgentId: body.assignedAgentId,
+    },
+  });
+
+  return NextResponse.json(updatedLead);
+}

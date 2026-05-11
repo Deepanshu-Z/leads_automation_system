@@ -44,25 +44,20 @@ export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
  */
 export type EscalationLog = $Result.DefaultSelection<Prisma.$EscalationLogPayload>
 /**
- * Model conversations
+ * Model IntentLog
  * 
  */
-export type conversations = $Result.DefaultSelection<Prisma.$conversationsPayload>
+export type IntentLog = $Result.DefaultSelection<Prisma.$IntentLogPayload>
 /**
- * Model intent_logs
+ * Model TokenLog
  * 
  */
-export type intent_logs = $Result.DefaultSelection<Prisma.$intent_logsPayload>
+export type TokenLog = $Result.DefaultSelection<Prisma.$TokenLogPayload>
 /**
- * Model messages
+ * Model AuditLog
  * 
  */
-export type messages = $Result.DefaultSelection<Prisma.$messagesPayload>
-/**
- * Model token_logs
- * 
- */
-export type token_logs = $Result.DefaultSelection<Prisma.$token_logsPayload>
+export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
 
 /**
  * Enums
@@ -71,9 +66,15 @@ export namespace $Enums {
   export const LeadStatus: {
   NEW: 'NEW',
   CONTACTED: 'CONTACTED',
+  ENGAGED: 'ENGAGED',
   QUALIFIED: 'QUALIFIED',
+  INFO_COLLECTED: 'INFO_COLLECTED',
   READY_TO_PAY: 'READY_TO_PAY',
+  PAYMENT_SENT: 'PAYMENT_SENT',
+  PAID: 'PAID',
+  ESCALATED: 'ESCALATED',
   CONVERTED: 'CONVERTED',
+  CLOSED: 'CLOSED',
   LOST: 'LOST'
 };
 
@@ -306,44 +307,34 @@ export class PrismaClient<
   get escalationLog(): Prisma.EscalationLogDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.conversations`: Exposes CRUD operations for the **conversations** model.
+   * `prisma.intentLog`: Exposes CRUD operations for the **IntentLog** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Conversations
-    * const conversations = await prisma.conversations.findMany()
+    * // Fetch zero or more IntentLogs
+    * const intentLogs = await prisma.intentLog.findMany()
     * ```
     */
-  get conversations(): Prisma.conversationsDelegate<ExtArgs, ClientOptions>;
+  get intentLog(): Prisma.IntentLogDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.intent_logs`: Exposes CRUD operations for the **intent_logs** model.
+   * `prisma.tokenLog`: Exposes CRUD operations for the **TokenLog** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Intent_logs
-    * const intent_logs = await prisma.intent_logs.findMany()
+    * // Fetch zero or more TokenLogs
+    * const tokenLogs = await prisma.tokenLog.findMany()
     * ```
     */
-  get intent_logs(): Prisma.intent_logsDelegate<ExtArgs, ClientOptions>;
+  get tokenLog(): Prisma.TokenLogDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.messages`: Exposes CRUD operations for the **messages** model.
+   * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Messages
-    * const messages = await prisma.messages.findMany()
+    * // Fetch zero or more AuditLogs
+    * const auditLogs = await prisma.auditLog.findMany()
     * ```
     */
-  get messages(): Prisma.messagesDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.token_logs`: Exposes CRUD operations for the **token_logs** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Token_logs
-    * const token_logs = await prisma.token_logs.findMany()
-    * ```
-    */
-  get token_logs(): Prisma.token_logsDelegate<ExtArgs, ClientOptions>;
+  get auditLog(): Prisma.AuditLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -784,10 +775,9 @@ export namespace Prisma {
     Message: 'Message',
     Payment: 'Payment',
     EscalationLog: 'EscalationLog',
-    conversations: 'conversations',
-    intent_logs: 'intent_logs',
-    messages: 'messages',
-    token_logs: 'token_logs'
+    IntentLog: 'IntentLog',
+    TokenLog: 'TokenLog',
+    AuditLog: 'AuditLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -803,7 +793,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "lead" | "agent" | "conversation" | "message" | "payment" | "escalationLog" | "conversations" | "intent_logs" | "messages" | "token_logs"
+      modelProps: "lead" | "agent" | "conversation" | "message" | "payment" | "escalationLog" | "intentLog" | "tokenLog" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1251,299 +1241,225 @@ export namespace Prisma {
           }
         }
       }
-      conversations: {
-        payload: Prisma.$conversationsPayload<ExtArgs>
-        fields: Prisma.conversationsFieldRefs
+      IntentLog: {
+        payload: Prisma.$IntentLogPayload<ExtArgs>
+        fields: Prisma.IntentLogFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.conversationsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload> | null
+            args: Prisma.IntentLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.conversationsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>
+            args: Prisma.IntentLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>
           }
           findFirst: {
-            args: Prisma.conversationsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload> | null
+            args: Prisma.IntentLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.conversationsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>
+            args: Prisma.IntentLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>
           }
           findMany: {
-            args: Prisma.conversationsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>[]
+            args: Prisma.IntentLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>[]
           }
           create: {
-            args: Prisma.conversationsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>
+            args: Prisma.IntentLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>
           }
           createMany: {
-            args: Prisma.conversationsCreateManyArgs<ExtArgs>
+            args: Prisma.IntentLogCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.conversationsCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>[]
+            args: Prisma.IntentLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>[]
           }
           delete: {
-            args: Prisma.conversationsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>
+            args: Prisma.IntentLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>
           }
           update: {
-            args: Prisma.conversationsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>
+            args: Prisma.IntentLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>
           }
           deleteMany: {
-            args: Prisma.conversationsDeleteManyArgs<ExtArgs>
+            args: Prisma.IntentLogDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.conversationsUpdateManyArgs<ExtArgs>
+            args: Prisma.IntentLogUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.conversationsUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>[]
+            args: Prisma.IntentLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>[]
           }
           upsert: {
-            args: Prisma.conversationsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$conversationsPayload>
+            args: Prisma.IntentLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntentLogPayload>
           }
           aggregate: {
-            args: Prisma.ConversationsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateConversations>
+            args: Prisma.IntentLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIntentLog>
           }
           groupBy: {
-            args: Prisma.conversationsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ConversationsGroupByOutputType>[]
+            args: Prisma.IntentLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IntentLogGroupByOutputType>[]
           }
           count: {
-            args: Prisma.conversationsCountArgs<ExtArgs>
-            result: $Utils.Optional<ConversationsCountAggregateOutputType> | number
+            args: Prisma.IntentLogCountArgs<ExtArgs>
+            result: $Utils.Optional<IntentLogCountAggregateOutputType> | number
           }
         }
       }
-      intent_logs: {
-        payload: Prisma.$intent_logsPayload<ExtArgs>
-        fields: Prisma.intent_logsFieldRefs
+      TokenLog: {
+        payload: Prisma.$TokenLogPayload<ExtArgs>
+        fields: Prisma.TokenLogFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.intent_logsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload> | null
+            args: Prisma.TokenLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.intent_logsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>
+            args: Prisma.TokenLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>
           }
           findFirst: {
-            args: Prisma.intent_logsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload> | null
+            args: Prisma.TokenLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.intent_logsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>
+            args: Prisma.TokenLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>
           }
           findMany: {
-            args: Prisma.intent_logsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>[]
+            args: Prisma.TokenLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>[]
           }
           create: {
-            args: Prisma.intent_logsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>
+            args: Prisma.TokenLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>
           }
           createMany: {
-            args: Prisma.intent_logsCreateManyArgs<ExtArgs>
+            args: Prisma.TokenLogCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.intent_logsCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>[]
+            args: Prisma.TokenLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>[]
           }
           delete: {
-            args: Prisma.intent_logsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>
+            args: Prisma.TokenLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>
           }
           update: {
-            args: Prisma.intent_logsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>
+            args: Prisma.TokenLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>
           }
           deleteMany: {
-            args: Prisma.intent_logsDeleteManyArgs<ExtArgs>
+            args: Prisma.TokenLogDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.intent_logsUpdateManyArgs<ExtArgs>
+            args: Prisma.TokenLogUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.intent_logsUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>[]
+            args: Prisma.TokenLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>[]
           }
           upsert: {
-            args: Prisma.intent_logsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$intent_logsPayload>
+            args: Prisma.TokenLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TokenLogPayload>
           }
           aggregate: {
-            args: Prisma.Intent_logsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateIntent_logs>
+            args: Prisma.TokenLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTokenLog>
           }
           groupBy: {
-            args: Prisma.intent_logsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Intent_logsGroupByOutputType>[]
+            args: Prisma.TokenLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TokenLogGroupByOutputType>[]
           }
           count: {
-            args: Prisma.intent_logsCountArgs<ExtArgs>
-            result: $Utils.Optional<Intent_logsCountAggregateOutputType> | number
+            args: Prisma.TokenLogCountArgs<ExtArgs>
+            result: $Utils.Optional<TokenLogCountAggregateOutputType> | number
           }
         }
       }
-      messages: {
-        payload: Prisma.$messagesPayload<ExtArgs>
-        fields: Prisma.messagesFieldRefs
+      AuditLog: {
+        payload: Prisma.$AuditLogPayload<ExtArgs>
+        fields: Prisma.AuditLogFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.messagesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload> | null
+            args: Prisma.AuditLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.messagesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>
+            args: Prisma.AuditLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
           }
           findFirst: {
-            args: Prisma.messagesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload> | null
+            args: Prisma.AuditLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.messagesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>
+            args: Prisma.AuditLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
           }
           findMany: {
-            args: Prisma.messagesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>[]
+            args: Prisma.AuditLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
           }
           create: {
-            args: Prisma.messagesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>
+            args: Prisma.AuditLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
           }
           createMany: {
-            args: Prisma.messagesCreateManyArgs<ExtArgs>
+            args: Prisma.AuditLogCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.messagesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>[]
+            args: Prisma.AuditLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
           }
           delete: {
-            args: Prisma.messagesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>
+            args: Prisma.AuditLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
           }
           update: {
-            args: Prisma.messagesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>
+            args: Prisma.AuditLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
           }
           deleteMany: {
-            args: Prisma.messagesDeleteManyArgs<ExtArgs>
+            args: Prisma.AuditLogDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.messagesUpdateManyArgs<ExtArgs>
+            args: Prisma.AuditLogUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.messagesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>[]
+            args: Prisma.AuditLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
           }
           upsert: {
-            args: Prisma.messagesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$messagesPayload>
+            args: Prisma.AuditLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
           }
           aggregate: {
-            args: Prisma.MessagesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMessages>
+            args: Prisma.AuditLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuditLog>
           }
           groupBy: {
-            args: Prisma.messagesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MessagesGroupByOutputType>[]
+            args: Prisma.AuditLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuditLogGroupByOutputType>[]
           }
           count: {
-            args: Prisma.messagesCountArgs<ExtArgs>
-            result: $Utils.Optional<MessagesCountAggregateOutputType> | number
-          }
-        }
-      }
-      token_logs: {
-        payload: Prisma.$token_logsPayload<ExtArgs>
-        fields: Prisma.token_logsFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.token_logsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.token_logsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>
-          }
-          findFirst: {
-            args: Prisma.token_logsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.token_logsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>
-          }
-          findMany: {
-            args: Prisma.token_logsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>[]
-          }
-          create: {
-            args: Prisma.token_logsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>
-          }
-          createMany: {
-            args: Prisma.token_logsCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.token_logsCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>[]
-          }
-          delete: {
-            args: Prisma.token_logsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>
-          }
-          update: {
-            args: Prisma.token_logsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>
-          }
-          deleteMany: {
-            args: Prisma.token_logsDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.token_logsUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.token_logsUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>[]
-          }
-          upsert: {
-            args: Prisma.token_logsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$token_logsPayload>
-          }
-          aggregate: {
-            args: Prisma.Token_logsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateToken_logs>
-          }
-          groupBy: {
-            args: Prisma.token_logsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Token_logsGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.token_logsCountArgs<ExtArgs>
-            result: $Utils.Optional<Token_logsCountAggregateOutputType> | number
+            args: Prisma.AuditLogCountArgs<ExtArgs>
+            result: $Utils.Optional<AuditLogCountAggregateOutputType> | number
           }
         }
       }
@@ -1661,10 +1577,9 @@ export namespace Prisma {
     message?: MessageOmit
     payment?: PaymentOmit
     escalationLog?: EscalationLogOmit
-    conversations?: conversationsOmit
-    intent_logs?: intent_logsOmit
-    messages?: messagesOmit
-    token_logs?: token_logsOmit
+    intentLog?: IntentLogOmit
+    tokenLog?: TokenLogOmit
+    auditLog?: AuditLogOmit
   }
 
   /* Types for Logging */
@@ -1746,14 +1661,16 @@ export namespace Prisma {
 
   export type LeadCountOutputType = {
     conversations: number
-    escalations: number
     payments: number
+    escalations: number
+    auditLogs: number
   }
 
   export type LeadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | LeadCountOutputTypeCountConversationsArgs
-    escalations?: boolean | LeadCountOutputTypeCountEscalationsArgs
     payments?: boolean | LeadCountOutputTypeCountPaymentsArgs
+    escalations?: boolean | LeadCountOutputTypeCountEscalationsArgs
+    auditLogs?: boolean | LeadCountOutputTypeCountAuditLogsArgs
   }
 
   // Custom InputTypes
@@ -1777,6 +1694,13 @@ export namespace Prisma {
   /**
    * LeadCountOutputType without action
    */
+  export type LeadCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
+  }
+
+  /**
+   * LeadCountOutputType without action
+   */
   export type LeadCountOutputTypeCountEscalationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EscalationLogWhereInput
   }
@@ -1784,8 +1708,8 @@ export namespace Prisma {
   /**
    * LeadCountOutputType without action
    */
-  export type LeadCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PaymentWhereInput
+  export type LeadCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
   }
 
 
@@ -1794,15 +1718,15 @@ export namespace Prisma {
    */
 
   export type AgentCountOutputType = {
+    leads: number
     conversations: number
     escalations: number
-    leads: number
   }
 
   export type AgentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    leads?: boolean | AgentCountOutputTypeCountLeadsArgs
     conversations?: boolean | AgentCountOutputTypeCountConversationsArgs
     escalations?: boolean | AgentCountOutputTypeCountEscalationsArgs
-    leads?: boolean | AgentCountOutputTypeCountLeadsArgs
   }
 
   // Custom InputTypes
@@ -1819,6 +1743,13 @@ export namespace Prisma {
   /**
    * AgentCountOutputType without action
    */
+  export type AgentCountOutputTypeCountLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeadWhereInput
+  }
+
+  /**
+   * AgentCountOutputType without action
+   */
   export type AgentCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ConversationWhereInput
   }
@@ -1828,13 +1759,6 @@ export namespace Prisma {
    */
   export type AgentCountOutputTypeCountEscalationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EscalationLogWhereInput
-  }
-
-  /**
-   * AgentCountOutputType without action
-   */
-  export type AgentCountOutputTypeCountLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LeadWhereInput
   }
 
 
@@ -1870,37 +1794,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type ConversationsCountOutputType
-   */
-
-  export type ConversationsCountOutputType = {
-    messages: number
-  }
-
-  export type ConversationsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    messages?: boolean | ConversationsCountOutputTypeCountMessagesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ConversationsCountOutputType without action
-   */
-  export type ConversationsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ConversationsCountOutputType
-     */
-    select?: ConversationsCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ConversationsCountOutputType without action
-   */
-  export type ConversationsCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: messagesWhereInput
-  }
-
-
-  /**
    * Models
    */
 
@@ -1931,11 +1824,11 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
-    createdAt: Date | null
-    assignedAgentId: number | null
     platform: string | null
     sourceId: string | null
     status: $Enums.LeadStatus | null
+    assignedAgentId: number | null
+    createdAt: Date | null
     updatedAt: Date | null
   }
 
@@ -1944,11 +1837,11 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
-    createdAt: Date | null
-    assignedAgentId: number | null
     platform: string | null
     sourceId: string | null
     status: $Enums.LeadStatus | null
+    assignedAgentId: number | null
+    createdAt: Date | null
     updatedAt: Date | null
   }
 
@@ -1957,11 +1850,11 @@ export namespace Prisma {
     name: number
     email: number
     phone: number
-    createdAt: number
-    assignedAgentId: number
     platform: number
     sourceId: number
     status: number
+    assignedAgentId: number
+    createdAt: number
     updatedAt: number
     _all: number
   }
@@ -1982,11 +1875,11 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
-    createdAt?: true
-    assignedAgentId?: true
     platform?: true
     sourceId?: true
     status?: true
+    assignedAgentId?: true
+    createdAt?: true
     updatedAt?: true
   }
 
@@ -1995,11 +1888,11 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
-    createdAt?: true
-    assignedAgentId?: true
     platform?: true
     sourceId?: true
     status?: true
+    assignedAgentId?: true
+    createdAt?: true
     updatedAt?: true
   }
 
@@ -2008,11 +1901,11 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
-    createdAt?: true
-    assignedAgentId?: true
     platform?: true
     sourceId?: true
     status?: true
+    assignedAgentId?: true
+    createdAt?: true
     updatedAt?: true
     _all?: true
   }
@@ -2108,11 +2001,11 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
-    createdAt: Date
-    assignedAgentId: number | null
     platform: string
     sourceId: string
     status: $Enums.LeadStatus
+    assignedAgentId: number | null
+    createdAt: Date
     updatedAt: Date
     _count: LeadCountAggregateOutputType | null
     _avg: LeadAvgAggregateOutputType | null
@@ -2140,16 +2033,17 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    createdAt?: boolean
-    assignedAgentId?: boolean
     platform?: boolean
     sourceId?: boolean
     status?: boolean
+    assignedAgentId?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
-    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
-    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
     agent?: boolean | Lead$agentArgs<ExtArgs>
+    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
     payments?: boolean | Lead$paymentsArgs<ExtArgs>
+    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
+    auditLogs?: boolean | Lead$auditLogsArgs<ExtArgs>
     _count?: boolean | LeadCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
@@ -2158,11 +2052,11 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    createdAt?: boolean
-    assignedAgentId?: boolean
     platform?: boolean
     sourceId?: boolean
     status?: boolean
+    assignedAgentId?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
     agent?: boolean | Lead$agentArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
@@ -2172,11 +2066,11 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    createdAt?: boolean
-    assignedAgentId?: boolean
     platform?: boolean
     sourceId?: boolean
     status?: boolean
+    assignedAgentId?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
     agent?: boolean | Lead$agentArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
@@ -2186,20 +2080,21 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
-    createdAt?: boolean
-    assignedAgentId?: boolean
     platform?: boolean
     sourceId?: boolean
     status?: boolean
+    assignedAgentId?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "createdAt" | "assignedAgentId" | "platform" | "sourceId" | "status" | "updatedAt", ExtArgs["result"]["lead"]>
+  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "platform" | "sourceId" | "status" | "assignedAgentId" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
-    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
     agent?: boolean | Lead$agentArgs<ExtArgs>
+    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
     payments?: boolean | Lead$paymentsArgs<ExtArgs>
+    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
+    auditLogs?: boolean | Lead$auditLogsArgs<ExtArgs>
     _count?: boolean | LeadCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LeadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2212,21 +2107,22 @@ export namespace Prisma {
   export type $LeadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Lead"
     objects: {
-      conversations: Prisma.$ConversationPayload<ExtArgs>[]
-      escalations: Prisma.$EscalationLogPayload<ExtArgs>[]
       agent: Prisma.$AgentPayload<ExtArgs> | null
+      conversations: Prisma.$ConversationPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
+      escalations: Prisma.$EscalationLogPayload<ExtArgs>[]
+      auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string | null
       email: string | null
       phone: string | null
-      createdAt: Date
-      assignedAgentId: number | null
       platform: string
       sourceId: string
       status: $Enums.LeadStatus
+      assignedAgentId: number | null
+      createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["lead"]>
     composites: {}
@@ -2622,10 +2518,11 @@ export namespace Prisma {
    */
   export interface Prisma__LeadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    conversations<T extends Lead$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    escalations<T extends Lead$escalationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$escalationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EscalationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     agent<T extends Lead$agentArgs<ExtArgs> = {}>(args?: Subset<T, Lead$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    conversations<T extends Lead$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends Lead$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    escalations<T extends Lead$escalationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$escalationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EscalationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    auditLogs<T extends Lead$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2659,11 +2556,11 @@ export namespace Prisma {
     readonly name: FieldRef<"Lead", 'String'>
     readonly email: FieldRef<"Lead", 'String'>
     readonly phone: FieldRef<"Lead", 'String'>
-    readonly createdAt: FieldRef<"Lead", 'DateTime'>
-    readonly assignedAgentId: FieldRef<"Lead", 'Int'>
     readonly platform: FieldRef<"Lead", 'String'>
     readonly sourceId: FieldRef<"Lead", 'String'>
     readonly status: FieldRef<"Lead", 'LeadStatus'>
+    readonly assignedAgentId: FieldRef<"Lead", 'Int'>
+    readonly createdAt: FieldRef<"Lead", 'DateTime'>
     readonly updatedAt: FieldRef<"Lead", 'DateTime'>
   }
     
@@ -3066,6 +2963,25 @@ export namespace Prisma {
   }
 
   /**
+   * Lead.agent
+   */
+  export type Lead$agentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Agent
+     */
+    select?: AgentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Agent
+     */
+    omit?: AgentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
+  }
+
+  /**
    * Lead.conversations
    */
   export type Lead$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3087,6 +3003,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+  }
+
+  /**
+   * Lead.payments
+   */
+  export type Lead$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    cursor?: PaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
   }
 
   /**
@@ -3114,46 +3054,27 @@ export namespace Prisma {
   }
 
   /**
-   * Lead.agent
+   * Lead.auditLogs
    */
-  export type Lead$agentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Lead$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Agent
+     * Select specific fields to fetch from the AuditLog
      */
-    select?: AgentSelect<ExtArgs> | null
+    select?: AuditLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Agent
+     * Omit specific fields from the AuditLog
      */
-    omit?: AgentOmit<ExtArgs> | null
+    omit?: AuditLogOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AgentInclude<ExtArgs> | null
-    where?: AgentWhereInput
-  }
-
-  /**
-   * Lead.payments
-   */
-  export type Lead$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Payment
-     */
-    select?: PaymentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Payment
-     */
-    omit?: PaymentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PaymentInclude<ExtArgs> | null
-    where?: PaymentWhereInput
-    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
-    cursor?: PaymentWhereUniqueInput
+    include?: AuditLogInclude<ExtArgs> | null
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    cursor?: AuditLogWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
   }
 
   /**
@@ -3198,31 +3119,31 @@ export namespace Prisma {
   export type AgentMinAggregateOutputType = {
     id: number | null
     name: string | null
-    createdAt: Date | null
     email: string | null
-    isOnline: boolean | null
     passwordHash: string | null
     role: $Enums.AgentRole | null
+    isOnline: boolean | null
+    createdAt: Date | null
   }
 
   export type AgentMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    createdAt: Date | null
     email: string | null
-    isOnline: boolean | null
     passwordHash: string | null
     role: $Enums.AgentRole | null
+    isOnline: boolean | null
+    createdAt: Date | null
   }
 
   export type AgentCountAggregateOutputType = {
     id: number
     name: number
-    createdAt: number
     email: number
-    isOnline: number
     passwordHash: number
     role: number
+    isOnline: number
+    createdAt: number
     _all: number
   }
 
@@ -3238,31 +3159,31 @@ export namespace Prisma {
   export type AgentMinAggregateInputType = {
     id?: true
     name?: true
-    createdAt?: true
     email?: true
-    isOnline?: true
     passwordHash?: true
     role?: true
+    isOnline?: true
+    createdAt?: true
   }
 
   export type AgentMaxAggregateInputType = {
     id?: true
     name?: true
-    createdAt?: true
     email?: true
-    isOnline?: true
     passwordHash?: true
     role?: true
+    isOnline?: true
+    createdAt?: true
   }
 
   export type AgentCountAggregateInputType = {
     id?: true
     name?: true
-    createdAt?: true
     email?: true
-    isOnline?: true
     passwordHash?: true
     role?: true
+    isOnline?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -3355,11 +3276,11 @@ export namespace Prisma {
   export type AgentGroupByOutputType = {
     id: number
     name: string
-    createdAt: Date
     email: string
-    isOnline: boolean
     passwordHash: string
     role: $Enums.AgentRole
+    isOnline: boolean
+    createdAt: Date
     _count: AgentCountAggregateOutputType | null
     _avg: AgentAvgAggregateOutputType | null
     _sum: AgentSumAggregateOutputType | null
@@ -3384,52 +3305,52 @@ export namespace Prisma {
   export type AgentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    createdAt?: boolean
     email?: boolean
-    isOnline?: boolean
     passwordHash?: boolean
     role?: boolean
+    isOnline?: boolean
+    createdAt?: boolean
+    leads?: boolean | Agent$leadsArgs<ExtArgs>
     conversations?: boolean | Agent$conversationsArgs<ExtArgs>
     escalations?: boolean | Agent$escalationsArgs<ExtArgs>
-    leads?: boolean | Agent$leadsArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    createdAt?: boolean
     email?: boolean
-    isOnline?: boolean
     passwordHash?: boolean
     role?: boolean
+    isOnline?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    createdAt?: boolean
     email?: boolean
-    isOnline?: boolean
     passwordHash?: boolean
     role?: boolean
+    isOnline?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectScalar = {
     id?: boolean
     name?: boolean
-    createdAt?: boolean
     email?: boolean
-    isOnline?: boolean
     passwordHash?: boolean
     role?: boolean
+    isOnline?: boolean
+    createdAt?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "email" | "isOnline" | "passwordHash" | "role", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "isOnline" | "createdAt", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    leads?: boolean | Agent$leadsArgs<ExtArgs>
     conversations?: boolean | Agent$conversationsArgs<ExtArgs>
     escalations?: boolean | Agent$escalationsArgs<ExtArgs>
-    leads?: boolean | Agent$leadsArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AgentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3438,18 +3359,18 @@ export namespace Prisma {
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Agent"
     objects: {
+      leads: Prisma.$LeadPayload<ExtArgs>[]
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
       escalations: Prisma.$EscalationLogPayload<ExtArgs>[]
-      leads: Prisma.$LeadPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      createdAt: Date
       email: string
-      isOnline: boolean
       passwordHash: string
       role: $Enums.AgentRole
+      isOnline: boolean
+      createdAt: Date
     }, ExtArgs["result"]["agent"]>
     composites: {}
   }
@@ -3844,9 +3765,9 @@ export namespace Prisma {
    */
   export interface Prisma__AgentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    leads<T extends Agent$leadsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversations<T extends Agent$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     escalations<T extends Agent$escalationsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$escalationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EscalationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    leads<T extends Agent$leadsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3878,11 +3799,11 @@ export namespace Prisma {
   interface AgentFieldRefs {
     readonly id: FieldRef<"Agent", 'Int'>
     readonly name: FieldRef<"Agent", 'String'>
-    readonly createdAt: FieldRef<"Agent", 'DateTime'>
     readonly email: FieldRef<"Agent", 'String'>
-    readonly isOnline: FieldRef<"Agent", 'Boolean'>
     readonly passwordHash: FieldRef<"Agent", 'String'>
     readonly role: FieldRef<"Agent", 'AgentRole'>
+    readonly isOnline: FieldRef<"Agent", 'Boolean'>
+    readonly createdAt: FieldRef<"Agent", 'DateTime'>
   }
     
 
@@ -4276,6 +4197,30 @@ export namespace Prisma {
   }
 
   /**
+   * Agent.leads
+   */
+  export type Agent$leadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lead
+     */
+    select?: LeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lead
+     */
+    omit?: LeadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeadInclude<ExtArgs> | null
+    where?: LeadWhereInput
+    orderBy?: LeadOrderByWithRelationInput | LeadOrderByWithRelationInput[]
+    cursor?: LeadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeadScalarFieldEnum | LeadScalarFieldEnum[]
+  }
+
+  /**
    * Agent.conversations
    */
   export type Agent$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4321,30 +4266,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EscalationLogScalarFieldEnum | EscalationLogScalarFieldEnum[]
-  }
-
-  /**
-   * Agent.leads
-   */
-  export type Agent$leadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Lead
-     */
-    select?: LeadSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Lead
-     */
-    omit?: LeadOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LeadInclude<ExtArgs> | null
-    where?: LeadWhereInput
-    orderBy?: LeadOrderByWithRelationInput | LeadOrderByWithRelationInput[]
-    cursor?: LeadWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: LeadScalarFieldEnum | LeadScalarFieldEnum[]
   }
 
   /**
@@ -4394,27 +4315,27 @@ export namespace Prisma {
     id: number | null
     leadId: number | null
     agentId: number | null
+    platform: string | null
     status: string | null
     createdAt: Date | null
-    platform: string | null
   }
 
   export type ConversationMaxAggregateOutputType = {
     id: number | null
     leadId: number | null
     agentId: number | null
+    platform: string | null
     status: string | null
     createdAt: Date | null
-    platform: string | null
   }
 
   export type ConversationCountAggregateOutputType = {
     id: number
     leadId: number
     agentId: number
+    platform: number
     status: number
     createdAt: number
-    platform: number
     _all: number
   }
 
@@ -4435,27 +4356,27 @@ export namespace Prisma {
     id?: true
     leadId?: true
     agentId?: true
+    platform?: true
     status?: true
     createdAt?: true
-    platform?: true
   }
 
   export type ConversationMaxAggregateInputType = {
     id?: true
     leadId?: true
     agentId?: true
+    platform?: true
     status?: true
     createdAt?: true
-    platform?: true
   }
 
   export type ConversationCountAggregateInputType = {
     id?: true
     leadId?: true
     agentId?: true
+    platform?: true
     status?: true
     createdAt?: true
-    platform?: true
     _all?: true
   }
 
@@ -4549,9 +4470,9 @@ export namespace Prisma {
     id: number
     leadId: number
     agentId: number | null
+    platform: string
     status: string
     createdAt: Date
-    platform: string
     _count: ConversationCountAggregateOutputType | null
     _avg: ConversationAvgAggregateOutputType | null
     _sum: ConversationSumAggregateOutputType | null
@@ -4577,11 +4498,11 @@ export namespace Prisma {
     id?: boolean
     leadId?: boolean
     agentId?: boolean
+    platform?: boolean
     status?: boolean
     createdAt?: boolean
-    platform?: boolean
-    agent?: boolean | Conversation$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | Conversation$agentArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
@@ -4590,63 +4511,63 @@ export namespace Prisma {
     id?: boolean
     leadId?: boolean
     agentId?: boolean
+    platform?: boolean
     status?: boolean
     createdAt?: boolean
-    platform?: boolean
-    agent?: boolean | Conversation$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | Conversation$agentArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     leadId?: boolean
     agentId?: boolean
+    platform?: boolean
     status?: boolean
     createdAt?: boolean
-    platform?: boolean
-    agent?: boolean | Conversation$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | Conversation$agentArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectScalar = {
     id?: boolean
     leadId?: boolean
     agentId?: boolean
+    platform?: boolean
     status?: boolean
     createdAt?: boolean
-    platform?: boolean
   }
 
-  export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "agentId" | "status" | "createdAt" | "platform", ExtArgs["result"]["conversation"]>
+  export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "agentId" | "platform" | "status" | "createdAt", ExtArgs["result"]["conversation"]>
   export type ConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | Conversation$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | Conversation$agentArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ConversationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | Conversation$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | Conversation$agentArgs<ExtArgs>
   }
   export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | Conversation$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | Conversation$agentArgs<ExtArgs>
   }
 
   export type $ConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Conversation"
     objects: {
-      agent: Prisma.$AgentPayload<ExtArgs> | null
       lead: Prisma.$LeadPayload<ExtArgs>
+      agent: Prisma.$AgentPayload<ExtArgs> | null
       messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       leadId: number
       agentId: number | null
+      platform: string
       status: string
       createdAt: Date
-      platform: string
     }, ExtArgs["result"]["conversation"]>
     composites: {}
   }
@@ -5041,8 +4962,8 @@ export namespace Prisma {
    */
   export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    agent<T extends Conversation$agentArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    agent<T extends Conversation$agentArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     messages<T extends Conversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5076,9 +4997,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Conversation", 'Int'>
     readonly leadId: FieldRef<"Conversation", 'Int'>
     readonly agentId: FieldRef<"Conversation", 'Int'>
+    readonly platform: FieldRef<"Conversation", 'String'>
     readonly status: FieldRef<"Conversation", 'String'>
     readonly createdAt: FieldRef<"Conversation", 'DateTime'>
-    readonly platform: FieldRef<"Conversation", 'String'>
   }
     
 
@@ -5568,31 +5489,31 @@ export namespace Prisma {
   export type MessageMinAggregateOutputType = {
     id: number | null
     conversationId: number | null
-    content: string | null
-    createdAt: Date | null
-    confidence: number | null
-    intent: string | null
     role: $Enums.MessageRole | null
+    content: string | null
+    intent: string | null
+    confidence: number | null
+    createdAt: Date | null
   }
 
   export type MessageMaxAggregateOutputType = {
     id: number | null
     conversationId: number | null
-    content: string | null
-    createdAt: Date | null
-    confidence: number | null
-    intent: string | null
     role: $Enums.MessageRole | null
+    content: string | null
+    intent: string | null
+    confidence: number | null
+    createdAt: Date | null
   }
 
   export type MessageCountAggregateOutputType = {
     id: number
     conversationId: number
-    content: number
-    createdAt: number
-    confidence: number
-    intent: number
     role: number
+    content: number
+    intent: number
+    confidence: number
+    createdAt: number
     _all: number
   }
 
@@ -5612,31 +5533,31 @@ export namespace Prisma {
   export type MessageMinAggregateInputType = {
     id?: true
     conversationId?: true
-    content?: true
-    createdAt?: true
-    confidence?: true
-    intent?: true
     role?: true
+    content?: true
+    intent?: true
+    confidence?: true
+    createdAt?: true
   }
 
   export type MessageMaxAggregateInputType = {
     id?: true
     conversationId?: true
-    content?: true
-    createdAt?: true
-    confidence?: true
-    intent?: true
     role?: true
+    content?: true
+    intent?: true
+    confidence?: true
+    createdAt?: true
   }
 
   export type MessageCountAggregateInputType = {
     id?: true
     conversationId?: true
-    content?: true
-    createdAt?: true
-    confidence?: true
-    intent?: true
     role?: true
+    content?: true
+    intent?: true
+    confidence?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -5729,11 +5650,11 @@ export namespace Prisma {
   export type MessageGroupByOutputType = {
     id: number
     conversationId: number
-    content: string
-    createdAt: Date
-    confidence: number | null
-    intent: string | null
     role: $Enums.MessageRole
+    content: string
+    intent: string | null
+    confidence: number | null
+    createdAt: Date
     _count: MessageCountAggregateOutputType | null
     _avg: MessageAvgAggregateOutputType | null
     _sum: MessageSumAggregateOutputType | null
@@ -5758,47 +5679,47 @@ export namespace Prisma {
   export type MessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     conversationId?: boolean
-    content?: boolean
-    createdAt?: boolean
-    confidence?: boolean
-    intent?: boolean
     role?: boolean
+    content?: boolean
+    intent?: boolean
+    confidence?: boolean
+    createdAt?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     conversationId?: boolean
-    content?: boolean
-    createdAt?: boolean
-    confidence?: boolean
-    intent?: boolean
     role?: boolean
+    content?: boolean
+    intent?: boolean
+    confidence?: boolean
+    createdAt?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     conversationId?: boolean
-    content?: boolean
-    createdAt?: boolean
-    confidence?: boolean
-    intent?: boolean
     role?: boolean
+    content?: boolean
+    intent?: boolean
+    confidence?: boolean
+    createdAt?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectScalar = {
     id?: boolean
     conversationId?: boolean
-    content?: boolean
-    createdAt?: boolean
-    confidence?: boolean
-    intent?: boolean
     role?: boolean
+    content?: boolean
+    intent?: boolean
+    confidence?: boolean
+    createdAt?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "content" | "createdAt" | "confidence" | "intent" | "role", ExtArgs["result"]["message"]>
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "role" | "content" | "intent" | "confidence" | "createdAt", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
   }
@@ -5817,11 +5738,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       conversationId: number
-      content: string
-      createdAt: Date
-      confidence: number | null
-      intent: string | null
       role: $Enums.MessageRole
+      content: string
+      intent: string | null
+      confidence: number | null
+      createdAt: Date
     }, ExtArgs["result"]["message"]>
     composites: {}
   }
@@ -6248,11 +6169,11 @@ export namespace Prisma {
   interface MessageFieldRefs {
     readonly id: FieldRef<"Message", 'Int'>
     readonly conversationId: FieldRef<"Message", 'Int'>
-    readonly content: FieldRef<"Message", 'String'>
-    readonly createdAt: FieldRef<"Message", 'DateTime'>
-    readonly confidence: FieldRef<"Message", 'Float'>
-    readonly intent: FieldRef<"Message", 'String'>
     readonly role: FieldRef<"Message", 'MessageRole'>
+    readonly content: FieldRef<"Message", 'String'>
+    readonly intent: FieldRef<"Message", 'String'>
+    readonly confidence: FieldRef<"Message", 'Float'>
+    readonly createdAt: FieldRef<"Message", 'DateTime'>
   }
     
 
@@ -6699,34 +6620,34 @@ export namespace Prisma {
   export type PaymentMinAggregateOutputType = {
     id: number | null
     leadId: number | null
-    amount: number | null
-    createdAt: Date | null
-    currency: string | null
-    paidAt: Date | null
     razorpayLinkId: string | null
+    amount: number | null
+    currency: string | null
     status: $Enums.PaymentStatus | null
+    paidAt: Date | null
+    createdAt: Date | null
   }
 
   export type PaymentMaxAggregateOutputType = {
     id: number | null
     leadId: number | null
-    amount: number | null
-    createdAt: Date | null
-    currency: string | null
-    paidAt: Date | null
     razorpayLinkId: string | null
+    amount: number | null
+    currency: string | null
     status: $Enums.PaymentStatus | null
+    paidAt: Date | null
+    createdAt: Date | null
   }
 
   export type PaymentCountAggregateOutputType = {
     id: number
     leadId: number
-    amount: number
-    createdAt: number
-    currency: number
-    paidAt: number
     razorpayLinkId: number
+    amount: number
+    currency: number
     status: number
+    paidAt: number
+    createdAt: number
     _all: number
   }
 
@@ -6746,34 +6667,34 @@ export namespace Prisma {
   export type PaymentMinAggregateInputType = {
     id?: true
     leadId?: true
-    amount?: true
-    createdAt?: true
-    currency?: true
-    paidAt?: true
     razorpayLinkId?: true
+    amount?: true
+    currency?: true
     status?: true
+    paidAt?: true
+    createdAt?: true
   }
 
   export type PaymentMaxAggregateInputType = {
     id?: true
     leadId?: true
-    amount?: true
-    createdAt?: true
-    currency?: true
-    paidAt?: true
     razorpayLinkId?: true
+    amount?: true
+    currency?: true
     status?: true
+    paidAt?: true
+    createdAt?: true
   }
 
   export type PaymentCountAggregateInputType = {
     id?: true
     leadId?: true
-    amount?: true
-    createdAt?: true
-    currency?: true
-    paidAt?: true
     razorpayLinkId?: true
+    amount?: true
+    currency?: true
     status?: true
+    paidAt?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -6866,12 +6787,12 @@ export namespace Prisma {
   export type PaymentGroupByOutputType = {
     id: number
     leadId: number
-    amount: number
-    createdAt: Date
-    currency: string
-    paidAt: Date | null
     razorpayLinkId: string | null
+    amount: number
+    currency: string
     status: $Enums.PaymentStatus
+    paidAt: Date | null
+    createdAt: Date
     _count: PaymentCountAggregateOutputType | null
     _avg: PaymentAvgAggregateOutputType | null
     _sum: PaymentSumAggregateOutputType | null
@@ -6896,51 +6817,51 @@ export namespace Prisma {
   export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     leadId?: boolean
-    amount?: boolean
-    createdAt?: boolean
-    currency?: boolean
-    paidAt?: boolean
     razorpayLinkId?: boolean
+    amount?: boolean
+    currency?: boolean
     status?: boolean
+    paidAt?: boolean
+    createdAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     leadId?: boolean
-    amount?: boolean
-    createdAt?: boolean
-    currency?: boolean
-    paidAt?: boolean
     razorpayLinkId?: boolean
+    amount?: boolean
+    currency?: boolean
     status?: boolean
+    paidAt?: boolean
+    createdAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     leadId?: boolean
-    amount?: boolean
-    createdAt?: boolean
-    currency?: boolean
-    paidAt?: boolean
     razorpayLinkId?: boolean
+    amount?: boolean
+    currency?: boolean
     status?: boolean
+    paidAt?: boolean
+    createdAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectScalar = {
     id?: boolean
     leadId?: boolean
-    amount?: boolean
-    createdAt?: boolean
-    currency?: boolean
-    paidAt?: boolean
     razorpayLinkId?: boolean
+    amount?: boolean
+    currency?: boolean
     status?: boolean
+    paidAt?: boolean
+    createdAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "amount" | "createdAt" | "currency" | "paidAt" | "razorpayLinkId" | "status", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "amount" | "currency" | "status" | "paidAt" | "createdAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
@@ -6959,12 +6880,12 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       leadId: number
-      amount: number
-      createdAt: Date
-      currency: string
-      paidAt: Date | null
       razorpayLinkId: string | null
+      amount: number
+      currency: string
       status: $Enums.PaymentStatus
+      paidAt: Date | null
+      createdAt: Date
     }, ExtArgs["result"]["payment"]>
     composites: {}
   }
@@ -7391,12 +7312,12 @@ export namespace Prisma {
   interface PaymentFieldRefs {
     readonly id: FieldRef<"Payment", 'Int'>
     readonly leadId: FieldRef<"Payment", 'Int'>
-    readonly amount: FieldRef<"Payment", 'Float'>
-    readonly createdAt: FieldRef<"Payment", 'DateTime'>
-    readonly currency: FieldRef<"Payment", 'String'>
-    readonly paidAt: FieldRef<"Payment", 'DateTime'>
     readonly razorpayLinkId: FieldRef<"Payment", 'String'>
+    readonly amount: FieldRef<"Payment", 'Float'>
+    readonly currency: FieldRef<"Payment", 'String'>
     readonly status: FieldRef<"Payment", 'PaymentStatus'>
+    readonly paidAt: FieldRef<"Payment", 'DateTime'>
+    readonly createdAt: FieldRef<"Payment", 'DateTime'>
   }
     
 
@@ -8030,8 +7951,8 @@ export namespace Prisma {
     reason?: boolean
     escalatedAt?: boolean
     resolvedAt?: boolean
-    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
   }, ExtArgs["result"]["escalationLog"]>
 
   export type EscalationLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8041,8 +7962,8 @@ export namespace Prisma {
     reason?: boolean
     escalatedAt?: boolean
     resolvedAt?: boolean
-    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
   }, ExtArgs["result"]["escalationLog"]>
 
   export type EscalationLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8052,8 +7973,8 @@ export namespace Prisma {
     reason?: boolean
     escalatedAt?: boolean
     resolvedAt?: boolean
-    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
   }, ExtArgs["result"]["escalationLog"]>
 
   export type EscalationLogSelectScalar = {
@@ -8067,23 +7988,23 @@ export namespace Prisma {
 
   export type EscalationLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "agentId" | "reason" | "escalatedAt" | "resolvedAt", ExtArgs["result"]["escalationLog"]>
   export type EscalationLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
   }
   export type EscalationLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
   }
   export type EscalationLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
     lead?: boolean | LeadDefaultArgs<ExtArgs>
+    agent?: boolean | EscalationLog$agentArgs<ExtArgs>
   }
 
   export type $EscalationLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EscalationLog"
     objects: {
-      agent: Prisma.$AgentPayload<ExtArgs> | null
       lead: Prisma.$LeadPayload<ExtArgs>
+      agent: Prisma.$AgentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8486,8 +8407,8 @@ export namespace Prisma {
    */
   export interface Prisma__EscalationLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    agent<T extends EscalationLog$agentArgs<ExtArgs> = {}>(args?: Subset<T, EscalationLog$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    agent<T extends EscalationLog$agentArgs<ExtArgs> = {}>(args?: Subset<T, EscalationLog$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8962,1126 +8883,30 @@ export namespace Prisma {
 
 
   /**
-   * Model conversations
+   * Model IntentLog
    */
 
-  export type AggregateConversations = {
-    _count: ConversationsCountAggregateOutputType | null
-    _avg: ConversationsAvgAggregateOutputType | null
-    _sum: ConversationsSumAggregateOutputType | null
-    _min: ConversationsMinAggregateOutputType | null
-    _max: ConversationsMaxAggregateOutputType | null
+  export type AggregateIntentLog = {
+    _count: IntentLogCountAggregateOutputType | null
+    _avg: IntentLogAvgAggregateOutputType | null
+    _sum: IntentLogSumAggregateOutputType | null
+    _min: IntentLogMinAggregateOutputType | null
+    _max: IntentLogMaxAggregateOutputType | null
   }
 
-  export type ConversationsAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type ConversationsSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type ConversationsMinAggregateOutputType = {
-    id: number | null
-    platform_thread_id: string | null
-    status: string | null
-    last_message_at: Date | null
-  }
-
-  export type ConversationsMaxAggregateOutputType = {
-    id: number | null
-    platform_thread_id: string | null
-    status: string | null
-    last_message_at: Date | null
-  }
-
-  export type ConversationsCountAggregateOutputType = {
-    id: number
-    platform_thread_id: number
-    status: number
-    last_message_at: number
-    _all: number
-  }
-
-
-  export type ConversationsAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type ConversationsSumAggregateInputType = {
-    id?: true
-  }
-
-  export type ConversationsMinAggregateInputType = {
-    id?: true
-    platform_thread_id?: true
-    status?: true
-    last_message_at?: true
-  }
-
-  export type ConversationsMaxAggregateInputType = {
-    id?: true
-    platform_thread_id?: true
-    status?: true
-    last_message_at?: true
-  }
-
-  export type ConversationsCountAggregateInputType = {
-    id?: true
-    platform_thread_id?: true
-    status?: true
-    last_message_at?: true
-    _all?: true
-  }
-
-  export type ConversationsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which conversations to aggregate.
-     */
-    where?: conversationsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of conversations to fetch.
-     */
-    orderBy?: conversationsOrderByWithRelationInput | conversationsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: conversationsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` conversations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` conversations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned conversations
-    **/
-    _count?: true | ConversationsCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ConversationsAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ConversationsSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ConversationsMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ConversationsMaxAggregateInputType
-  }
-
-  export type GetConversationsAggregateType<T extends ConversationsAggregateArgs> = {
-        [P in keyof T & keyof AggregateConversations]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateConversations[P]>
-      : GetScalarType<T[P], AggregateConversations[P]>
-  }
-
-
-
-
-  export type conversationsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: conversationsWhereInput
-    orderBy?: conversationsOrderByWithAggregationInput | conversationsOrderByWithAggregationInput[]
-    by: ConversationsScalarFieldEnum[] | ConversationsScalarFieldEnum
-    having?: conversationsScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ConversationsCountAggregateInputType | true
-    _avg?: ConversationsAvgAggregateInputType
-    _sum?: ConversationsSumAggregateInputType
-    _min?: ConversationsMinAggregateInputType
-    _max?: ConversationsMaxAggregateInputType
-  }
-
-  export type ConversationsGroupByOutputType = {
-    id: number
-    platform_thread_id: string
-    status: string
-    last_message_at: Date
-    _count: ConversationsCountAggregateOutputType | null
-    _avg: ConversationsAvgAggregateOutputType | null
-    _sum: ConversationsSumAggregateOutputType | null
-    _min: ConversationsMinAggregateOutputType | null
-    _max: ConversationsMaxAggregateOutputType | null
-  }
-
-  type GetConversationsGroupByPayload<T extends conversationsGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ConversationsGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ConversationsGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ConversationsGroupByOutputType[P]>
-            : GetScalarType<T[P], ConversationsGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type conversationsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    platform_thread_id?: boolean
-    status?: boolean
-    last_message_at?: boolean
-    messages?: boolean | conversations$messagesArgs<ExtArgs>
-    _count?: boolean | ConversationsCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["conversations"]>
-
-  export type conversationsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    platform_thread_id?: boolean
-    status?: boolean
-    last_message_at?: boolean
-  }, ExtArgs["result"]["conversations"]>
-
-  export type conversationsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    platform_thread_id?: boolean
-    status?: boolean
-    last_message_at?: boolean
-  }, ExtArgs["result"]["conversations"]>
-
-  export type conversationsSelectScalar = {
-    id?: boolean
-    platform_thread_id?: boolean
-    status?: boolean
-    last_message_at?: boolean
-  }
-
-  export type conversationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform_thread_id" | "status" | "last_message_at", ExtArgs["result"]["conversations"]>
-  export type conversationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    messages?: boolean | conversations$messagesArgs<ExtArgs>
-    _count?: boolean | ConversationsCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type conversationsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type conversationsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $conversationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "conversations"
-    objects: {
-      messages: Prisma.$messagesPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      platform_thread_id: string
-      status: string
-      last_message_at: Date
-    }, ExtArgs["result"]["conversations"]>
-    composites: {}
-  }
-
-  type conversationsGetPayload<S extends boolean | null | undefined | conversationsDefaultArgs> = $Result.GetResult<Prisma.$conversationsPayload, S>
-
-  type conversationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<conversationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ConversationsCountAggregateInputType | true
-    }
-
-  export interface conversationsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['conversations'], meta: { name: 'conversations' } }
-    /**
-     * Find zero or one Conversations that matches the filter.
-     * @param {conversationsFindUniqueArgs} args - Arguments to find a Conversations
-     * @example
-     * // Get one Conversations
-     * const conversations = await prisma.conversations.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends conversationsFindUniqueArgs>(args: SelectSubset<T, conversationsFindUniqueArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Conversations that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {conversationsFindUniqueOrThrowArgs} args - Arguments to find a Conversations
-     * @example
-     * // Get one Conversations
-     * const conversations = await prisma.conversations.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends conversationsFindUniqueOrThrowArgs>(args: SelectSubset<T, conversationsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Conversations that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {conversationsFindFirstArgs} args - Arguments to find a Conversations
-     * @example
-     * // Get one Conversations
-     * const conversations = await prisma.conversations.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends conversationsFindFirstArgs>(args?: SelectSubset<T, conversationsFindFirstArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Conversations that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {conversationsFindFirstOrThrowArgs} args - Arguments to find a Conversations
-     * @example
-     * // Get one Conversations
-     * const conversations = await prisma.conversations.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends conversationsFindFirstOrThrowArgs>(args?: SelectSubset<T, conversationsFindFirstOrThrowArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Conversations that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {conversationsFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Conversations
-     * const conversations = await prisma.conversations.findMany()
-     * 
-     * // Get first 10 Conversations
-     * const conversations = await prisma.conversations.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const conversationsWithIdOnly = await prisma.conversations.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends conversationsFindManyArgs>(args?: SelectSubset<T, conversationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Conversations.
-     * @param {conversationsCreateArgs} args - Arguments to create a Conversations.
-     * @example
-     * // Create one Conversations
-     * const Conversations = await prisma.conversations.create({
-     *   data: {
-     *     // ... data to create a Conversations
-     *   }
-     * })
-     * 
-     */
-    create<T extends conversationsCreateArgs>(args: SelectSubset<T, conversationsCreateArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Conversations.
-     * @param {conversationsCreateManyArgs} args - Arguments to create many Conversations.
-     * @example
-     * // Create many Conversations
-     * const conversations = await prisma.conversations.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends conversationsCreateManyArgs>(args?: SelectSubset<T, conversationsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Conversations and returns the data saved in the database.
-     * @param {conversationsCreateManyAndReturnArgs} args - Arguments to create many Conversations.
-     * @example
-     * // Create many Conversations
-     * const conversations = await prisma.conversations.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Conversations and only return the `id`
-     * const conversationsWithIdOnly = await prisma.conversations.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends conversationsCreateManyAndReturnArgs>(args?: SelectSubset<T, conversationsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Conversations.
-     * @param {conversationsDeleteArgs} args - Arguments to delete one Conversations.
-     * @example
-     * // Delete one Conversations
-     * const Conversations = await prisma.conversations.delete({
-     *   where: {
-     *     // ... filter to delete one Conversations
-     *   }
-     * })
-     * 
-     */
-    delete<T extends conversationsDeleteArgs>(args: SelectSubset<T, conversationsDeleteArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Conversations.
-     * @param {conversationsUpdateArgs} args - Arguments to update one Conversations.
-     * @example
-     * // Update one Conversations
-     * const conversations = await prisma.conversations.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends conversationsUpdateArgs>(args: SelectSubset<T, conversationsUpdateArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Conversations.
-     * @param {conversationsDeleteManyArgs} args - Arguments to filter Conversations to delete.
-     * @example
-     * // Delete a few Conversations
-     * const { count } = await prisma.conversations.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends conversationsDeleteManyArgs>(args?: SelectSubset<T, conversationsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Conversations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {conversationsUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Conversations
-     * const conversations = await prisma.conversations.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends conversationsUpdateManyArgs>(args: SelectSubset<T, conversationsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Conversations and returns the data updated in the database.
-     * @param {conversationsUpdateManyAndReturnArgs} args - Arguments to update many Conversations.
-     * @example
-     * // Update many Conversations
-     * const conversations = await prisma.conversations.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Conversations and only return the `id`
-     * const conversationsWithIdOnly = await prisma.conversations.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends conversationsUpdateManyAndReturnArgs>(args: SelectSubset<T, conversationsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Conversations.
-     * @param {conversationsUpsertArgs} args - Arguments to update or create a Conversations.
-     * @example
-     * // Update or create a Conversations
-     * const conversations = await prisma.conversations.upsert({
-     *   create: {
-     *     // ... data to create a Conversations
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Conversations we want to update
-     *   }
-     * })
-     */
-    upsert<T extends conversationsUpsertArgs>(args: SelectSubset<T, conversationsUpsertArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Conversations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {conversationsCountArgs} args - Arguments to filter Conversations to count.
-     * @example
-     * // Count the number of Conversations
-     * const count = await prisma.conversations.count({
-     *   where: {
-     *     // ... the filter for the Conversations we want to count
-     *   }
-     * })
-    **/
-    count<T extends conversationsCountArgs>(
-      args?: Subset<T, conversationsCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ConversationsCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Conversations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ConversationsAggregateArgs>(args: Subset<T, ConversationsAggregateArgs>): Prisma.PrismaPromise<GetConversationsAggregateType<T>>
-
-    /**
-     * Group by Conversations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {conversationsGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends conversationsGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: conversationsGroupByArgs['orderBy'] }
-        : { orderBy?: conversationsGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, conversationsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConversationsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the conversations model
-   */
-  readonly fields: conversationsFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for conversations.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__conversationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    messages<T extends conversations$messagesArgs<ExtArgs> = {}>(args?: Subset<T, conversations$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the conversations model
-   */
-  interface conversationsFieldRefs {
-    readonly id: FieldRef<"conversations", 'Int'>
-    readonly platform_thread_id: FieldRef<"conversations", 'String'>
-    readonly status: FieldRef<"conversations", 'String'>
-    readonly last_message_at: FieldRef<"conversations", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * conversations findUnique
-   */
-  export type conversationsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * Filter, which conversations to fetch.
-     */
-    where: conversationsWhereUniqueInput
-  }
-
-  /**
-   * conversations findUniqueOrThrow
-   */
-  export type conversationsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * Filter, which conversations to fetch.
-     */
-    where: conversationsWhereUniqueInput
-  }
-
-  /**
-   * conversations findFirst
-   */
-  export type conversationsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * Filter, which conversations to fetch.
-     */
-    where?: conversationsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of conversations to fetch.
-     */
-    orderBy?: conversationsOrderByWithRelationInput | conversationsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for conversations.
-     */
-    cursor?: conversationsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` conversations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` conversations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of conversations.
-     */
-    distinct?: ConversationsScalarFieldEnum | ConversationsScalarFieldEnum[]
-  }
-
-  /**
-   * conversations findFirstOrThrow
-   */
-  export type conversationsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * Filter, which conversations to fetch.
-     */
-    where?: conversationsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of conversations to fetch.
-     */
-    orderBy?: conversationsOrderByWithRelationInput | conversationsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for conversations.
-     */
-    cursor?: conversationsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` conversations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` conversations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of conversations.
-     */
-    distinct?: ConversationsScalarFieldEnum | ConversationsScalarFieldEnum[]
-  }
-
-  /**
-   * conversations findMany
-   */
-  export type conversationsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * Filter, which conversations to fetch.
-     */
-    where?: conversationsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of conversations to fetch.
-     */
-    orderBy?: conversationsOrderByWithRelationInput | conversationsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing conversations.
-     */
-    cursor?: conversationsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` conversations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` conversations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of conversations.
-     */
-    distinct?: ConversationsScalarFieldEnum | ConversationsScalarFieldEnum[]
-  }
-
-  /**
-   * conversations create
-   */
-  export type conversationsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * The data needed to create a conversations.
-     */
-    data: XOR<conversationsCreateInput, conversationsUncheckedCreateInput>
-  }
-
-  /**
-   * conversations createMany
-   */
-  export type conversationsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many conversations.
-     */
-    data: conversationsCreateManyInput | conversationsCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * conversations createManyAndReturn
-   */
-  export type conversationsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * The data used to create many conversations.
-     */
-    data: conversationsCreateManyInput | conversationsCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * conversations update
-   */
-  export type conversationsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * The data needed to update a conversations.
-     */
-    data: XOR<conversationsUpdateInput, conversationsUncheckedUpdateInput>
-    /**
-     * Choose, which conversations to update.
-     */
-    where: conversationsWhereUniqueInput
-  }
-
-  /**
-   * conversations updateMany
-   */
-  export type conversationsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update conversations.
-     */
-    data: XOR<conversationsUpdateManyMutationInput, conversationsUncheckedUpdateManyInput>
-    /**
-     * Filter which conversations to update
-     */
-    where?: conversationsWhereInput
-    /**
-     * Limit how many conversations to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * conversations updateManyAndReturn
-   */
-  export type conversationsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * The data used to update conversations.
-     */
-    data: XOR<conversationsUpdateManyMutationInput, conversationsUncheckedUpdateManyInput>
-    /**
-     * Filter which conversations to update
-     */
-    where?: conversationsWhereInput
-    /**
-     * Limit how many conversations to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * conversations upsert
-   */
-  export type conversationsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * The filter to search for the conversations to update in case it exists.
-     */
-    where: conversationsWhereUniqueInput
-    /**
-     * In case the conversations found by the `where` argument doesn't exist, create a new conversations with this data.
-     */
-    create: XOR<conversationsCreateInput, conversationsUncheckedCreateInput>
-    /**
-     * In case the conversations was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<conversationsUpdateInput, conversationsUncheckedUpdateInput>
-  }
-
-  /**
-   * conversations delete
-   */
-  export type conversationsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-    /**
-     * Filter which conversations to delete.
-     */
-    where: conversationsWhereUniqueInput
-  }
-
-  /**
-   * conversations deleteMany
-   */
-  export type conversationsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which conversations to delete
-     */
-    where?: conversationsWhereInput
-    /**
-     * Limit how many conversations to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * conversations.messages
-   */
-  export type conversations$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    where?: messagesWhereInput
-    orderBy?: messagesOrderByWithRelationInput | messagesOrderByWithRelationInput[]
-    cursor?: messagesWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: MessagesScalarFieldEnum | MessagesScalarFieldEnum[]
-  }
-
-  /**
-   * conversations without action
-   */
-  export type conversationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the conversations
-     */
-    select?: conversationsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the conversations
-     */
-    omit?: conversationsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: conversationsInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model intent_logs
-   */
-
-  export type AggregateIntent_logs = {
-    _count: Intent_logsCountAggregateOutputType | null
-    _avg: Intent_logsAvgAggregateOutputType | null
-    _sum: Intent_logsSumAggregateOutputType | null
-    _min: Intent_logsMinAggregateOutputType | null
-    _max: Intent_logsMaxAggregateOutputType | null
-  }
-
-  export type Intent_logsAvgAggregateOutputType = {
+  export type IntentLogAvgAggregateOutputType = {
     id: number | null
     confidence: number | null
   }
 
-  export type Intent_logsSumAggregateOutputType = {
+  export type IntentLogSumAggregateOutputType = {
     id: number | null
     confidence: number | null
   }
 
-  export type Intent_logsMinAggregateOutputType = {
+  export type IntentLogMinAggregateOutputType = {
     id: number | null
-    sender_id: string | null
+    senderId: string | null
     message: string | null
     intent: string | null
     confidence: number | null
@@ -10090,9 +8915,9 @@ export namespace Prisma {
     timestamp: Date | null
   }
 
-  export type Intent_logsMaxAggregateOutputType = {
+  export type IntentLogMaxAggregateOutputType = {
     id: number | null
-    sender_id: string | null
+    senderId: string | null
     message: string | null
     intent: string | null
     confidence: number | null
@@ -10101,9 +8926,9 @@ export namespace Prisma {
     timestamp: Date | null
   }
 
-  export type Intent_logsCountAggregateOutputType = {
+  export type IntentLogCountAggregateOutputType = {
     id: number
-    sender_id: number
+    senderId: number
     message: number
     intent: number
     confidence: number
@@ -10114,19 +8939,19 @@ export namespace Prisma {
   }
 
 
-  export type Intent_logsAvgAggregateInputType = {
+  export type IntentLogAvgAggregateInputType = {
     id?: true
     confidence?: true
   }
 
-  export type Intent_logsSumAggregateInputType = {
+  export type IntentLogSumAggregateInputType = {
     id?: true
     confidence?: true
   }
 
-  export type Intent_logsMinAggregateInputType = {
+  export type IntentLogMinAggregateInputType = {
     id?: true
-    sender_id?: true
+    senderId?: true
     message?: true
     intent?: true
     confidence?: true
@@ -10135,9 +8960,9 @@ export namespace Prisma {
     timestamp?: true
   }
 
-  export type Intent_logsMaxAggregateInputType = {
+  export type IntentLogMaxAggregateInputType = {
     id?: true
-    sender_id?: true
+    senderId?: true
     message?: true
     intent?: true
     confidence?: true
@@ -10146,9 +8971,9 @@ export namespace Prisma {
     timestamp?: true
   }
 
-  export type Intent_logsCountAggregateInputType = {
+  export type IntentLogCountAggregateInputType = {
     id?: true
-    sender_id?: true
+    senderId?: true
     message?: true
     intent?: true
     confidence?: true
@@ -10158,158 +8983,158 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type Intent_logsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which intent_logs to aggregate.
+     * Filter which IntentLog to aggregate.
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of intent_logs to fetch.
+     * Determine the order of IntentLogs to fetch.
      */
-    orderBy?: intent_logsOrderByWithRelationInput | intent_logsOrderByWithRelationInput[]
+    orderBy?: IntentLogOrderByWithRelationInput | IntentLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: intent_logsWhereUniqueInput
+    cursor?: IntentLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` intent_logs from the position of the cursor.
+     * Take `±n` IntentLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` intent_logs.
+     * Skip the first `n` IntentLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned intent_logs
+     * Count returned IntentLogs
     **/
-    _count?: true | Intent_logsCountAggregateInputType
+    _count?: true | IntentLogCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: Intent_logsAvgAggregateInputType
+    _avg?: IntentLogAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: Intent_logsSumAggregateInputType
+    _sum?: IntentLogSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: Intent_logsMinAggregateInputType
+    _min?: IntentLogMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: Intent_logsMaxAggregateInputType
+    _max?: IntentLogMaxAggregateInputType
   }
 
-  export type GetIntent_logsAggregateType<T extends Intent_logsAggregateArgs> = {
-        [P in keyof T & keyof AggregateIntent_logs]: P extends '_count' | 'count'
+  export type GetIntentLogAggregateType<T extends IntentLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateIntentLog]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateIntent_logs[P]>
-      : GetScalarType<T[P], AggregateIntent_logs[P]>
+        : GetScalarType<T[P], AggregateIntentLog[P]>
+      : GetScalarType<T[P], AggregateIntentLog[P]>
   }
 
 
 
 
-  export type intent_logsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: intent_logsWhereInput
-    orderBy?: intent_logsOrderByWithAggregationInput | intent_logsOrderByWithAggregationInput[]
-    by: Intent_logsScalarFieldEnum[] | Intent_logsScalarFieldEnum
-    having?: intent_logsScalarWhereWithAggregatesInput
+  export type IntentLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntentLogWhereInput
+    orderBy?: IntentLogOrderByWithAggregationInput | IntentLogOrderByWithAggregationInput[]
+    by: IntentLogScalarFieldEnum[] | IntentLogScalarFieldEnum
+    having?: IntentLogScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: Intent_logsCountAggregateInputType | true
-    _avg?: Intent_logsAvgAggregateInputType
-    _sum?: Intent_logsSumAggregateInputType
-    _min?: Intent_logsMinAggregateInputType
-    _max?: Intent_logsMaxAggregateInputType
+    _count?: IntentLogCountAggregateInputType | true
+    _avg?: IntentLogAvgAggregateInputType
+    _sum?: IntentLogSumAggregateInputType
+    _min?: IntentLogMinAggregateInputType
+    _max?: IntentLogMaxAggregateInputType
   }
 
-  export type Intent_logsGroupByOutputType = {
+  export type IntentLogGroupByOutputType = {
     id: number
-    sender_id: string
+    senderId: string
     message: string
     intent: string
     confidence: number
     reason: string
     escalated: boolean
     timestamp: Date
-    _count: Intent_logsCountAggregateOutputType | null
-    _avg: Intent_logsAvgAggregateOutputType | null
-    _sum: Intent_logsSumAggregateOutputType | null
-    _min: Intent_logsMinAggregateOutputType | null
-    _max: Intent_logsMaxAggregateOutputType | null
+    _count: IntentLogCountAggregateOutputType | null
+    _avg: IntentLogAvgAggregateOutputType | null
+    _sum: IntentLogSumAggregateOutputType | null
+    _min: IntentLogMinAggregateOutputType | null
+    _max: IntentLogMaxAggregateOutputType | null
   }
 
-  type GetIntent_logsGroupByPayload<T extends intent_logsGroupByArgs> = Prisma.PrismaPromise<
+  type GetIntentLogGroupByPayload<T extends IntentLogGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<Intent_logsGroupByOutputType, T['by']> &
+      PickEnumerable<IntentLogGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof Intent_logsGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof IntentLogGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], Intent_logsGroupByOutputType[P]>
-            : GetScalarType<T[P], Intent_logsGroupByOutputType[P]>
+              : GetScalarType<T[P], IntentLogGroupByOutputType[P]>
+            : GetScalarType<T[P], IntentLogGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type intent_logsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IntentLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     message?: boolean
     intent?: boolean
     confidence?: boolean
     reason?: boolean
     escalated?: boolean
     timestamp?: boolean
-  }, ExtArgs["result"]["intent_logs"]>
+  }, ExtArgs["result"]["intentLog"]>
 
-  export type intent_logsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IntentLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     message?: boolean
     intent?: boolean
     confidence?: boolean
     reason?: boolean
     escalated?: boolean
     timestamp?: boolean
-  }, ExtArgs["result"]["intent_logs"]>
+  }, ExtArgs["result"]["intentLog"]>
 
-  export type intent_logsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IntentLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     message?: boolean
     intent?: boolean
     confidence?: boolean
     reason?: boolean
     escalated?: boolean
     timestamp?: boolean
-  }, ExtArgs["result"]["intent_logs"]>
+  }, ExtArgs["result"]["intentLog"]>
 
-  export type intent_logsSelectScalar = {
+  export type IntentLogSelectScalar = {
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     message?: boolean
     intent?: boolean
     confidence?: boolean
@@ -10318,150 +9143,150 @@ export namespace Prisma {
     timestamp?: boolean
   }
 
-  export type intent_logsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sender_id" | "message" | "intent" | "confidence" | "reason" | "escalated" | "timestamp", ExtArgs["result"]["intent_logs"]>
+  export type IntentLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "message" | "intent" | "confidence" | "reason" | "escalated" | "timestamp", ExtArgs["result"]["intentLog"]>
 
-  export type $intent_logsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "intent_logs"
+  export type $IntentLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IntentLog"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      sender_id: string
+      senderId: string
       message: string
       intent: string
       confidence: number
       reason: string
       escalated: boolean
       timestamp: Date
-    }, ExtArgs["result"]["intent_logs"]>
+    }, ExtArgs["result"]["intentLog"]>
     composites: {}
   }
 
-  type intent_logsGetPayload<S extends boolean | null | undefined | intent_logsDefaultArgs> = $Result.GetResult<Prisma.$intent_logsPayload, S>
+  type IntentLogGetPayload<S extends boolean | null | undefined | IntentLogDefaultArgs> = $Result.GetResult<Prisma.$IntentLogPayload, S>
 
-  type intent_logsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<intent_logsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: Intent_logsCountAggregateInputType | true
+  type IntentLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IntentLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IntentLogCountAggregateInputType | true
     }
 
-  export interface intent_logsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['intent_logs'], meta: { name: 'intent_logs' } }
+  export interface IntentLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IntentLog'], meta: { name: 'IntentLog' } }
     /**
-     * Find zero or one Intent_logs that matches the filter.
-     * @param {intent_logsFindUniqueArgs} args - Arguments to find a Intent_logs
+     * Find zero or one IntentLog that matches the filter.
+     * @param {IntentLogFindUniqueArgs} args - Arguments to find a IntentLog
      * @example
-     * // Get one Intent_logs
-     * const intent_logs = await prisma.intent_logs.findUnique({
+     * // Get one IntentLog
+     * const intentLog = await prisma.intentLog.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends intent_logsFindUniqueArgs>(args: SelectSubset<T, intent_logsFindUniqueArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends IntentLogFindUniqueArgs>(args: SelectSubset<T, IntentLogFindUniqueArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Intent_logs that matches the filter or throw an error with `error.code='P2025'`
+     * Find one IntentLog that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {intent_logsFindUniqueOrThrowArgs} args - Arguments to find a Intent_logs
+     * @param {IntentLogFindUniqueOrThrowArgs} args - Arguments to find a IntentLog
      * @example
-     * // Get one Intent_logs
-     * const intent_logs = await prisma.intent_logs.findUniqueOrThrow({
+     * // Get one IntentLog
+     * const intentLog = await prisma.intentLog.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends intent_logsFindUniqueOrThrowArgs>(args: SelectSubset<T, intent_logsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends IntentLogFindUniqueOrThrowArgs>(args: SelectSubset<T, IntentLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Intent_logs that matches the filter.
+     * Find the first IntentLog that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {intent_logsFindFirstArgs} args - Arguments to find a Intent_logs
+     * @param {IntentLogFindFirstArgs} args - Arguments to find a IntentLog
      * @example
-     * // Get one Intent_logs
-     * const intent_logs = await prisma.intent_logs.findFirst({
+     * // Get one IntentLog
+     * const intentLog = await prisma.intentLog.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends intent_logsFindFirstArgs>(args?: SelectSubset<T, intent_logsFindFirstArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends IntentLogFindFirstArgs>(args?: SelectSubset<T, IntentLogFindFirstArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Intent_logs that matches the filter or
+     * Find the first IntentLog that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {intent_logsFindFirstOrThrowArgs} args - Arguments to find a Intent_logs
+     * @param {IntentLogFindFirstOrThrowArgs} args - Arguments to find a IntentLog
      * @example
-     * // Get one Intent_logs
-     * const intent_logs = await prisma.intent_logs.findFirstOrThrow({
+     * // Get one IntentLog
+     * const intentLog = await prisma.intentLog.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends intent_logsFindFirstOrThrowArgs>(args?: SelectSubset<T, intent_logsFindFirstOrThrowArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends IntentLogFindFirstOrThrowArgs>(args?: SelectSubset<T, IntentLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Intent_logs that matches the filter.
+     * Find zero or more IntentLogs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {intent_logsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {IntentLogFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Intent_logs
-     * const intent_logs = await prisma.intent_logs.findMany()
+     * // Get all IntentLogs
+     * const intentLogs = await prisma.intentLog.findMany()
      * 
-     * // Get first 10 Intent_logs
-     * const intent_logs = await prisma.intent_logs.findMany({ take: 10 })
+     * // Get first 10 IntentLogs
+     * const intentLogs = await prisma.intentLog.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const intent_logsWithIdOnly = await prisma.intent_logs.findMany({ select: { id: true } })
+     * const intentLogWithIdOnly = await prisma.intentLog.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends intent_logsFindManyArgs>(args?: SelectSubset<T, intent_logsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends IntentLogFindManyArgs>(args?: SelectSubset<T, IntentLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Intent_logs.
-     * @param {intent_logsCreateArgs} args - Arguments to create a Intent_logs.
+     * Create a IntentLog.
+     * @param {IntentLogCreateArgs} args - Arguments to create a IntentLog.
      * @example
-     * // Create one Intent_logs
-     * const Intent_logs = await prisma.intent_logs.create({
+     * // Create one IntentLog
+     * const IntentLog = await prisma.intentLog.create({
      *   data: {
-     *     // ... data to create a Intent_logs
+     *     // ... data to create a IntentLog
      *   }
      * })
      * 
      */
-    create<T extends intent_logsCreateArgs>(args: SelectSubset<T, intent_logsCreateArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends IntentLogCreateArgs>(args: SelectSubset<T, IntentLogCreateArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Intent_logs.
-     * @param {intent_logsCreateManyArgs} args - Arguments to create many Intent_logs.
+     * Create many IntentLogs.
+     * @param {IntentLogCreateManyArgs} args - Arguments to create many IntentLogs.
      * @example
-     * // Create many Intent_logs
-     * const intent_logs = await prisma.intent_logs.createMany({
+     * // Create many IntentLogs
+     * const intentLog = await prisma.intentLog.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends intent_logsCreateManyArgs>(args?: SelectSubset<T, intent_logsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends IntentLogCreateManyArgs>(args?: SelectSubset<T, IntentLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Intent_logs and returns the data saved in the database.
-     * @param {intent_logsCreateManyAndReturnArgs} args - Arguments to create many Intent_logs.
+     * Create many IntentLogs and returns the data saved in the database.
+     * @param {IntentLogCreateManyAndReturnArgs} args - Arguments to create many IntentLogs.
      * @example
-     * // Create many Intent_logs
-     * const intent_logs = await prisma.intent_logs.createManyAndReturn({
+     * // Create many IntentLogs
+     * const intentLog = await prisma.intentLog.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Intent_logs and only return the `id`
-     * const intent_logsWithIdOnly = await prisma.intent_logs.createManyAndReturn({
+     * // Create many IntentLogs and only return the `id`
+     * const intentLogWithIdOnly = await prisma.intentLog.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -10471,28 +9296,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends intent_logsCreateManyAndReturnArgs>(args?: SelectSubset<T, intent_logsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends IntentLogCreateManyAndReturnArgs>(args?: SelectSubset<T, IntentLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Intent_logs.
-     * @param {intent_logsDeleteArgs} args - Arguments to delete one Intent_logs.
+     * Delete a IntentLog.
+     * @param {IntentLogDeleteArgs} args - Arguments to delete one IntentLog.
      * @example
-     * // Delete one Intent_logs
-     * const Intent_logs = await prisma.intent_logs.delete({
+     * // Delete one IntentLog
+     * const IntentLog = await prisma.intentLog.delete({
      *   where: {
-     *     // ... filter to delete one Intent_logs
+     *     // ... filter to delete one IntentLog
      *   }
      * })
      * 
      */
-    delete<T extends intent_logsDeleteArgs>(args: SelectSubset<T, intent_logsDeleteArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends IntentLogDeleteArgs>(args: SelectSubset<T, IntentLogDeleteArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Intent_logs.
-     * @param {intent_logsUpdateArgs} args - Arguments to update one Intent_logs.
+     * Update one IntentLog.
+     * @param {IntentLogUpdateArgs} args - Arguments to update one IntentLog.
      * @example
-     * // Update one Intent_logs
-     * const intent_logs = await prisma.intent_logs.update({
+     * // Update one IntentLog
+     * const intentLog = await prisma.intentLog.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10502,30 +9327,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends intent_logsUpdateArgs>(args: SelectSubset<T, intent_logsUpdateArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends IntentLogUpdateArgs>(args: SelectSubset<T, IntentLogUpdateArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Intent_logs.
-     * @param {intent_logsDeleteManyArgs} args - Arguments to filter Intent_logs to delete.
+     * Delete zero or more IntentLogs.
+     * @param {IntentLogDeleteManyArgs} args - Arguments to filter IntentLogs to delete.
      * @example
-     * // Delete a few Intent_logs
-     * const { count } = await prisma.intent_logs.deleteMany({
+     * // Delete a few IntentLogs
+     * const { count } = await prisma.intentLog.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends intent_logsDeleteManyArgs>(args?: SelectSubset<T, intent_logsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends IntentLogDeleteManyArgs>(args?: SelectSubset<T, IntentLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Intent_logs.
+     * Update zero or more IntentLogs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {intent_logsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {IntentLogUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Intent_logs
-     * const intent_logs = await prisma.intent_logs.updateMany({
+     * // Update many IntentLogs
+     * const intentLog = await prisma.intentLog.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10535,14 +9360,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends intent_logsUpdateManyArgs>(args: SelectSubset<T, intent_logsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends IntentLogUpdateManyArgs>(args: SelectSubset<T, IntentLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Intent_logs and returns the data updated in the database.
-     * @param {intent_logsUpdateManyAndReturnArgs} args - Arguments to update many Intent_logs.
+     * Update zero or more IntentLogs and returns the data updated in the database.
+     * @param {IntentLogUpdateManyAndReturnArgs} args - Arguments to update many IntentLogs.
      * @example
-     * // Update many Intent_logs
-     * const intent_logs = await prisma.intent_logs.updateManyAndReturn({
+     * // Update many IntentLogs
+     * const intentLog = await prisma.intentLog.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10551,8 +9376,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Intent_logs and only return the `id`
-     * const intent_logsWithIdOnly = await prisma.intent_logs.updateManyAndReturn({
+     * // Update zero or more IntentLogs and only return the `id`
+     * const intentLogWithIdOnly = await prisma.intentLog.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -10565,56 +9390,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends intent_logsUpdateManyAndReturnArgs>(args: SelectSubset<T, intent_logsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends IntentLogUpdateManyAndReturnArgs>(args: SelectSubset<T, IntentLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Intent_logs.
-     * @param {intent_logsUpsertArgs} args - Arguments to update or create a Intent_logs.
+     * Create or update one IntentLog.
+     * @param {IntentLogUpsertArgs} args - Arguments to update or create a IntentLog.
      * @example
-     * // Update or create a Intent_logs
-     * const intent_logs = await prisma.intent_logs.upsert({
+     * // Update or create a IntentLog
+     * const intentLog = await prisma.intentLog.upsert({
      *   create: {
-     *     // ... data to create a Intent_logs
+     *     // ... data to create a IntentLog
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Intent_logs we want to update
+     *     // ... the filter for the IntentLog we want to update
      *   }
      * })
      */
-    upsert<T extends intent_logsUpsertArgs>(args: SelectSubset<T, intent_logsUpsertArgs<ExtArgs>>): Prisma__intent_logsClient<$Result.GetResult<Prisma.$intent_logsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends IntentLogUpsertArgs>(args: SelectSubset<T, IntentLogUpsertArgs<ExtArgs>>): Prisma__IntentLogClient<$Result.GetResult<Prisma.$IntentLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Intent_logs.
+     * Count the number of IntentLogs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {intent_logsCountArgs} args - Arguments to filter Intent_logs to count.
+     * @param {IntentLogCountArgs} args - Arguments to filter IntentLogs to count.
      * @example
-     * // Count the number of Intent_logs
-     * const count = await prisma.intent_logs.count({
+     * // Count the number of IntentLogs
+     * const count = await prisma.intentLog.count({
      *   where: {
-     *     // ... the filter for the Intent_logs we want to count
+     *     // ... the filter for the IntentLogs we want to count
      *   }
      * })
     **/
-    count<T extends intent_logsCountArgs>(
-      args?: Subset<T, intent_logsCountArgs>,
+    count<T extends IntentLogCountArgs>(
+      args?: Subset<T, IntentLogCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], Intent_logsCountAggregateOutputType>
+          : GetScalarType<T['select'], IntentLogCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Intent_logs.
+     * Allows you to perform aggregations operations on a IntentLog.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Intent_logsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {IntentLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -10634,13 +9459,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends Intent_logsAggregateArgs>(args: Subset<T, Intent_logsAggregateArgs>): Prisma.PrismaPromise<GetIntent_logsAggregateType<T>>
+    aggregate<T extends IntentLogAggregateArgs>(args: Subset<T, IntentLogAggregateArgs>): Prisma.PrismaPromise<GetIntentLogAggregateType<T>>
 
     /**
-     * Group by Intent_logs.
+     * Group by IntentLog.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {intent_logsGroupByArgs} args - Group by arguments.
+     * @param {IntentLogGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -10655,14 +9480,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends intent_logsGroupByArgs,
+      T extends IntentLogGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: intent_logsGroupByArgs['orderBy'] }
-        : { orderBy?: intent_logsGroupByArgs['orderBy'] },
+        ? { orderBy: IntentLogGroupByArgs['orderBy'] }
+        : { orderBy?: IntentLogGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -10711,20 +9536,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, intent_logsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntent_logsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, IntentLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntentLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the intent_logs model
+   * Fields of the IntentLog model
    */
-  readonly fields: intent_logsFieldRefs;
+  readonly fields: IntentLogFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for intent_logs.
+   * The delegate class that acts as a "Promise-like" for IntentLog.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__intent_logsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__IntentLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -10752,1902 +9577,801 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the intent_logs model
+   * Fields of the IntentLog model
    */
-  interface intent_logsFieldRefs {
-    readonly id: FieldRef<"intent_logs", 'Int'>
-    readonly sender_id: FieldRef<"intent_logs", 'String'>
-    readonly message: FieldRef<"intent_logs", 'String'>
-    readonly intent: FieldRef<"intent_logs", 'String'>
-    readonly confidence: FieldRef<"intent_logs", 'Float'>
-    readonly reason: FieldRef<"intent_logs", 'String'>
-    readonly escalated: FieldRef<"intent_logs", 'Boolean'>
-    readonly timestamp: FieldRef<"intent_logs", 'DateTime'>
+  interface IntentLogFieldRefs {
+    readonly id: FieldRef<"IntentLog", 'Int'>
+    readonly senderId: FieldRef<"IntentLog", 'String'>
+    readonly message: FieldRef<"IntentLog", 'String'>
+    readonly intent: FieldRef<"IntentLog", 'String'>
+    readonly confidence: FieldRef<"IntentLog", 'Float'>
+    readonly reason: FieldRef<"IntentLog", 'String'>
+    readonly escalated: FieldRef<"IntentLog", 'Boolean'>
+    readonly timestamp: FieldRef<"IntentLog", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * intent_logs findUnique
+   * IntentLog findUnique
    */
-  export type intent_logsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * Filter, which intent_logs to fetch.
+     * Filter, which IntentLog to fetch.
      */
-    where: intent_logsWhereUniqueInput
+    where: IntentLogWhereUniqueInput
   }
 
   /**
-   * intent_logs findUniqueOrThrow
+   * IntentLog findUniqueOrThrow
    */
-  export type intent_logsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * Filter, which intent_logs to fetch.
+     * Filter, which IntentLog to fetch.
      */
-    where: intent_logsWhereUniqueInput
+    where: IntentLogWhereUniqueInput
   }
 
   /**
-   * intent_logs findFirst
+   * IntentLog findFirst
    */
-  export type intent_logsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * Filter, which intent_logs to fetch.
+     * Filter, which IntentLog to fetch.
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of intent_logs to fetch.
+     * Determine the order of IntentLogs to fetch.
      */
-    orderBy?: intent_logsOrderByWithRelationInput | intent_logsOrderByWithRelationInput[]
+    orderBy?: IntentLogOrderByWithRelationInput | IntentLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for intent_logs.
+     * Sets the position for searching for IntentLogs.
      */
-    cursor?: intent_logsWhereUniqueInput
+    cursor?: IntentLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` intent_logs from the position of the cursor.
+     * Take `±n` IntentLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` intent_logs.
+     * Skip the first `n` IntentLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of intent_logs.
+     * Filter by unique combinations of IntentLogs.
      */
-    distinct?: Intent_logsScalarFieldEnum | Intent_logsScalarFieldEnum[]
+    distinct?: IntentLogScalarFieldEnum | IntentLogScalarFieldEnum[]
   }
 
   /**
-   * intent_logs findFirstOrThrow
+   * IntentLog findFirstOrThrow
    */
-  export type intent_logsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * Filter, which intent_logs to fetch.
+     * Filter, which IntentLog to fetch.
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of intent_logs to fetch.
+     * Determine the order of IntentLogs to fetch.
      */
-    orderBy?: intent_logsOrderByWithRelationInput | intent_logsOrderByWithRelationInput[]
+    orderBy?: IntentLogOrderByWithRelationInput | IntentLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for intent_logs.
+     * Sets the position for searching for IntentLogs.
      */
-    cursor?: intent_logsWhereUniqueInput
+    cursor?: IntentLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` intent_logs from the position of the cursor.
+     * Take `±n` IntentLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` intent_logs.
+     * Skip the first `n` IntentLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of intent_logs.
+     * Filter by unique combinations of IntentLogs.
      */
-    distinct?: Intent_logsScalarFieldEnum | Intent_logsScalarFieldEnum[]
+    distinct?: IntentLogScalarFieldEnum | IntentLogScalarFieldEnum[]
   }
 
   /**
-   * intent_logs findMany
+   * IntentLog findMany
    */
-  export type intent_logsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * Filter, which intent_logs to fetch.
+     * Filter, which IntentLogs to fetch.
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of intent_logs to fetch.
+     * Determine the order of IntentLogs to fetch.
      */
-    orderBy?: intent_logsOrderByWithRelationInput | intent_logsOrderByWithRelationInput[]
+    orderBy?: IntentLogOrderByWithRelationInput | IntentLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing intent_logs.
+     * Sets the position for listing IntentLogs.
      */
-    cursor?: intent_logsWhereUniqueInput
+    cursor?: IntentLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` intent_logs from the position of the cursor.
+     * Take `±n` IntentLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` intent_logs.
+     * Skip the first `n` IntentLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of intent_logs.
+     * Filter by unique combinations of IntentLogs.
      */
-    distinct?: Intent_logsScalarFieldEnum | Intent_logsScalarFieldEnum[]
+    distinct?: IntentLogScalarFieldEnum | IntentLogScalarFieldEnum[]
   }
 
   /**
-   * intent_logs create
+   * IntentLog create
    */
-  export type intent_logsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * The data needed to create a intent_logs.
+     * The data needed to create a IntentLog.
      */
-    data: XOR<intent_logsCreateInput, intent_logsUncheckedCreateInput>
+    data: XOR<IntentLogCreateInput, IntentLogUncheckedCreateInput>
   }
 
   /**
-   * intent_logs createMany
+   * IntentLog createMany
    */
-  export type intent_logsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many intent_logs.
+     * The data used to create many IntentLogs.
      */
-    data: intent_logsCreateManyInput | intent_logsCreateManyInput[]
+    data: IntentLogCreateManyInput | IntentLogCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * intent_logs createManyAndReturn
+   * IntentLog createManyAndReturn
    */
-  export type intent_logsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelectCreateManyAndReturn<ExtArgs> | null
+    select?: IntentLogSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * The data used to create many intent_logs.
+     * The data used to create many IntentLogs.
      */
-    data: intent_logsCreateManyInput | intent_logsCreateManyInput[]
+    data: IntentLogCreateManyInput | IntentLogCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * intent_logs update
+   * IntentLog update
    */
-  export type intent_logsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * The data needed to update a intent_logs.
+     * The data needed to update a IntentLog.
      */
-    data: XOR<intent_logsUpdateInput, intent_logsUncheckedUpdateInput>
+    data: XOR<IntentLogUpdateInput, IntentLogUncheckedUpdateInput>
     /**
-     * Choose, which intent_logs to update.
+     * Choose, which IntentLog to update.
      */
-    where: intent_logsWhereUniqueInput
+    where: IntentLogWhereUniqueInput
   }
 
   /**
-   * intent_logs updateMany
+   * IntentLog updateMany
    */
-  export type intent_logsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update intent_logs.
+     * The data used to update IntentLogs.
      */
-    data: XOR<intent_logsUpdateManyMutationInput, intent_logsUncheckedUpdateManyInput>
+    data: XOR<IntentLogUpdateManyMutationInput, IntentLogUncheckedUpdateManyInput>
     /**
-     * Filter which intent_logs to update
+     * Filter which IntentLogs to update
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
-     * Limit how many intent_logs to update.
+     * Limit how many IntentLogs to update.
      */
     limit?: number
   }
 
   /**
-   * intent_logs updateManyAndReturn
+   * IntentLog updateManyAndReturn
    */
-  export type intent_logsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: IntentLogSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * The data used to update intent_logs.
+     * The data used to update IntentLogs.
      */
-    data: XOR<intent_logsUpdateManyMutationInput, intent_logsUncheckedUpdateManyInput>
+    data: XOR<IntentLogUpdateManyMutationInput, IntentLogUncheckedUpdateManyInput>
     /**
-     * Filter which intent_logs to update
+     * Filter which IntentLogs to update
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
-     * Limit how many intent_logs to update.
+     * Limit how many IntentLogs to update.
      */
     limit?: number
   }
 
   /**
-   * intent_logs upsert
+   * IntentLog upsert
    */
-  export type intent_logsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * The filter to search for the intent_logs to update in case it exists.
+     * The filter to search for the IntentLog to update in case it exists.
      */
-    where: intent_logsWhereUniqueInput
+    where: IntentLogWhereUniqueInput
     /**
-     * In case the intent_logs found by the `where` argument doesn't exist, create a new intent_logs with this data.
+     * In case the IntentLog found by the `where` argument doesn't exist, create a new IntentLog with this data.
      */
-    create: XOR<intent_logsCreateInput, intent_logsUncheckedCreateInput>
+    create: XOR<IntentLogCreateInput, IntentLogUncheckedCreateInput>
     /**
-     * In case the intent_logs was found with the provided `where` argument, update it with this data.
+     * In case the IntentLog was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<intent_logsUpdateInput, intent_logsUncheckedUpdateInput>
+    update: XOR<IntentLogUpdateInput, IntentLogUncheckedUpdateInput>
   }
 
   /**
-   * intent_logs delete
+   * IntentLog delete
    */
-  export type intent_logsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
     /**
-     * Filter which intent_logs to delete.
+     * Filter which IntentLog to delete.
      */
-    where: intent_logsWhereUniqueInput
+    where: IntentLogWhereUniqueInput
   }
 
   /**
-   * intent_logs deleteMany
+   * IntentLog deleteMany
    */
-  export type intent_logsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which intent_logs to delete
+     * Filter which IntentLogs to delete
      */
-    where?: intent_logsWhereInput
+    where?: IntentLogWhereInput
     /**
-     * Limit how many intent_logs to delete.
+     * Limit how many IntentLogs to delete.
      */
     limit?: number
   }
 
   /**
-   * intent_logs without action
+   * IntentLog without action
    */
-  export type intent_logsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IntentLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the intent_logs
+     * Select specific fields to fetch from the IntentLog
      */
-    select?: intent_logsSelect<ExtArgs> | null
+    select?: IntentLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the intent_logs
+     * Omit specific fields from the IntentLog
      */
-    omit?: intent_logsOmit<ExtArgs> | null
+    omit?: IntentLogOmit<ExtArgs> | null
   }
 
 
   /**
-   * Model messages
+   * Model TokenLog
    */
 
-  export type AggregateMessages = {
-    _count: MessagesCountAggregateOutputType | null
-    _avg: MessagesAvgAggregateOutputType | null
-    _sum: MessagesSumAggregateOutputType | null
-    _min: MessagesMinAggregateOutputType | null
-    _max: MessagesMaxAggregateOutputType | null
+  export type AggregateTokenLog = {
+    _count: TokenLogCountAggregateOutputType | null
+    _avg: TokenLogAvgAggregateOutputType | null
+    _sum: TokenLogSumAggregateOutputType | null
+    _min: TokenLogMinAggregateOutputType | null
+    _max: TokenLogMaxAggregateOutputType | null
   }
 
-  export type MessagesAvgAggregateOutputType = {
+  export type TokenLogAvgAggregateOutputType = {
     id: number | null
-    conversation_id: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
   }
 
-  export type MessagesSumAggregateOutputType = {
+  export type TokenLogSumAggregateOutputType = {
     id: number | null
-    conversation_id: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
   }
 
-  export type MessagesMinAggregateOutputType = {
+  export type TokenLogMinAggregateOutputType = {
     id: number | null
-    conversation_id: number | null
-    sender: string | null
-    content: string | null
-    timestamp: Date | null
-  }
-
-  export type MessagesMaxAggregateOutputType = {
-    id: number | null
-    conversation_id: number | null
-    sender: string | null
-    content: string | null
-    timestamp: Date | null
-  }
-
-  export type MessagesCountAggregateOutputType = {
-    id: number
-    conversation_id: number
-    sender: number
-    content: number
-    timestamp: number
-    _all: number
-  }
-
-
-  export type MessagesAvgAggregateInputType = {
-    id?: true
-    conversation_id?: true
-  }
-
-  export type MessagesSumAggregateInputType = {
-    id?: true
-    conversation_id?: true
-  }
-
-  export type MessagesMinAggregateInputType = {
-    id?: true
-    conversation_id?: true
-    sender?: true
-    content?: true
-    timestamp?: true
-  }
-
-  export type MessagesMaxAggregateInputType = {
-    id?: true
-    conversation_id?: true
-    sender?: true
-    content?: true
-    timestamp?: true
-  }
-
-  export type MessagesCountAggregateInputType = {
-    id?: true
-    conversation_id?: true
-    sender?: true
-    content?: true
-    timestamp?: true
-    _all?: true
-  }
-
-  export type MessagesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which messages to aggregate.
-     */
-    where?: messagesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of messages to fetch.
-     */
-    orderBy?: messagesOrderByWithRelationInput | messagesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: messagesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` messages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` messages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned messages
-    **/
-    _count?: true | MessagesCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: MessagesAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MessagesSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: MessagesMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: MessagesMaxAggregateInputType
-  }
-
-  export type GetMessagesAggregateType<T extends MessagesAggregateArgs> = {
-        [P in keyof T & keyof AggregateMessages]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateMessages[P]>
-      : GetScalarType<T[P], AggregateMessages[P]>
-  }
-
-
-
-
-  export type messagesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: messagesWhereInput
-    orderBy?: messagesOrderByWithAggregationInput | messagesOrderByWithAggregationInput[]
-    by: MessagesScalarFieldEnum[] | MessagesScalarFieldEnum
-    having?: messagesScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: MessagesCountAggregateInputType | true
-    _avg?: MessagesAvgAggregateInputType
-    _sum?: MessagesSumAggregateInputType
-    _min?: MessagesMinAggregateInputType
-    _max?: MessagesMaxAggregateInputType
-  }
-
-  export type MessagesGroupByOutputType = {
-    id: number
-    conversation_id: number
-    sender: string
-    content: string
-    timestamp: Date
-    _count: MessagesCountAggregateOutputType | null
-    _avg: MessagesAvgAggregateOutputType | null
-    _sum: MessagesSumAggregateOutputType | null
-    _min: MessagesMinAggregateOutputType | null
-    _max: MessagesMaxAggregateOutputType | null
-  }
-
-  type GetMessagesGroupByPayload<T extends messagesGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<MessagesGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MessagesGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MessagesGroupByOutputType[P]>
-            : GetScalarType<T[P], MessagesGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type messagesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    conversation_id?: boolean
-    sender?: boolean
-    content?: boolean
-    timestamp?: boolean
-    conversations?: boolean | conversationsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["messages"]>
-
-  export type messagesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    conversation_id?: boolean
-    sender?: boolean
-    content?: boolean
-    timestamp?: boolean
-    conversations?: boolean | conversationsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["messages"]>
-
-  export type messagesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    conversation_id?: boolean
-    sender?: boolean
-    content?: boolean
-    timestamp?: boolean
-    conversations?: boolean | conversationsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["messages"]>
-
-  export type messagesSelectScalar = {
-    id?: boolean
-    conversation_id?: boolean
-    sender?: boolean
-    content?: boolean
-    timestamp?: boolean
-  }
-
-  export type messagesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversation_id" | "sender" | "content" | "timestamp", ExtArgs["result"]["messages"]>
-  export type messagesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversations?: boolean | conversationsDefaultArgs<ExtArgs>
-  }
-  export type messagesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversations?: boolean | conversationsDefaultArgs<ExtArgs>
-  }
-  export type messagesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversations?: boolean | conversationsDefaultArgs<ExtArgs>
-  }
-
-  export type $messagesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "messages"
-    objects: {
-      conversations: Prisma.$conversationsPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      conversation_id: number
-      sender: string
-      content: string
-      timestamp: Date
-    }, ExtArgs["result"]["messages"]>
-    composites: {}
-  }
-
-  type messagesGetPayload<S extends boolean | null | undefined | messagesDefaultArgs> = $Result.GetResult<Prisma.$messagesPayload, S>
-
-  type messagesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<messagesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MessagesCountAggregateInputType | true
-    }
-
-  export interface messagesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['messages'], meta: { name: 'messages' } }
-    /**
-     * Find zero or one Messages that matches the filter.
-     * @param {messagesFindUniqueArgs} args - Arguments to find a Messages
-     * @example
-     * // Get one Messages
-     * const messages = await prisma.messages.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends messagesFindUniqueArgs>(args: SelectSubset<T, messagesFindUniqueArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Messages that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {messagesFindUniqueOrThrowArgs} args - Arguments to find a Messages
-     * @example
-     * // Get one Messages
-     * const messages = await prisma.messages.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends messagesFindUniqueOrThrowArgs>(args: SelectSubset<T, messagesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Messages that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {messagesFindFirstArgs} args - Arguments to find a Messages
-     * @example
-     * // Get one Messages
-     * const messages = await prisma.messages.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends messagesFindFirstArgs>(args?: SelectSubset<T, messagesFindFirstArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Messages that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {messagesFindFirstOrThrowArgs} args - Arguments to find a Messages
-     * @example
-     * // Get one Messages
-     * const messages = await prisma.messages.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends messagesFindFirstOrThrowArgs>(args?: SelectSubset<T, messagesFindFirstOrThrowArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Messages that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {messagesFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Messages
-     * const messages = await prisma.messages.findMany()
-     * 
-     * // Get first 10 Messages
-     * const messages = await prisma.messages.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const messagesWithIdOnly = await prisma.messages.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends messagesFindManyArgs>(args?: SelectSubset<T, messagesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Messages.
-     * @param {messagesCreateArgs} args - Arguments to create a Messages.
-     * @example
-     * // Create one Messages
-     * const Messages = await prisma.messages.create({
-     *   data: {
-     *     // ... data to create a Messages
-     *   }
-     * })
-     * 
-     */
-    create<T extends messagesCreateArgs>(args: SelectSubset<T, messagesCreateArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Messages.
-     * @param {messagesCreateManyArgs} args - Arguments to create many Messages.
-     * @example
-     * // Create many Messages
-     * const messages = await prisma.messages.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends messagesCreateManyArgs>(args?: SelectSubset<T, messagesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Messages and returns the data saved in the database.
-     * @param {messagesCreateManyAndReturnArgs} args - Arguments to create many Messages.
-     * @example
-     * // Create many Messages
-     * const messages = await prisma.messages.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Messages and only return the `id`
-     * const messagesWithIdOnly = await prisma.messages.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends messagesCreateManyAndReturnArgs>(args?: SelectSubset<T, messagesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Messages.
-     * @param {messagesDeleteArgs} args - Arguments to delete one Messages.
-     * @example
-     * // Delete one Messages
-     * const Messages = await prisma.messages.delete({
-     *   where: {
-     *     // ... filter to delete one Messages
-     *   }
-     * })
-     * 
-     */
-    delete<T extends messagesDeleteArgs>(args: SelectSubset<T, messagesDeleteArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Messages.
-     * @param {messagesUpdateArgs} args - Arguments to update one Messages.
-     * @example
-     * // Update one Messages
-     * const messages = await prisma.messages.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends messagesUpdateArgs>(args: SelectSubset<T, messagesUpdateArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Messages.
-     * @param {messagesDeleteManyArgs} args - Arguments to filter Messages to delete.
-     * @example
-     * // Delete a few Messages
-     * const { count } = await prisma.messages.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends messagesDeleteManyArgs>(args?: SelectSubset<T, messagesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Messages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {messagesUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Messages
-     * const messages = await prisma.messages.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends messagesUpdateManyArgs>(args: SelectSubset<T, messagesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Messages and returns the data updated in the database.
-     * @param {messagesUpdateManyAndReturnArgs} args - Arguments to update many Messages.
-     * @example
-     * // Update many Messages
-     * const messages = await prisma.messages.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Messages and only return the `id`
-     * const messagesWithIdOnly = await prisma.messages.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends messagesUpdateManyAndReturnArgs>(args: SelectSubset<T, messagesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Messages.
-     * @param {messagesUpsertArgs} args - Arguments to update or create a Messages.
-     * @example
-     * // Update or create a Messages
-     * const messages = await prisma.messages.upsert({
-     *   create: {
-     *     // ... data to create a Messages
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Messages we want to update
-     *   }
-     * })
-     */
-    upsert<T extends messagesUpsertArgs>(args: SelectSubset<T, messagesUpsertArgs<ExtArgs>>): Prisma__messagesClient<$Result.GetResult<Prisma.$messagesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Messages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {messagesCountArgs} args - Arguments to filter Messages to count.
-     * @example
-     * // Count the number of Messages
-     * const count = await prisma.messages.count({
-     *   where: {
-     *     // ... the filter for the Messages we want to count
-     *   }
-     * })
-    **/
-    count<T extends messagesCountArgs>(
-      args?: Subset<T, messagesCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], MessagesCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Messages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessagesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends MessagesAggregateArgs>(args: Subset<T, MessagesAggregateArgs>): Prisma.PrismaPromise<GetMessagesAggregateType<T>>
-
-    /**
-     * Group by Messages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {messagesGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends messagesGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: messagesGroupByArgs['orderBy'] }
-        : { orderBy?: messagesGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, messagesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMessagesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the messages model
-   */
-  readonly fields: messagesFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for messages.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__messagesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    conversations<T extends conversationsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, conversationsDefaultArgs<ExtArgs>>): Prisma__conversationsClient<$Result.GetResult<Prisma.$conversationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the messages model
-   */
-  interface messagesFieldRefs {
-    readonly id: FieldRef<"messages", 'Int'>
-    readonly conversation_id: FieldRef<"messages", 'Int'>
-    readonly sender: FieldRef<"messages", 'String'>
-    readonly content: FieldRef<"messages", 'String'>
-    readonly timestamp: FieldRef<"messages", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * messages findUnique
-   */
-  export type messagesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * Filter, which messages to fetch.
-     */
-    where: messagesWhereUniqueInput
-  }
-
-  /**
-   * messages findUniqueOrThrow
-   */
-  export type messagesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * Filter, which messages to fetch.
-     */
-    where: messagesWhereUniqueInput
-  }
-
-  /**
-   * messages findFirst
-   */
-  export type messagesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * Filter, which messages to fetch.
-     */
-    where?: messagesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of messages to fetch.
-     */
-    orderBy?: messagesOrderByWithRelationInput | messagesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for messages.
-     */
-    cursor?: messagesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` messages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` messages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of messages.
-     */
-    distinct?: MessagesScalarFieldEnum | MessagesScalarFieldEnum[]
-  }
-
-  /**
-   * messages findFirstOrThrow
-   */
-  export type messagesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * Filter, which messages to fetch.
-     */
-    where?: messagesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of messages to fetch.
-     */
-    orderBy?: messagesOrderByWithRelationInput | messagesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for messages.
-     */
-    cursor?: messagesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` messages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` messages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of messages.
-     */
-    distinct?: MessagesScalarFieldEnum | MessagesScalarFieldEnum[]
-  }
-
-  /**
-   * messages findMany
-   */
-  export type messagesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * Filter, which messages to fetch.
-     */
-    where?: messagesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of messages to fetch.
-     */
-    orderBy?: messagesOrderByWithRelationInput | messagesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing messages.
-     */
-    cursor?: messagesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` messages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` messages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of messages.
-     */
-    distinct?: MessagesScalarFieldEnum | MessagesScalarFieldEnum[]
-  }
-
-  /**
-   * messages create
-   */
-  export type messagesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * The data needed to create a messages.
-     */
-    data: XOR<messagesCreateInput, messagesUncheckedCreateInput>
-  }
-
-  /**
-   * messages createMany
-   */
-  export type messagesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many messages.
-     */
-    data: messagesCreateManyInput | messagesCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * messages createManyAndReturn
-   */
-  export type messagesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * The data used to create many messages.
-     */
-    data: messagesCreateManyInput | messagesCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * messages update
-   */
-  export type messagesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * The data needed to update a messages.
-     */
-    data: XOR<messagesUpdateInput, messagesUncheckedUpdateInput>
-    /**
-     * Choose, which messages to update.
-     */
-    where: messagesWhereUniqueInput
-  }
-
-  /**
-   * messages updateMany
-   */
-  export type messagesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update messages.
-     */
-    data: XOR<messagesUpdateManyMutationInput, messagesUncheckedUpdateManyInput>
-    /**
-     * Filter which messages to update
-     */
-    where?: messagesWhereInput
-    /**
-     * Limit how many messages to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * messages updateManyAndReturn
-   */
-  export type messagesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * The data used to update messages.
-     */
-    data: XOR<messagesUpdateManyMutationInput, messagesUncheckedUpdateManyInput>
-    /**
-     * Filter which messages to update
-     */
-    where?: messagesWhereInput
-    /**
-     * Limit how many messages to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * messages upsert
-   */
-  export type messagesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * The filter to search for the messages to update in case it exists.
-     */
-    where: messagesWhereUniqueInput
-    /**
-     * In case the messages found by the `where` argument doesn't exist, create a new messages with this data.
-     */
-    create: XOR<messagesCreateInput, messagesUncheckedCreateInput>
-    /**
-     * In case the messages was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<messagesUpdateInput, messagesUncheckedUpdateInput>
-  }
-
-  /**
-   * messages delete
-   */
-  export type messagesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-    /**
-     * Filter which messages to delete.
-     */
-    where: messagesWhereUniqueInput
-  }
-
-  /**
-   * messages deleteMany
-   */
-  export type messagesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which messages to delete
-     */
-    where?: messagesWhereInput
-    /**
-     * Limit how many messages to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * messages without action
-   */
-  export type messagesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the messages
-     */
-    select?: messagesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the messages
-     */
-    omit?: messagesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: messagesInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model token_logs
-   */
-
-  export type AggregateToken_logs = {
-    _count: Token_logsCountAggregateOutputType | null
-    _avg: Token_logsAvgAggregateOutputType | null
-    _sum: Token_logsSumAggregateOutputType | null
-    _min: Token_logsMinAggregateOutputType | null
-    _max: Token_logsMaxAggregateOutputType | null
-  }
-
-  export type Token_logsAvgAggregateOutputType = {
-    id: number | null
-    prompt_tokens: number | null
-    completion_tokens: number | null
-    total_tokens: number | null
-  }
-
-  export type Token_logsSumAggregateOutputType = {
-    id: number | null
-    prompt_tokens: number | null
-    completion_tokens: number | null
-    total_tokens: number | null
-  }
-
-  export type Token_logsMinAggregateOutputType = {
-    id: number | null
-    sender_id: string | null
+    senderId: string | null
     model: string | null
     intent: string | null
-    prompt_tokens: number | null
-    completion_tokens: number | null
-    total_tokens: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
     timestamp: Date | null
   }
 
-  export type Token_logsMaxAggregateOutputType = {
+  export type TokenLogMaxAggregateOutputType = {
     id: number | null
-    sender_id: string | null
+    senderId: string | null
     model: string | null
     intent: string | null
-    prompt_tokens: number | null
-    completion_tokens: number | null
-    total_tokens: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
     timestamp: Date | null
   }
 
-  export type Token_logsCountAggregateOutputType = {
+  export type TokenLogCountAggregateOutputType = {
     id: number
-    sender_id: number
+    senderId: number
     model: number
     intent: number
-    prompt_tokens: number
-    completion_tokens: number
-    total_tokens: number
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
     timestamp: number
     _all: number
   }
 
 
-  export type Token_logsAvgAggregateInputType = {
+  export type TokenLogAvgAggregateInputType = {
     id?: true
-    prompt_tokens?: true
-    completion_tokens?: true
-    total_tokens?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
   }
 
-  export type Token_logsSumAggregateInputType = {
+  export type TokenLogSumAggregateInputType = {
     id?: true
-    prompt_tokens?: true
-    completion_tokens?: true
-    total_tokens?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
   }
 
-  export type Token_logsMinAggregateInputType = {
+  export type TokenLogMinAggregateInputType = {
     id?: true
-    sender_id?: true
+    senderId?: true
     model?: true
     intent?: true
-    prompt_tokens?: true
-    completion_tokens?: true
-    total_tokens?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
     timestamp?: true
   }
 
-  export type Token_logsMaxAggregateInputType = {
+  export type TokenLogMaxAggregateInputType = {
     id?: true
-    sender_id?: true
+    senderId?: true
     model?: true
     intent?: true
-    prompt_tokens?: true
-    completion_tokens?: true
-    total_tokens?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
     timestamp?: true
   }
 
-  export type Token_logsCountAggregateInputType = {
+  export type TokenLogCountAggregateInputType = {
     id?: true
-    sender_id?: true
+    senderId?: true
     model?: true
     intent?: true
-    prompt_tokens?: true
-    completion_tokens?: true
-    total_tokens?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
     timestamp?: true
     _all?: true
   }
 
-  export type Token_logsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which token_logs to aggregate.
+     * Filter which TokenLog to aggregate.
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of token_logs to fetch.
+     * Determine the order of TokenLogs to fetch.
      */
-    orderBy?: token_logsOrderByWithRelationInput | token_logsOrderByWithRelationInput[]
+    orderBy?: TokenLogOrderByWithRelationInput | TokenLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: token_logsWhereUniqueInput
+    cursor?: TokenLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` token_logs from the position of the cursor.
+     * Take `±n` TokenLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` token_logs.
+     * Skip the first `n` TokenLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned token_logs
+     * Count returned TokenLogs
     **/
-    _count?: true | Token_logsCountAggregateInputType
+    _count?: true | TokenLogCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: Token_logsAvgAggregateInputType
+    _avg?: TokenLogAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: Token_logsSumAggregateInputType
+    _sum?: TokenLogSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: Token_logsMinAggregateInputType
+    _min?: TokenLogMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: Token_logsMaxAggregateInputType
+    _max?: TokenLogMaxAggregateInputType
   }
 
-  export type GetToken_logsAggregateType<T extends Token_logsAggregateArgs> = {
-        [P in keyof T & keyof AggregateToken_logs]: P extends '_count' | 'count'
+  export type GetTokenLogAggregateType<T extends TokenLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateTokenLog]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateToken_logs[P]>
-      : GetScalarType<T[P], AggregateToken_logs[P]>
+        : GetScalarType<T[P], AggregateTokenLog[P]>
+      : GetScalarType<T[P], AggregateTokenLog[P]>
   }
 
 
 
 
-  export type token_logsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: token_logsWhereInput
-    orderBy?: token_logsOrderByWithAggregationInput | token_logsOrderByWithAggregationInput[]
-    by: Token_logsScalarFieldEnum[] | Token_logsScalarFieldEnum
-    having?: token_logsScalarWhereWithAggregatesInput
+  export type TokenLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TokenLogWhereInput
+    orderBy?: TokenLogOrderByWithAggregationInput | TokenLogOrderByWithAggregationInput[]
+    by: TokenLogScalarFieldEnum[] | TokenLogScalarFieldEnum
+    having?: TokenLogScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: Token_logsCountAggregateInputType | true
-    _avg?: Token_logsAvgAggregateInputType
-    _sum?: Token_logsSumAggregateInputType
-    _min?: Token_logsMinAggregateInputType
-    _max?: Token_logsMaxAggregateInputType
+    _count?: TokenLogCountAggregateInputType | true
+    _avg?: TokenLogAvgAggregateInputType
+    _sum?: TokenLogSumAggregateInputType
+    _min?: TokenLogMinAggregateInputType
+    _max?: TokenLogMaxAggregateInputType
   }
 
-  export type Token_logsGroupByOutputType = {
+  export type TokenLogGroupByOutputType = {
     id: number
-    sender_id: string
+    senderId: string
     model: string
     intent: string
-    prompt_tokens: number
-    completion_tokens: number
-    total_tokens: number
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
     timestamp: Date
-    _count: Token_logsCountAggregateOutputType | null
-    _avg: Token_logsAvgAggregateOutputType | null
-    _sum: Token_logsSumAggregateOutputType | null
-    _min: Token_logsMinAggregateOutputType | null
-    _max: Token_logsMaxAggregateOutputType | null
+    _count: TokenLogCountAggregateOutputType | null
+    _avg: TokenLogAvgAggregateOutputType | null
+    _sum: TokenLogSumAggregateOutputType | null
+    _min: TokenLogMinAggregateOutputType | null
+    _max: TokenLogMaxAggregateOutputType | null
   }
 
-  type GetToken_logsGroupByPayload<T extends token_logsGroupByArgs> = Prisma.PrismaPromise<
+  type GetTokenLogGroupByPayload<T extends TokenLogGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<Token_logsGroupByOutputType, T['by']> &
+      PickEnumerable<TokenLogGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof Token_logsGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TokenLogGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], Token_logsGroupByOutputType[P]>
-            : GetScalarType<T[P], Token_logsGroupByOutputType[P]>
+              : GetScalarType<T[P], TokenLogGroupByOutputType[P]>
+            : GetScalarType<T[P], TokenLogGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type token_logsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TokenLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     model?: boolean
     intent?: boolean
-    prompt_tokens?: boolean
-    completion_tokens?: boolean
-    total_tokens?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
     timestamp?: boolean
-  }, ExtArgs["result"]["token_logs"]>
+  }, ExtArgs["result"]["tokenLog"]>
 
-  export type token_logsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TokenLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     model?: boolean
     intent?: boolean
-    prompt_tokens?: boolean
-    completion_tokens?: boolean
-    total_tokens?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
     timestamp?: boolean
-  }, ExtArgs["result"]["token_logs"]>
+  }, ExtArgs["result"]["tokenLog"]>
 
-  export type token_logsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TokenLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     model?: boolean
     intent?: boolean
-    prompt_tokens?: boolean
-    completion_tokens?: boolean
-    total_tokens?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
     timestamp?: boolean
-  }, ExtArgs["result"]["token_logs"]>
+  }, ExtArgs["result"]["tokenLog"]>
 
-  export type token_logsSelectScalar = {
+  export type TokenLogSelectScalar = {
     id?: boolean
-    sender_id?: boolean
+    senderId?: boolean
     model?: boolean
     intent?: boolean
-    prompt_tokens?: boolean
-    completion_tokens?: boolean
-    total_tokens?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
     timestamp?: boolean
   }
 
-  export type token_logsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sender_id" | "model" | "intent" | "prompt_tokens" | "completion_tokens" | "total_tokens" | "timestamp", ExtArgs["result"]["token_logs"]>
+  export type TokenLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "model" | "intent" | "promptTokens" | "completionTokens" | "totalTokens" | "timestamp", ExtArgs["result"]["tokenLog"]>
 
-  export type $token_logsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "token_logs"
+  export type $TokenLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TokenLog"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      sender_id: string
+      senderId: string
       model: string
       intent: string
-      prompt_tokens: number
-      completion_tokens: number
-      total_tokens: number
+      promptTokens: number
+      completionTokens: number
+      totalTokens: number
       timestamp: Date
-    }, ExtArgs["result"]["token_logs"]>
+    }, ExtArgs["result"]["tokenLog"]>
     composites: {}
   }
 
-  type token_logsGetPayload<S extends boolean | null | undefined | token_logsDefaultArgs> = $Result.GetResult<Prisma.$token_logsPayload, S>
+  type TokenLogGetPayload<S extends boolean | null | undefined | TokenLogDefaultArgs> = $Result.GetResult<Prisma.$TokenLogPayload, S>
 
-  type token_logsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<token_logsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: Token_logsCountAggregateInputType | true
+  type TokenLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TokenLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TokenLogCountAggregateInputType | true
     }
 
-  export interface token_logsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['token_logs'], meta: { name: 'token_logs' } }
+  export interface TokenLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TokenLog'], meta: { name: 'TokenLog' } }
     /**
-     * Find zero or one Token_logs that matches the filter.
-     * @param {token_logsFindUniqueArgs} args - Arguments to find a Token_logs
+     * Find zero or one TokenLog that matches the filter.
+     * @param {TokenLogFindUniqueArgs} args - Arguments to find a TokenLog
      * @example
-     * // Get one Token_logs
-     * const token_logs = await prisma.token_logs.findUnique({
+     * // Get one TokenLog
+     * const tokenLog = await prisma.tokenLog.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends token_logsFindUniqueArgs>(args: SelectSubset<T, token_logsFindUniqueArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends TokenLogFindUniqueArgs>(args: SelectSubset<T, TokenLogFindUniqueArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Token_logs that matches the filter or throw an error with `error.code='P2025'`
+     * Find one TokenLog that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {token_logsFindUniqueOrThrowArgs} args - Arguments to find a Token_logs
+     * @param {TokenLogFindUniqueOrThrowArgs} args - Arguments to find a TokenLog
      * @example
-     * // Get one Token_logs
-     * const token_logs = await prisma.token_logs.findUniqueOrThrow({
+     * // Get one TokenLog
+     * const tokenLog = await prisma.tokenLog.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends token_logsFindUniqueOrThrowArgs>(args: SelectSubset<T, token_logsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends TokenLogFindUniqueOrThrowArgs>(args: SelectSubset<T, TokenLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Token_logs that matches the filter.
+     * Find the first TokenLog that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {token_logsFindFirstArgs} args - Arguments to find a Token_logs
+     * @param {TokenLogFindFirstArgs} args - Arguments to find a TokenLog
      * @example
-     * // Get one Token_logs
-     * const token_logs = await prisma.token_logs.findFirst({
+     * // Get one TokenLog
+     * const tokenLog = await prisma.tokenLog.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends token_logsFindFirstArgs>(args?: SelectSubset<T, token_logsFindFirstArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends TokenLogFindFirstArgs>(args?: SelectSubset<T, TokenLogFindFirstArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Token_logs that matches the filter or
+     * Find the first TokenLog that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {token_logsFindFirstOrThrowArgs} args - Arguments to find a Token_logs
+     * @param {TokenLogFindFirstOrThrowArgs} args - Arguments to find a TokenLog
      * @example
-     * // Get one Token_logs
-     * const token_logs = await prisma.token_logs.findFirstOrThrow({
+     * // Get one TokenLog
+     * const tokenLog = await prisma.tokenLog.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends token_logsFindFirstOrThrowArgs>(args?: SelectSubset<T, token_logsFindFirstOrThrowArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends TokenLogFindFirstOrThrowArgs>(args?: SelectSubset<T, TokenLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Token_logs that matches the filter.
+     * Find zero or more TokenLogs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {token_logsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {TokenLogFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Token_logs
-     * const token_logs = await prisma.token_logs.findMany()
+     * // Get all TokenLogs
+     * const tokenLogs = await prisma.tokenLog.findMany()
      * 
-     * // Get first 10 Token_logs
-     * const token_logs = await prisma.token_logs.findMany({ take: 10 })
+     * // Get first 10 TokenLogs
+     * const tokenLogs = await prisma.tokenLog.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const token_logsWithIdOnly = await prisma.token_logs.findMany({ select: { id: true } })
+     * const tokenLogWithIdOnly = await prisma.tokenLog.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends token_logsFindManyArgs>(args?: SelectSubset<T, token_logsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends TokenLogFindManyArgs>(args?: SelectSubset<T, TokenLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Token_logs.
-     * @param {token_logsCreateArgs} args - Arguments to create a Token_logs.
+     * Create a TokenLog.
+     * @param {TokenLogCreateArgs} args - Arguments to create a TokenLog.
      * @example
-     * // Create one Token_logs
-     * const Token_logs = await prisma.token_logs.create({
+     * // Create one TokenLog
+     * const TokenLog = await prisma.tokenLog.create({
      *   data: {
-     *     // ... data to create a Token_logs
+     *     // ... data to create a TokenLog
      *   }
      * })
      * 
      */
-    create<T extends token_logsCreateArgs>(args: SelectSubset<T, token_logsCreateArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends TokenLogCreateArgs>(args: SelectSubset<T, TokenLogCreateArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Token_logs.
-     * @param {token_logsCreateManyArgs} args - Arguments to create many Token_logs.
+     * Create many TokenLogs.
+     * @param {TokenLogCreateManyArgs} args - Arguments to create many TokenLogs.
      * @example
-     * // Create many Token_logs
-     * const token_logs = await prisma.token_logs.createMany({
+     * // Create many TokenLogs
+     * const tokenLog = await prisma.tokenLog.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends token_logsCreateManyArgs>(args?: SelectSubset<T, token_logsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends TokenLogCreateManyArgs>(args?: SelectSubset<T, TokenLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Token_logs and returns the data saved in the database.
-     * @param {token_logsCreateManyAndReturnArgs} args - Arguments to create many Token_logs.
+     * Create many TokenLogs and returns the data saved in the database.
+     * @param {TokenLogCreateManyAndReturnArgs} args - Arguments to create many TokenLogs.
      * @example
-     * // Create many Token_logs
-     * const token_logs = await prisma.token_logs.createManyAndReturn({
+     * // Create many TokenLogs
+     * const tokenLog = await prisma.tokenLog.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Token_logs and only return the `id`
-     * const token_logsWithIdOnly = await prisma.token_logs.createManyAndReturn({
+     * // Create many TokenLogs and only return the `id`
+     * const tokenLogWithIdOnly = await prisma.tokenLog.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -12657,28 +10381,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends token_logsCreateManyAndReturnArgs>(args?: SelectSubset<T, token_logsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends TokenLogCreateManyAndReturnArgs>(args?: SelectSubset<T, TokenLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Token_logs.
-     * @param {token_logsDeleteArgs} args - Arguments to delete one Token_logs.
+     * Delete a TokenLog.
+     * @param {TokenLogDeleteArgs} args - Arguments to delete one TokenLog.
      * @example
-     * // Delete one Token_logs
-     * const Token_logs = await prisma.token_logs.delete({
+     * // Delete one TokenLog
+     * const TokenLog = await prisma.tokenLog.delete({
      *   where: {
-     *     // ... filter to delete one Token_logs
+     *     // ... filter to delete one TokenLog
      *   }
      * })
      * 
      */
-    delete<T extends token_logsDeleteArgs>(args: SelectSubset<T, token_logsDeleteArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends TokenLogDeleteArgs>(args: SelectSubset<T, TokenLogDeleteArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Token_logs.
-     * @param {token_logsUpdateArgs} args - Arguments to update one Token_logs.
+     * Update one TokenLog.
+     * @param {TokenLogUpdateArgs} args - Arguments to update one TokenLog.
      * @example
-     * // Update one Token_logs
-     * const token_logs = await prisma.token_logs.update({
+     * // Update one TokenLog
+     * const tokenLog = await prisma.tokenLog.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -12688,30 +10412,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends token_logsUpdateArgs>(args: SelectSubset<T, token_logsUpdateArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends TokenLogUpdateArgs>(args: SelectSubset<T, TokenLogUpdateArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Token_logs.
-     * @param {token_logsDeleteManyArgs} args - Arguments to filter Token_logs to delete.
+     * Delete zero or more TokenLogs.
+     * @param {TokenLogDeleteManyArgs} args - Arguments to filter TokenLogs to delete.
      * @example
-     * // Delete a few Token_logs
-     * const { count } = await prisma.token_logs.deleteMany({
+     * // Delete a few TokenLogs
+     * const { count } = await prisma.tokenLog.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends token_logsDeleteManyArgs>(args?: SelectSubset<T, token_logsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends TokenLogDeleteManyArgs>(args?: SelectSubset<T, TokenLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Token_logs.
+     * Update zero or more TokenLogs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {token_logsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TokenLogUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Token_logs
-     * const token_logs = await prisma.token_logs.updateMany({
+     * // Update many TokenLogs
+     * const tokenLog = await prisma.tokenLog.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -12721,14 +10445,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends token_logsUpdateManyArgs>(args: SelectSubset<T, token_logsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends TokenLogUpdateManyArgs>(args: SelectSubset<T, TokenLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Token_logs and returns the data updated in the database.
-     * @param {token_logsUpdateManyAndReturnArgs} args - Arguments to update many Token_logs.
+     * Update zero or more TokenLogs and returns the data updated in the database.
+     * @param {TokenLogUpdateManyAndReturnArgs} args - Arguments to update many TokenLogs.
      * @example
-     * // Update many Token_logs
-     * const token_logs = await prisma.token_logs.updateManyAndReturn({
+     * // Update many TokenLogs
+     * const tokenLog = await prisma.tokenLog.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -12737,8 +10461,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Token_logs and only return the `id`
-     * const token_logsWithIdOnly = await prisma.token_logs.updateManyAndReturn({
+     * // Update zero or more TokenLogs and only return the `id`
+     * const tokenLogWithIdOnly = await prisma.tokenLog.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -12751,56 +10475,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends token_logsUpdateManyAndReturnArgs>(args: SelectSubset<T, token_logsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends TokenLogUpdateManyAndReturnArgs>(args: SelectSubset<T, TokenLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Token_logs.
-     * @param {token_logsUpsertArgs} args - Arguments to update or create a Token_logs.
+     * Create or update one TokenLog.
+     * @param {TokenLogUpsertArgs} args - Arguments to update or create a TokenLog.
      * @example
-     * // Update or create a Token_logs
-     * const token_logs = await prisma.token_logs.upsert({
+     * // Update or create a TokenLog
+     * const tokenLog = await prisma.tokenLog.upsert({
      *   create: {
-     *     // ... data to create a Token_logs
+     *     // ... data to create a TokenLog
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Token_logs we want to update
+     *     // ... the filter for the TokenLog we want to update
      *   }
      * })
      */
-    upsert<T extends token_logsUpsertArgs>(args: SelectSubset<T, token_logsUpsertArgs<ExtArgs>>): Prisma__token_logsClient<$Result.GetResult<Prisma.$token_logsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends TokenLogUpsertArgs>(args: SelectSubset<T, TokenLogUpsertArgs<ExtArgs>>): Prisma__TokenLogClient<$Result.GetResult<Prisma.$TokenLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Token_logs.
+     * Count the number of TokenLogs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {token_logsCountArgs} args - Arguments to filter Token_logs to count.
+     * @param {TokenLogCountArgs} args - Arguments to filter TokenLogs to count.
      * @example
-     * // Count the number of Token_logs
-     * const count = await prisma.token_logs.count({
+     * // Count the number of TokenLogs
+     * const count = await prisma.tokenLog.count({
      *   where: {
-     *     // ... the filter for the Token_logs we want to count
+     *     // ... the filter for the TokenLogs we want to count
      *   }
      * })
     **/
-    count<T extends token_logsCountArgs>(
-      args?: Subset<T, token_logsCountArgs>,
+    count<T extends TokenLogCountArgs>(
+      args?: Subset<T, TokenLogCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], Token_logsCountAggregateOutputType>
+          : GetScalarType<T['select'], TokenLogCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Token_logs.
+     * Allows you to perform aggregations operations on a TokenLog.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Token_logsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TokenLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -12820,13 +10544,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends Token_logsAggregateArgs>(args: Subset<T, Token_logsAggregateArgs>): Prisma.PrismaPromise<GetToken_logsAggregateType<T>>
+    aggregate<T extends TokenLogAggregateArgs>(args: Subset<T, TokenLogAggregateArgs>): Prisma.PrismaPromise<GetTokenLogAggregateType<T>>
 
     /**
-     * Group by Token_logs.
+     * Group by TokenLog.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {token_logsGroupByArgs} args - Group by arguments.
+     * @param {TokenLogGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -12841,14 +10565,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends token_logsGroupByArgs,
+      T extends TokenLogGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: token_logsGroupByArgs['orderBy'] }
-        : { orderBy?: token_logsGroupByArgs['orderBy'] },
+        ? { orderBy: TokenLogGroupByArgs['orderBy'] }
+        : { orderBy?: TokenLogGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -12897,20 +10621,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, token_logsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetToken_logsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TokenLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTokenLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the token_logs model
+   * Fields of the TokenLog model
    */
-  readonly fields: token_logsFieldRefs;
+  readonly fields: TokenLogFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for token_logs.
+   * The delegate class that acts as a "Promise-like" for TokenLog.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__token_logsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__TokenLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -12938,385 +10662,1512 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the token_logs model
+   * Fields of the TokenLog model
    */
-  interface token_logsFieldRefs {
-    readonly id: FieldRef<"token_logs", 'Int'>
-    readonly sender_id: FieldRef<"token_logs", 'String'>
-    readonly model: FieldRef<"token_logs", 'String'>
-    readonly intent: FieldRef<"token_logs", 'String'>
-    readonly prompt_tokens: FieldRef<"token_logs", 'Int'>
-    readonly completion_tokens: FieldRef<"token_logs", 'Int'>
-    readonly total_tokens: FieldRef<"token_logs", 'Int'>
-    readonly timestamp: FieldRef<"token_logs", 'DateTime'>
+  interface TokenLogFieldRefs {
+    readonly id: FieldRef<"TokenLog", 'Int'>
+    readonly senderId: FieldRef<"TokenLog", 'String'>
+    readonly model: FieldRef<"TokenLog", 'String'>
+    readonly intent: FieldRef<"TokenLog", 'String'>
+    readonly promptTokens: FieldRef<"TokenLog", 'Int'>
+    readonly completionTokens: FieldRef<"TokenLog", 'Int'>
+    readonly totalTokens: FieldRef<"TokenLog", 'Int'>
+    readonly timestamp: FieldRef<"TokenLog", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * token_logs findUnique
+   * TokenLog findUnique
    */
-  export type token_logsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * Filter, which token_logs to fetch.
+     * Filter, which TokenLog to fetch.
      */
-    where: token_logsWhereUniqueInput
+    where: TokenLogWhereUniqueInput
   }
 
   /**
-   * token_logs findUniqueOrThrow
+   * TokenLog findUniqueOrThrow
    */
-  export type token_logsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * Filter, which token_logs to fetch.
+     * Filter, which TokenLog to fetch.
      */
-    where: token_logsWhereUniqueInput
+    where: TokenLogWhereUniqueInput
   }
 
   /**
-   * token_logs findFirst
+   * TokenLog findFirst
    */
-  export type token_logsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * Filter, which token_logs to fetch.
+     * Filter, which TokenLog to fetch.
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of token_logs to fetch.
+     * Determine the order of TokenLogs to fetch.
      */
-    orderBy?: token_logsOrderByWithRelationInput | token_logsOrderByWithRelationInput[]
+    orderBy?: TokenLogOrderByWithRelationInput | TokenLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for token_logs.
+     * Sets the position for searching for TokenLogs.
      */
-    cursor?: token_logsWhereUniqueInput
+    cursor?: TokenLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` token_logs from the position of the cursor.
+     * Take `±n` TokenLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` token_logs.
+     * Skip the first `n` TokenLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of token_logs.
+     * Filter by unique combinations of TokenLogs.
      */
-    distinct?: Token_logsScalarFieldEnum | Token_logsScalarFieldEnum[]
+    distinct?: TokenLogScalarFieldEnum | TokenLogScalarFieldEnum[]
   }
 
   /**
-   * token_logs findFirstOrThrow
+   * TokenLog findFirstOrThrow
    */
-  export type token_logsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * Filter, which token_logs to fetch.
+     * Filter, which TokenLog to fetch.
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of token_logs to fetch.
+     * Determine the order of TokenLogs to fetch.
      */
-    orderBy?: token_logsOrderByWithRelationInput | token_logsOrderByWithRelationInput[]
+    orderBy?: TokenLogOrderByWithRelationInput | TokenLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for token_logs.
+     * Sets the position for searching for TokenLogs.
      */
-    cursor?: token_logsWhereUniqueInput
+    cursor?: TokenLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` token_logs from the position of the cursor.
+     * Take `±n` TokenLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` token_logs.
+     * Skip the first `n` TokenLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of token_logs.
+     * Filter by unique combinations of TokenLogs.
      */
-    distinct?: Token_logsScalarFieldEnum | Token_logsScalarFieldEnum[]
+    distinct?: TokenLogScalarFieldEnum | TokenLogScalarFieldEnum[]
   }
 
   /**
-   * token_logs findMany
+   * TokenLog findMany
    */
-  export type token_logsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * Filter, which token_logs to fetch.
+     * Filter, which TokenLogs to fetch.
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of token_logs to fetch.
+     * Determine the order of TokenLogs to fetch.
      */
-    orderBy?: token_logsOrderByWithRelationInput | token_logsOrderByWithRelationInput[]
+    orderBy?: TokenLogOrderByWithRelationInput | TokenLogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing token_logs.
+     * Sets the position for listing TokenLogs.
      */
-    cursor?: token_logsWhereUniqueInput
+    cursor?: TokenLogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` token_logs from the position of the cursor.
+     * Take `±n` TokenLogs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` token_logs.
+     * Skip the first `n` TokenLogs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of token_logs.
+     * Filter by unique combinations of TokenLogs.
      */
-    distinct?: Token_logsScalarFieldEnum | Token_logsScalarFieldEnum[]
+    distinct?: TokenLogScalarFieldEnum | TokenLogScalarFieldEnum[]
   }
 
   /**
-   * token_logs create
+   * TokenLog create
    */
-  export type token_logsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * The data needed to create a token_logs.
+     * The data needed to create a TokenLog.
      */
-    data: XOR<token_logsCreateInput, token_logsUncheckedCreateInput>
+    data: XOR<TokenLogCreateInput, TokenLogUncheckedCreateInput>
   }
 
   /**
-   * token_logs createMany
+   * TokenLog createMany
    */
-  export type token_logsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many token_logs.
+     * The data used to create many TokenLogs.
      */
-    data: token_logsCreateManyInput | token_logsCreateManyInput[]
+    data: TokenLogCreateManyInput | TokenLogCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * token_logs createManyAndReturn
+   * TokenLog createManyAndReturn
    */
-  export type token_logsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelectCreateManyAndReturn<ExtArgs> | null
+    select?: TokenLogSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * The data used to create many token_logs.
+     * The data used to create many TokenLogs.
      */
-    data: token_logsCreateManyInput | token_logsCreateManyInput[]
+    data: TokenLogCreateManyInput | TokenLogCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * token_logs update
+   * TokenLog update
    */
-  export type token_logsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * The data needed to update a token_logs.
+     * The data needed to update a TokenLog.
      */
-    data: XOR<token_logsUpdateInput, token_logsUncheckedUpdateInput>
+    data: XOR<TokenLogUpdateInput, TokenLogUncheckedUpdateInput>
     /**
-     * Choose, which token_logs to update.
+     * Choose, which TokenLog to update.
      */
-    where: token_logsWhereUniqueInput
+    where: TokenLogWhereUniqueInput
   }
 
   /**
-   * token_logs updateMany
+   * TokenLog updateMany
    */
-  export type token_logsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update token_logs.
+     * The data used to update TokenLogs.
      */
-    data: XOR<token_logsUpdateManyMutationInput, token_logsUncheckedUpdateManyInput>
+    data: XOR<TokenLogUpdateManyMutationInput, TokenLogUncheckedUpdateManyInput>
     /**
-     * Filter which token_logs to update
+     * Filter which TokenLogs to update
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
-     * Limit how many token_logs to update.
+     * Limit how many TokenLogs to update.
      */
     limit?: number
   }
 
   /**
-   * token_logs updateManyAndReturn
+   * TokenLog updateManyAndReturn
    */
-  export type token_logsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: TokenLogSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * The data used to update token_logs.
+     * The data used to update TokenLogs.
      */
-    data: XOR<token_logsUpdateManyMutationInput, token_logsUncheckedUpdateManyInput>
+    data: XOR<TokenLogUpdateManyMutationInput, TokenLogUncheckedUpdateManyInput>
     /**
-     * Filter which token_logs to update
+     * Filter which TokenLogs to update
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
-     * Limit how many token_logs to update.
+     * Limit how many TokenLogs to update.
      */
     limit?: number
   }
 
   /**
-   * token_logs upsert
+   * TokenLog upsert
    */
-  export type token_logsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * The filter to search for the token_logs to update in case it exists.
+     * The filter to search for the TokenLog to update in case it exists.
      */
-    where: token_logsWhereUniqueInput
+    where: TokenLogWhereUniqueInput
     /**
-     * In case the token_logs found by the `where` argument doesn't exist, create a new token_logs with this data.
+     * In case the TokenLog found by the `where` argument doesn't exist, create a new TokenLog with this data.
      */
-    create: XOR<token_logsCreateInput, token_logsUncheckedCreateInput>
+    create: XOR<TokenLogCreateInput, TokenLogUncheckedCreateInput>
     /**
-     * In case the token_logs was found with the provided `where` argument, update it with this data.
+     * In case the TokenLog was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<token_logsUpdateInput, token_logsUncheckedUpdateInput>
+    update: XOR<TokenLogUpdateInput, TokenLogUncheckedUpdateInput>
   }
 
   /**
-   * token_logs delete
+   * TokenLog delete
    */
-  export type token_logsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
     /**
-     * Filter which token_logs to delete.
+     * Filter which TokenLog to delete.
      */
-    where: token_logsWhereUniqueInput
+    where: TokenLogWhereUniqueInput
   }
 
   /**
-   * token_logs deleteMany
+   * TokenLog deleteMany
    */
-  export type token_logsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which token_logs to delete
+     * Filter which TokenLogs to delete
      */
-    where?: token_logsWhereInput
+    where?: TokenLogWhereInput
     /**
-     * Limit how many token_logs to delete.
+     * Limit how many TokenLogs to delete.
      */
     limit?: number
   }
 
   /**
-   * token_logs without action
+   * TokenLog without action
    */
-  export type token_logsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TokenLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the token_logs
+     * Select specific fields to fetch from the TokenLog
      */
-    select?: token_logsSelect<ExtArgs> | null
+    select?: TokenLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the token_logs
+     * Omit specific fields from the TokenLog
      */
-    omit?: token_logsOmit<ExtArgs> | null
+    omit?: TokenLogOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AuditLog
+   */
+
+  export type AggregateAuditLog = {
+    _count: AuditLogCountAggregateOutputType | null
+    _avg: AuditLogAvgAggregateOutputType | null
+    _sum: AuditLogSumAggregateOutputType | null
+    _min: AuditLogMinAggregateOutputType | null
+    _max: AuditLogMaxAggregateOutputType | null
+  }
+
+  export type AuditLogAvgAggregateOutputType = {
+    id: number | null
+    leadId: number | null
+  }
+
+  export type AuditLogSumAggregateOutputType = {
+    id: number | null
+    leadId: number | null
+  }
+
+  export type AuditLogMinAggregateOutputType = {
+    id: number | null
+    leadId: number | null
+    oldStatus: string | null
+    newStatus: string | null
+    reason: string | null
+    triggeredBy: string | null
+    createdAt: Date | null
+  }
+
+  export type AuditLogMaxAggregateOutputType = {
+    id: number | null
+    leadId: number | null
+    oldStatus: string | null
+    newStatus: string | null
+    reason: string | null
+    triggeredBy: string | null
+    createdAt: Date | null
+  }
+
+  export type AuditLogCountAggregateOutputType = {
+    id: number
+    leadId: number
+    oldStatus: number
+    newStatus: number
+    reason: number
+    triggeredBy: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AuditLogAvgAggregateInputType = {
+    id?: true
+    leadId?: true
+  }
+
+  export type AuditLogSumAggregateInputType = {
+    id?: true
+    leadId?: true
+  }
+
+  export type AuditLogMinAggregateInputType = {
+    id?: true
+    leadId?: true
+    oldStatus?: true
+    newStatus?: true
+    reason?: true
+    triggeredBy?: true
+    createdAt?: true
+  }
+
+  export type AuditLogMaxAggregateInputType = {
+    id?: true
+    leadId?: true
+    oldStatus?: true
+    newStatus?: true
+    reason?: true
+    triggeredBy?: true
+    createdAt?: true
+  }
+
+  export type AuditLogCountAggregateInputType = {
+    id?: true
+    leadId?: true
+    oldStatus?: true
+    newStatus?: true
+    reason?: true
+    triggeredBy?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AuditLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuditLog to aggregate.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AuditLogs
+    **/
+    _count?: true | AuditLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AuditLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AuditLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AuditLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AuditLogMaxAggregateInputType
+  }
+
+  export type GetAuditLogAggregateType<T extends AuditLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuditLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAuditLog[P]>
+      : GetScalarType<T[P], AggregateAuditLog[P]>
+  }
+
+
+
+
+  export type AuditLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithAggregationInput | AuditLogOrderByWithAggregationInput[]
+    by: AuditLogScalarFieldEnum[] | AuditLogScalarFieldEnum
+    having?: AuditLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AuditLogCountAggregateInputType | true
+    _avg?: AuditLogAvgAggregateInputType
+    _sum?: AuditLogSumAggregateInputType
+    _min?: AuditLogMinAggregateInputType
+    _max?: AuditLogMaxAggregateInputType
+  }
+
+  export type AuditLogGroupByOutputType = {
+    id: number
+    leadId: number
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt: Date
+    _count: AuditLogCountAggregateOutputType | null
+    _avg: AuditLogAvgAggregateOutputType | null
+    _sum: AuditLogSumAggregateOutputType | null
+    _min: AuditLogMinAggregateOutputType | null
+    _max: AuditLogMaxAggregateOutputType | null
+  }
+
+  type GetAuditLogGroupByPayload<T extends AuditLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AuditLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AuditLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AuditLogGroupByOutputType[P]>
+            : GetScalarType<T[P], AuditLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    leadId?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    reason?: boolean
+    triggeredBy?: boolean
+    createdAt?: boolean
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    leadId?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    reason?: boolean
+    triggeredBy?: boolean
+    createdAt?: boolean
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    leadId?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    reason?: boolean
+    triggeredBy?: boolean
+    createdAt?: boolean
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectScalar = {
+    id?: boolean
+    leadId?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    reason?: boolean
+    triggeredBy?: boolean
+    createdAt?: boolean
+  }
+
+  export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "oldStatus" | "newStatus" | "reason" | "triggeredBy" | "createdAt", ExtArgs["result"]["auditLog"]>
+  export type AuditLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
+  }
+  export type AuditLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
+  }
+  export type AuditLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
+  }
+
+  export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuditLog"
+    objects: {
+      lead: Prisma.$LeadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      leadId: number
+      oldStatus: string
+      newStatus: string
+      reason: string
+      triggeredBy: string
+      createdAt: Date
+    }, ExtArgs["result"]["auditLog"]>
+    composites: {}
+  }
+
+  type AuditLogGetPayload<S extends boolean | null | undefined | AuditLogDefaultArgs> = $Result.GetResult<Prisma.$AuditLogPayload, S>
+
+  type AuditLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AuditLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AuditLogCountAggregateInputType | true
+    }
+
+  export interface AuditLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuditLog'], meta: { name: 'AuditLog' } }
+    /**
+     * Find zero or one AuditLog that matches the filter.
+     * @param {AuditLogFindUniqueArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AuditLogFindUniqueArgs>(args: SelectSubset<T, AuditLogFindUniqueArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AuditLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AuditLogFindUniqueOrThrowArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AuditLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AuditLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AuditLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindFirstArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AuditLogFindFirstArgs>(args?: SelectSubset<T, AuditLogFindFirstArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AuditLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindFirstOrThrowArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AuditLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AuditLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AuditLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AuditLogs
+     * const auditLogs = await prisma.auditLog.findMany()
+     * 
+     * // Get first 10 AuditLogs
+     * const auditLogs = await prisma.auditLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AuditLogFindManyArgs>(args?: SelectSubset<T, AuditLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AuditLog.
+     * @param {AuditLogCreateArgs} args - Arguments to create a AuditLog.
+     * @example
+     * // Create one AuditLog
+     * const AuditLog = await prisma.auditLog.create({
+     *   data: {
+     *     // ... data to create a AuditLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends AuditLogCreateArgs>(args: SelectSubset<T, AuditLogCreateArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AuditLogs.
+     * @param {AuditLogCreateManyArgs} args - Arguments to create many AuditLogs.
+     * @example
+     * // Create many AuditLogs
+     * const auditLog = await prisma.auditLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AuditLogCreateManyArgs>(args?: SelectSubset<T, AuditLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AuditLogs and returns the data saved in the database.
+     * @param {AuditLogCreateManyAndReturnArgs} args - Arguments to create many AuditLogs.
+     * @example
+     * // Create many AuditLogs
+     * const auditLog = await prisma.auditLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AuditLogs and only return the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AuditLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AuditLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AuditLog.
+     * @param {AuditLogDeleteArgs} args - Arguments to delete one AuditLog.
+     * @example
+     * // Delete one AuditLog
+     * const AuditLog = await prisma.auditLog.delete({
+     *   where: {
+     *     // ... filter to delete one AuditLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AuditLogDeleteArgs>(args: SelectSubset<T, AuditLogDeleteArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AuditLog.
+     * @param {AuditLogUpdateArgs} args - Arguments to update one AuditLog.
+     * @example
+     * // Update one AuditLog
+     * const auditLog = await prisma.auditLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AuditLogUpdateArgs>(args: SelectSubset<T, AuditLogUpdateArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AuditLogs.
+     * @param {AuditLogDeleteManyArgs} args - Arguments to filter AuditLogs to delete.
+     * @example
+     * // Delete a few AuditLogs
+     * const { count } = await prisma.auditLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AuditLogDeleteManyArgs>(args?: SelectSubset<T, AuditLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AuditLogs
+     * const auditLog = await prisma.auditLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AuditLogUpdateManyArgs>(args: SelectSubset<T, AuditLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuditLogs and returns the data updated in the database.
+     * @param {AuditLogUpdateManyAndReturnArgs} args - Arguments to update many AuditLogs.
+     * @example
+     * // Update many AuditLogs
+     * const auditLog = await prisma.auditLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AuditLogs and only return the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AuditLogUpdateManyAndReturnArgs>(args: SelectSubset<T, AuditLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AuditLog.
+     * @param {AuditLogUpsertArgs} args - Arguments to update or create a AuditLog.
+     * @example
+     * // Update or create a AuditLog
+     * const auditLog = await prisma.auditLog.upsert({
+     *   create: {
+     *     // ... data to create a AuditLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AuditLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AuditLogUpsertArgs>(args: SelectSubset<T, AuditLogUpsertArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogCountArgs} args - Arguments to filter AuditLogs to count.
+     * @example
+     * // Count the number of AuditLogs
+     * const count = await prisma.auditLog.count({
+     *   where: {
+     *     // ... the filter for the AuditLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends AuditLogCountArgs>(
+      args?: Subset<T, AuditLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AuditLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AuditLogAggregateArgs>(args: Subset<T, AuditLogAggregateArgs>): Prisma.PrismaPromise<GetAuditLogAggregateType<T>>
+
+    /**
+     * Group by AuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AuditLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AuditLogGroupByArgs['orderBy'] }
+        : { orderBy?: AuditLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AuditLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuditLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AuditLog model
+   */
+  readonly fields: AuditLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AuditLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AuditLog model
+   */
+  interface AuditLogFieldRefs {
+    readonly id: FieldRef<"AuditLog", 'Int'>
+    readonly leadId: FieldRef<"AuditLog", 'Int'>
+    readonly oldStatus: FieldRef<"AuditLog", 'String'>
+    readonly newStatus: FieldRef<"AuditLog", 'String'>
+    readonly reason: FieldRef<"AuditLog", 'String'>
+    readonly triggeredBy: FieldRef<"AuditLog", 'String'>
+    readonly createdAt: FieldRef<"AuditLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AuditLog findUnique
+   */
+  export type AuditLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog findUniqueOrThrow
+   */
+  export type AuditLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog findFirst
+   */
+  export type AuditLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog findFirstOrThrow
+   */
+  export type AuditLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog findMany
+   */
+  export type AuditLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AuditLogs to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog create
+   */
+  export type AuditLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AuditLog.
+     */
+    data: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
+  }
+
+  /**
+   * AuditLog createMany
+   */
+  export type AuditLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AuditLogs.
+     */
+    data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AuditLog createManyAndReturn
+   */
+  export type AuditLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many AuditLogs.
+     */
+    data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AuditLog update
+   */
+  export type AuditLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AuditLog.
+     */
+    data: XOR<AuditLogUpdateInput, AuditLogUncheckedUpdateInput>
+    /**
+     * Choose, which AuditLog to update.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog updateMany
+   */
+  export type AuditLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AuditLogs.
+     */
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AuditLogs to update
+     */
+    where?: AuditLogWhereInput
+    /**
+     * Limit how many AuditLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuditLog updateManyAndReturn
+   */
+  export type AuditLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * The data used to update AuditLogs.
+     */
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AuditLogs to update
+     */
+    where?: AuditLogWhereInput
+    /**
+     * Limit how many AuditLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AuditLog upsert
+   */
+  export type AuditLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AuditLog to update in case it exists.
+     */
+    where: AuditLogWhereUniqueInput
+    /**
+     * In case the AuditLog found by the `where` argument doesn't exist, create a new AuditLog with this data.
+     */
+    create: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
+    /**
+     * In case the AuditLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AuditLogUpdateInput, AuditLogUncheckedUpdateInput>
+  }
+
+  /**
+   * AuditLog delete
+   */
+  export type AuditLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
+     * Filter which AuditLog to delete.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog deleteMany
+   */
+  export type AuditLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuditLogs to delete
+     */
+    where?: AuditLogWhereInput
+    /**
+     * Limit how many AuditLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuditLog without action
+   */
+  export type AuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
   }
 
 
@@ -13339,11 +12190,11 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phone: 'phone',
-    createdAt: 'createdAt',
-    assignedAgentId: 'assignedAgentId',
     platform: 'platform',
     sourceId: 'sourceId',
     status: 'status',
+    assignedAgentId: 'assignedAgentId',
+    createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
@@ -13353,11 +12204,11 @@ export namespace Prisma {
   export const AgentScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    createdAt: 'createdAt',
     email: 'email',
-    isOnline: 'isOnline',
     passwordHash: 'passwordHash',
-    role: 'role'
+    role: 'role',
+    isOnline: 'isOnline',
+    createdAt: 'createdAt'
   };
 
   export type AgentScalarFieldEnum = (typeof AgentScalarFieldEnum)[keyof typeof AgentScalarFieldEnum]
@@ -13367,9 +12218,9 @@ export namespace Prisma {
     id: 'id',
     leadId: 'leadId',
     agentId: 'agentId',
+    platform: 'platform',
     status: 'status',
-    createdAt: 'createdAt',
-    platform: 'platform'
+    createdAt: 'createdAt'
   };
 
   export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
@@ -13378,11 +12229,11 @@ export namespace Prisma {
   export const MessageScalarFieldEnum: {
     id: 'id',
     conversationId: 'conversationId',
+    role: 'role',
     content: 'content',
-    createdAt: 'createdAt',
-    confidence: 'confidence',
     intent: 'intent',
-    role: 'role'
+    confidence: 'confidence',
+    createdAt: 'createdAt'
   };
 
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
@@ -13391,12 +12242,12 @@ export namespace Prisma {
   export const PaymentScalarFieldEnum: {
     id: 'id',
     leadId: 'leadId',
-    amount: 'amount',
-    createdAt: 'createdAt',
-    currency: 'currency',
-    paidAt: 'paidAt',
     razorpayLinkId: 'razorpayLinkId',
-    status: 'status'
+    amount: 'amount',
+    currency: 'currency',
+    status: 'status',
+    paidAt: 'paidAt',
+    createdAt: 'createdAt'
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
@@ -13414,19 +12265,9 @@ export namespace Prisma {
   export type EscalationLogScalarFieldEnum = (typeof EscalationLogScalarFieldEnum)[keyof typeof EscalationLogScalarFieldEnum]
 
 
-  export const ConversationsScalarFieldEnum: {
+  export const IntentLogScalarFieldEnum: {
     id: 'id',
-    platform_thread_id: 'platform_thread_id',
-    status: 'status',
-    last_message_at: 'last_message_at'
-  };
-
-  export type ConversationsScalarFieldEnum = (typeof ConversationsScalarFieldEnum)[keyof typeof ConversationsScalarFieldEnum]
-
-
-  export const Intent_logsScalarFieldEnum: {
-    id: 'id',
-    sender_id: 'sender_id',
+    senderId: 'senderId',
     message: 'message',
     intent: 'intent',
     confidence: 'confidence',
@@ -13435,32 +12276,34 @@ export namespace Prisma {
     timestamp: 'timestamp'
   };
 
-  export type Intent_logsScalarFieldEnum = (typeof Intent_logsScalarFieldEnum)[keyof typeof Intent_logsScalarFieldEnum]
+  export type IntentLogScalarFieldEnum = (typeof IntentLogScalarFieldEnum)[keyof typeof IntentLogScalarFieldEnum]
 
 
-  export const MessagesScalarFieldEnum: {
+  export const TokenLogScalarFieldEnum: {
     id: 'id',
-    conversation_id: 'conversation_id',
-    sender: 'sender',
-    content: 'content',
-    timestamp: 'timestamp'
-  };
-
-  export type MessagesScalarFieldEnum = (typeof MessagesScalarFieldEnum)[keyof typeof MessagesScalarFieldEnum]
-
-
-  export const Token_logsScalarFieldEnum: {
-    id: 'id',
-    sender_id: 'sender_id',
+    senderId: 'senderId',
     model: 'model',
     intent: 'intent',
-    prompt_tokens: 'prompt_tokens',
-    completion_tokens: 'completion_tokens',
-    total_tokens: 'total_tokens',
+    promptTokens: 'promptTokens',
+    completionTokens: 'completionTokens',
+    totalTokens: 'totalTokens',
     timestamp: 'timestamp'
   };
 
-  export type Token_logsScalarFieldEnum = (typeof Token_logsScalarFieldEnum)[keyof typeof Token_logsScalarFieldEnum]
+  export type TokenLogScalarFieldEnum = (typeof TokenLogScalarFieldEnum)[keyof typeof TokenLogScalarFieldEnum]
+
+
+  export const AuditLogScalarFieldEnum: {
+    id: 'id',
+    leadId: 'leadId',
+    oldStatus: 'oldStatus',
+    newStatus: 'newStatus',
+    reason: 'reason',
+    triggeredBy: 'triggeredBy',
+    createdAt: 'createdAt'
+  };
+
+  export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13521,20 +12364,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'LeadStatus'
    */
   export type EnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeadStatus'>
@@ -13549,9 +12378,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'DateTime'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -13570,16 +12406,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Boolean'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -13594,6 +12423,20 @@ export namespace Prisma {
    * Reference to a field of type 'MessageRole[]'
    */
   export type ListEnumMessageRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -13622,16 +12465,17 @@ export namespace Prisma {
     name?: StringNullableFilter<"Lead"> | string | null
     email?: StringNullableFilter<"Lead"> | string | null
     phone?: StringNullableFilter<"Lead"> | string | null
-    createdAt?: DateTimeFilter<"Lead"> | Date | string
-    assignedAgentId?: IntNullableFilter<"Lead"> | number | null
     platform?: StringFilter<"Lead"> | string
     sourceId?: StringFilter<"Lead"> | string
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
+    assignedAgentId?: IntNullableFilter<"Lead"> | number | null
+    createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
-    conversations?: ConversationListRelationFilter
-    escalations?: EscalationLogListRelationFilter
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+    conversations?: ConversationListRelationFilter
     payments?: PaymentListRelationFilter
+    escalations?: EscalationLogListRelationFilter
+    auditLogs?: AuditLogListRelationFilter
   }
 
   export type LeadOrderByWithRelationInput = {
@@ -13639,16 +12483,17 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    assignedAgentId?: SortOrderInput | SortOrder
     platform?: SortOrder
     sourceId?: SortOrder
     status?: SortOrder
+    assignedAgentId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
-    conversations?: ConversationOrderByRelationAggregateInput
-    escalations?: EscalationLogOrderByRelationAggregateInput
     agent?: AgentOrderByWithRelationInput
+    conversations?: ConversationOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
+    escalations?: EscalationLogOrderByRelationAggregateInput
+    auditLogs?: AuditLogOrderByRelationAggregateInput
   }
 
   export type LeadWhereUniqueInput = Prisma.AtLeast<{
@@ -13660,15 +12505,16 @@ export namespace Prisma {
     name?: StringNullableFilter<"Lead"> | string | null
     email?: StringNullableFilter<"Lead"> | string | null
     phone?: StringNullableFilter<"Lead"> | string | null
-    createdAt?: DateTimeFilter<"Lead"> | Date | string
-    assignedAgentId?: IntNullableFilter<"Lead"> | number | null
     platform?: StringFilter<"Lead"> | string
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
+    assignedAgentId?: IntNullableFilter<"Lead"> | number | null
+    createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
-    conversations?: ConversationListRelationFilter
-    escalations?: EscalationLogListRelationFilter
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+    conversations?: ConversationListRelationFilter
     payments?: PaymentListRelationFilter
+    escalations?: EscalationLogListRelationFilter
+    auditLogs?: AuditLogListRelationFilter
   }, "id" | "sourceId">
 
   export type LeadOrderByWithAggregationInput = {
@@ -13676,11 +12522,11 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    assignedAgentId?: SortOrderInput | SortOrder
     platform?: SortOrder
     sourceId?: SortOrder
     status?: SortOrder
+    assignedAgentId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: LeadCountOrderByAggregateInput
     _avg?: LeadAvgOrderByAggregateInput
@@ -13697,11 +12543,11 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     email?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Lead"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
-    assignedAgentId?: IntNullableWithAggregatesFilter<"Lead"> | number | null
     platform?: StringWithAggregatesFilter<"Lead"> | string
     sourceId?: StringWithAggregatesFilter<"Lead"> | string
     status?: EnumLeadStatusWithAggregatesFilter<"Lead"> | $Enums.LeadStatus
+    assignedAgentId?: IntNullableWithAggregatesFilter<"Lead"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
   }
 
@@ -13711,27 +12557,27 @@ export namespace Prisma {
     NOT?: AgentWhereInput | AgentWhereInput[]
     id?: IntFilter<"Agent"> | number
     name?: StringFilter<"Agent"> | string
-    createdAt?: DateTimeFilter<"Agent"> | Date | string
     email?: StringFilter<"Agent"> | string
-    isOnline?: BoolFilter<"Agent"> | boolean
     passwordHash?: StringFilter<"Agent"> | string
     role?: EnumAgentRoleFilter<"Agent"> | $Enums.AgentRole
+    isOnline?: BoolFilter<"Agent"> | boolean
+    createdAt?: DateTimeFilter<"Agent"> | Date | string
+    leads?: LeadListRelationFilter
     conversations?: ConversationListRelationFilter
     escalations?: EscalationLogListRelationFilter
-    leads?: LeadListRelationFilter
   }
 
   export type AgentOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    createdAt?: SortOrder
     email?: SortOrder
-    isOnline?: SortOrder
     passwordHash?: SortOrder
     role?: SortOrder
+    isOnline?: SortOrder
+    createdAt?: SortOrder
+    leads?: LeadOrderByRelationAggregateInput
     conversations?: ConversationOrderByRelationAggregateInput
     escalations?: EscalationLogOrderByRelationAggregateInput
-    leads?: LeadOrderByRelationAggregateInput
   }
 
   export type AgentWhereUniqueInput = Prisma.AtLeast<{
@@ -13741,23 +12587,23 @@ export namespace Prisma {
     OR?: AgentWhereInput[]
     NOT?: AgentWhereInput | AgentWhereInput[]
     name?: StringFilter<"Agent"> | string
-    createdAt?: DateTimeFilter<"Agent"> | Date | string
-    isOnline?: BoolFilter<"Agent"> | boolean
     passwordHash?: StringFilter<"Agent"> | string
     role?: EnumAgentRoleFilter<"Agent"> | $Enums.AgentRole
+    isOnline?: BoolFilter<"Agent"> | boolean
+    createdAt?: DateTimeFilter<"Agent"> | Date | string
+    leads?: LeadListRelationFilter
     conversations?: ConversationListRelationFilter
     escalations?: EscalationLogListRelationFilter
-    leads?: LeadListRelationFilter
   }, "id" | "email">
 
   export type AgentOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    createdAt?: SortOrder
     email?: SortOrder
-    isOnline?: SortOrder
     passwordHash?: SortOrder
     role?: SortOrder
+    isOnline?: SortOrder
+    createdAt?: SortOrder
     _count?: AgentCountOrderByAggregateInput
     _avg?: AgentAvgOrderByAggregateInput
     _max?: AgentMaxOrderByAggregateInput
@@ -13771,11 +12617,11 @@ export namespace Prisma {
     NOT?: AgentScalarWhereWithAggregatesInput | AgentScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Agent"> | number
     name?: StringWithAggregatesFilter<"Agent"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Agent"> | Date | string
     email?: StringWithAggregatesFilter<"Agent"> | string
-    isOnline?: BoolWithAggregatesFilter<"Agent"> | boolean
     passwordHash?: StringWithAggregatesFilter<"Agent"> | string
     role?: EnumAgentRoleWithAggregatesFilter<"Agent"> | $Enums.AgentRole
+    isOnline?: BoolWithAggregatesFilter<"Agent"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Agent"> | Date | string
   }
 
   export type ConversationWhereInput = {
@@ -13785,11 +12631,11 @@ export namespace Prisma {
     id?: IntFilter<"Conversation"> | number
     leadId?: IntFilter<"Conversation"> | number
     agentId?: IntNullableFilter<"Conversation"> | number | null
+    platform?: StringFilter<"Conversation"> | string
     status?: StringFilter<"Conversation"> | string
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    platform?: StringFilter<"Conversation"> | string
-    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     messages?: MessageListRelationFilter
   }
 
@@ -13797,11 +12643,11 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     agentId?: SortOrderInput | SortOrder
+    platform?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-    platform?: SortOrder
-    agent?: AgentOrderByWithRelationInput
     lead?: LeadOrderByWithRelationInput
+    agent?: AgentOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
   }
 
@@ -13812,11 +12658,11 @@ export namespace Prisma {
     NOT?: ConversationWhereInput | ConversationWhereInput[]
     leadId?: IntFilter<"Conversation"> | number
     agentId?: IntNullableFilter<"Conversation"> | number | null
+    platform?: StringFilter<"Conversation"> | string
     status?: StringFilter<"Conversation"> | string
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    platform?: StringFilter<"Conversation"> | string
-    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     messages?: MessageListRelationFilter
   }, "id">
 
@@ -13824,9 +12670,9 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     agentId?: SortOrderInput | SortOrder
+    platform?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-    platform?: SortOrder
     _count?: ConversationCountOrderByAggregateInput
     _avg?: ConversationAvgOrderByAggregateInput
     _max?: ConversationMaxOrderByAggregateInput
@@ -13841,9 +12687,9 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Conversation"> | number
     leadId?: IntWithAggregatesFilter<"Conversation"> | number
     agentId?: IntNullableWithAggregatesFilter<"Conversation"> | number | null
+    platform?: StringWithAggregatesFilter<"Conversation"> | string
     status?: StringWithAggregatesFilter<"Conversation"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Conversation"> | Date | string
-    platform?: StringWithAggregatesFilter<"Conversation"> | string
   }
 
   export type MessageWhereInput = {
@@ -13852,22 +12698,22 @@ export namespace Prisma {
     NOT?: MessageWhereInput | MessageWhereInput[]
     id?: IntFilter<"Message"> | number
     conversationId?: IntFilter<"Message"> | number
-    content?: StringFilter<"Message"> | string
-    createdAt?: DateTimeFilter<"Message"> | Date | string
-    confidence?: FloatNullableFilter<"Message"> | number | null
-    intent?: StringNullableFilter<"Message"> | string | null
     role?: EnumMessageRoleFilter<"Message"> | $Enums.MessageRole
+    content?: StringFilter<"Message"> | string
+    intent?: StringNullableFilter<"Message"> | string | null
+    confidence?: FloatNullableFilter<"Message"> | number | null
+    createdAt?: DateTimeFilter<"Message"> | Date | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
   }
 
   export type MessageOrderByWithRelationInput = {
     id?: SortOrder
     conversationId?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    confidence?: SortOrderInput | SortOrder
-    intent?: SortOrderInput | SortOrder
     role?: SortOrder
+    content?: SortOrder
+    intent?: SortOrderInput | SortOrder
+    confidence?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     conversation?: ConversationOrderByWithRelationInput
   }
 
@@ -13877,22 +12723,22 @@ export namespace Prisma {
     OR?: MessageWhereInput[]
     NOT?: MessageWhereInput | MessageWhereInput[]
     conversationId?: IntFilter<"Message"> | number
-    content?: StringFilter<"Message"> | string
-    createdAt?: DateTimeFilter<"Message"> | Date | string
-    confidence?: FloatNullableFilter<"Message"> | number | null
-    intent?: StringNullableFilter<"Message"> | string | null
     role?: EnumMessageRoleFilter<"Message"> | $Enums.MessageRole
+    content?: StringFilter<"Message"> | string
+    intent?: StringNullableFilter<"Message"> | string | null
+    confidence?: FloatNullableFilter<"Message"> | number | null
+    createdAt?: DateTimeFilter<"Message"> | Date | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
   }, "id">
 
   export type MessageOrderByWithAggregationInput = {
     id?: SortOrder
     conversationId?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    confidence?: SortOrderInput | SortOrder
-    intent?: SortOrderInput | SortOrder
     role?: SortOrder
+    content?: SortOrder
+    intent?: SortOrderInput | SortOrder
+    confidence?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: MessageCountOrderByAggregateInput
     _avg?: MessageAvgOrderByAggregateInput
     _max?: MessageMaxOrderByAggregateInput
@@ -13906,11 +12752,11 @@ export namespace Prisma {
     NOT?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Message"> | number
     conversationId?: IntWithAggregatesFilter<"Message"> | number
-    content?: StringWithAggregatesFilter<"Message"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
-    confidence?: FloatNullableWithAggregatesFilter<"Message"> | number | null
-    intent?: StringNullableWithAggregatesFilter<"Message"> | string | null
     role?: EnumMessageRoleWithAggregatesFilter<"Message"> | $Enums.MessageRole
+    content?: StringWithAggregatesFilter<"Message"> | string
+    intent?: StringNullableWithAggregatesFilter<"Message"> | string | null
+    confidence?: FloatNullableWithAggregatesFilter<"Message"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
   }
 
   export type PaymentWhereInput = {
@@ -13919,24 +12765,24 @@ export namespace Prisma {
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     id?: IntFilter<"Payment"> | number
     leadId?: IntFilter<"Payment"> | number
-    amount?: FloatFilter<"Payment"> | number
-    createdAt?: DateTimeFilter<"Payment"> | Date | string
-    currency?: StringFilter<"Payment"> | string
-    paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
+    amount?: FloatFilter<"Payment"> | number
+    currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }
 
   export type PaymentOrderByWithRelationInput = {
     id?: SortOrder
     leadId?: SortOrder
-    amount?: SortOrder
-    createdAt?: SortOrder
-    currency?: SortOrder
-    paidAt?: SortOrderInput | SortOrder
     razorpayLinkId?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
     status?: SortOrder
+    paidAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     lead?: LeadOrderByWithRelationInput
   }
 
@@ -13946,24 +12792,24 @@ export namespace Prisma {
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     leadId?: IntFilter<"Payment"> | number
-    amount?: FloatFilter<"Payment"> | number
-    createdAt?: DateTimeFilter<"Payment"> | Date | string
-    currency?: StringFilter<"Payment"> | string
-    paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
+    amount?: FloatFilter<"Payment"> | number
+    currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }, "id">
 
   export type PaymentOrderByWithAggregationInput = {
     id?: SortOrder
     leadId?: SortOrder
-    amount?: SortOrder
-    createdAt?: SortOrder
-    currency?: SortOrder
-    paidAt?: SortOrderInput | SortOrder
     razorpayLinkId?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
     status?: SortOrder
+    paidAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: PaymentCountOrderByAggregateInput
     _avg?: PaymentAvgOrderByAggregateInput
     _max?: PaymentMaxOrderByAggregateInput
@@ -13977,12 +12823,12 @@ export namespace Prisma {
     NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Payment"> | number
     leadId?: IntWithAggregatesFilter<"Payment"> | number
-    amount?: FloatWithAggregatesFilter<"Payment"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
-    currency?: StringWithAggregatesFilter<"Payment"> | string
-    paidAt?: DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
     razorpayLinkId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    amount?: FloatWithAggregatesFilter<"Payment"> | number
+    currency?: StringWithAggregatesFilter<"Payment"> | string
     status?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
+    paidAt?: DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
   }
 
   export type EscalationLogWhereInput = {
@@ -13995,8 +12841,8 @@ export namespace Prisma {
     reason?: StringFilter<"EscalationLog"> | string
     escalatedAt?: DateTimeFilter<"EscalationLog"> | Date | string
     resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
-    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
   }
 
   export type EscalationLogOrderByWithRelationInput = {
@@ -14006,8 +12852,8 @@ export namespace Prisma {
     reason?: SortOrder
     escalatedAt?: SortOrder
     resolvedAt?: SortOrderInput | SortOrder
-    agent?: AgentOrderByWithRelationInput
     lead?: LeadOrderByWithRelationInput
+    agent?: AgentOrderByWithRelationInput
   }
 
   export type EscalationLogWhereUniqueInput = Prisma.AtLeast<{
@@ -14020,8 +12866,8 @@ export namespace Prisma {
     reason?: StringFilter<"EscalationLog"> | string
     escalatedAt?: DateTimeFilter<"EscalationLog"> | Date | string
     resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
-    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
   }, "id">
 
   export type EscalationLogOrderByWithAggregationInput = {
@@ -14050,75 +12896,23 @@ export namespace Prisma {
     resolvedAt?: DateTimeNullableWithAggregatesFilter<"EscalationLog"> | Date | string | null
   }
 
-  export type conversationsWhereInput = {
-    AND?: conversationsWhereInput | conversationsWhereInput[]
-    OR?: conversationsWhereInput[]
-    NOT?: conversationsWhereInput | conversationsWhereInput[]
-    id?: IntFilter<"conversations"> | number
-    platform_thread_id?: StringFilter<"conversations"> | string
-    status?: StringFilter<"conversations"> | string
-    last_message_at?: DateTimeFilter<"conversations"> | Date | string
-    messages?: MessagesListRelationFilter
+  export type IntentLogWhereInput = {
+    AND?: IntentLogWhereInput | IntentLogWhereInput[]
+    OR?: IntentLogWhereInput[]
+    NOT?: IntentLogWhereInput | IntentLogWhereInput[]
+    id?: IntFilter<"IntentLog"> | number
+    senderId?: StringFilter<"IntentLog"> | string
+    message?: StringFilter<"IntentLog"> | string
+    intent?: StringFilter<"IntentLog"> | string
+    confidence?: FloatFilter<"IntentLog"> | number
+    reason?: StringFilter<"IntentLog"> | string
+    escalated?: BoolFilter<"IntentLog"> | boolean
+    timestamp?: DateTimeFilter<"IntentLog"> | Date | string
   }
 
-  export type conversationsOrderByWithRelationInput = {
+  export type IntentLogOrderByWithRelationInput = {
     id?: SortOrder
-    platform_thread_id?: SortOrder
-    status?: SortOrder
-    last_message_at?: SortOrder
-    messages?: messagesOrderByRelationAggregateInput
-  }
-
-  export type conversationsWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    platform_thread_id?: string
-    AND?: conversationsWhereInput | conversationsWhereInput[]
-    OR?: conversationsWhereInput[]
-    NOT?: conversationsWhereInput | conversationsWhereInput[]
-    status?: StringFilter<"conversations"> | string
-    last_message_at?: DateTimeFilter<"conversations"> | Date | string
-    messages?: MessagesListRelationFilter
-  }, "id" | "platform_thread_id">
-
-  export type conversationsOrderByWithAggregationInput = {
-    id?: SortOrder
-    platform_thread_id?: SortOrder
-    status?: SortOrder
-    last_message_at?: SortOrder
-    _count?: conversationsCountOrderByAggregateInput
-    _avg?: conversationsAvgOrderByAggregateInput
-    _max?: conversationsMaxOrderByAggregateInput
-    _min?: conversationsMinOrderByAggregateInput
-    _sum?: conversationsSumOrderByAggregateInput
-  }
-
-  export type conversationsScalarWhereWithAggregatesInput = {
-    AND?: conversationsScalarWhereWithAggregatesInput | conversationsScalarWhereWithAggregatesInput[]
-    OR?: conversationsScalarWhereWithAggregatesInput[]
-    NOT?: conversationsScalarWhereWithAggregatesInput | conversationsScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"conversations"> | number
-    platform_thread_id?: StringWithAggregatesFilter<"conversations"> | string
-    status?: StringWithAggregatesFilter<"conversations"> | string
-    last_message_at?: DateTimeWithAggregatesFilter<"conversations"> | Date | string
-  }
-
-  export type intent_logsWhereInput = {
-    AND?: intent_logsWhereInput | intent_logsWhereInput[]
-    OR?: intent_logsWhereInput[]
-    NOT?: intent_logsWhereInput | intent_logsWhereInput[]
-    id?: IntFilter<"intent_logs"> | number
-    sender_id?: StringFilter<"intent_logs"> | string
-    message?: StringFilter<"intent_logs"> | string
-    intent?: StringFilter<"intent_logs"> | string
-    confidence?: FloatFilter<"intent_logs"> | number
-    reason?: StringFilter<"intent_logs"> | string
-    escalated?: BoolFilter<"intent_logs"> | boolean
-    timestamp?: DateTimeFilter<"intent_logs"> | Date | string
-  }
-
-  export type intent_logsOrderByWithRelationInput = {
-    id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     message?: SortOrder
     intent?: SortOrder
     confidence?: SortOrder
@@ -14127,189 +12921,200 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
-  export type intent_logsWhereUniqueInput = Prisma.AtLeast<{
+  export type IntentLogWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: intent_logsWhereInput | intent_logsWhereInput[]
-    OR?: intent_logsWhereInput[]
-    NOT?: intent_logsWhereInput | intent_logsWhereInput[]
-    sender_id?: StringFilter<"intent_logs"> | string
-    message?: StringFilter<"intent_logs"> | string
-    intent?: StringFilter<"intent_logs"> | string
-    confidence?: FloatFilter<"intent_logs"> | number
-    reason?: StringFilter<"intent_logs"> | string
-    escalated?: BoolFilter<"intent_logs"> | boolean
-    timestamp?: DateTimeFilter<"intent_logs"> | Date | string
+    AND?: IntentLogWhereInput | IntentLogWhereInput[]
+    OR?: IntentLogWhereInput[]
+    NOT?: IntentLogWhereInput | IntentLogWhereInput[]
+    senderId?: StringFilter<"IntentLog"> | string
+    message?: StringFilter<"IntentLog"> | string
+    intent?: StringFilter<"IntentLog"> | string
+    confidence?: FloatFilter<"IntentLog"> | number
+    reason?: StringFilter<"IntentLog"> | string
+    escalated?: BoolFilter<"IntentLog"> | boolean
+    timestamp?: DateTimeFilter<"IntentLog"> | Date | string
   }, "id">
 
-  export type intent_logsOrderByWithAggregationInput = {
+  export type IntentLogOrderByWithAggregationInput = {
     id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     message?: SortOrder
     intent?: SortOrder
     confidence?: SortOrder
     reason?: SortOrder
     escalated?: SortOrder
     timestamp?: SortOrder
-    _count?: intent_logsCountOrderByAggregateInput
-    _avg?: intent_logsAvgOrderByAggregateInput
-    _max?: intent_logsMaxOrderByAggregateInput
-    _min?: intent_logsMinOrderByAggregateInput
-    _sum?: intent_logsSumOrderByAggregateInput
+    _count?: IntentLogCountOrderByAggregateInput
+    _avg?: IntentLogAvgOrderByAggregateInput
+    _max?: IntentLogMaxOrderByAggregateInput
+    _min?: IntentLogMinOrderByAggregateInput
+    _sum?: IntentLogSumOrderByAggregateInput
   }
 
-  export type intent_logsScalarWhereWithAggregatesInput = {
-    AND?: intent_logsScalarWhereWithAggregatesInput | intent_logsScalarWhereWithAggregatesInput[]
-    OR?: intent_logsScalarWhereWithAggregatesInput[]
-    NOT?: intent_logsScalarWhereWithAggregatesInput | intent_logsScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"intent_logs"> | number
-    sender_id?: StringWithAggregatesFilter<"intent_logs"> | string
-    message?: StringWithAggregatesFilter<"intent_logs"> | string
-    intent?: StringWithAggregatesFilter<"intent_logs"> | string
-    confidence?: FloatWithAggregatesFilter<"intent_logs"> | number
-    reason?: StringWithAggregatesFilter<"intent_logs"> | string
-    escalated?: BoolWithAggregatesFilter<"intent_logs"> | boolean
-    timestamp?: DateTimeWithAggregatesFilter<"intent_logs"> | Date | string
+  export type IntentLogScalarWhereWithAggregatesInput = {
+    AND?: IntentLogScalarWhereWithAggregatesInput | IntentLogScalarWhereWithAggregatesInput[]
+    OR?: IntentLogScalarWhereWithAggregatesInput[]
+    NOT?: IntentLogScalarWhereWithAggregatesInput | IntentLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"IntentLog"> | number
+    senderId?: StringWithAggregatesFilter<"IntentLog"> | string
+    message?: StringWithAggregatesFilter<"IntentLog"> | string
+    intent?: StringWithAggregatesFilter<"IntentLog"> | string
+    confidence?: FloatWithAggregatesFilter<"IntentLog"> | number
+    reason?: StringWithAggregatesFilter<"IntentLog"> | string
+    escalated?: BoolWithAggregatesFilter<"IntentLog"> | boolean
+    timestamp?: DateTimeWithAggregatesFilter<"IntentLog"> | Date | string
   }
 
-  export type messagesWhereInput = {
-    AND?: messagesWhereInput | messagesWhereInput[]
-    OR?: messagesWhereInput[]
-    NOT?: messagesWhereInput | messagesWhereInput[]
-    id?: IntFilter<"messages"> | number
-    conversation_id?: IntFilter<"messages"> | number
-    sender?: StringFilter<"messages"> | string
-    content?: StringFilter<"messages"> | string
-    timestamp?: DateTimeFilter<"messages"> | Date | string
-    conversations?: XOR<ConversationsScalarRelationFilter, conversationsWhereInput>
+  export type TokenLogWhereInput = {
+    AND?: TokenLogWhereInput | TokenLogWhereInput[]
+    OR?: TokenLogWhereInput[]
+    NOT?: TokenLogWhereInput | TokenLogWhereInput[]
+    id?: IntFilter<"TokenLog"> | number
+    senderId?: StringFilter<"TokenLog"> | string
+    model?: StringFilter<"TokenLog"> | string
+    intent?: StringFilter<"TokenLog"> | string
+    promptTokens?: IntFilter<"TokenLog"> | number
+    completionTokens?: IntFilter<"TokenLog"> | number
+    totalTokens?: IntFilter<"TokenLog"> | number
+    timestamp?: DateTimeFilter<"TokenLog"> | Date | string
   }
 
-  export type messagesOrderByWithRelationInput = {
+  export type TokenLogOrderByWithRelationInput = {
     id?: SortOrder
-    conversation_id?: SortOrder
-    sender?: SortOrder
-    content?: SortOrder
-    timestamp?: SortOrder
-    conversations?: conversationsOrderByWithRelationInput
-  }
-
-  export type messagesWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: messagesWhereInput | messagesWhereInput[]
-    OR?: messagesWhereInput[]
-    NOT?: messagesWhereInput | messagesWhereInput[]
-    conversation_id?: IntFilter<"messages"> | number
-    sender?: StringFilter<"messages"> | string
-    content?: StringFilter<"messages"> | string
-    timestamp?: DateTimeFilter<"messages"> | Date | string
-    conversations?: XOR<ConversationsScalarRelationFilter, conversationsWhereInput>
-  }, "id">
-
-  export type messagesOrderByWithAggregationInput = {
-    id?: SortOrder
-    conversation_id?: SortOrder
-    sender?: SortOrder
-    content?: SortOrder
-    timestamp?: SortOrder
-    _count?: messagesCountOrderByAggregateInput
-    _avg?: messagesAvgOrderByAggregateInput
-    _max?: messagesMaxOrderByAggregateInput
-    _min?: messagesMinOrderByAggregateInput
-    _sum?: messagesSumOrderByAggregateInput
-  }
-
-  export type messagesScalarWhereWithAggregatesInput = {
-    AND?: messagesScalarWhereWithAggregatesInput | messagesScalarWhereWithAggregatesInput[]
-    OR?: messagesScalarWhereWithAggregatesInput[]
-    NOT?: messagesScalarWhereWithAggregatesInput | messagesScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"messages"> | number
-    conversation_id?: IntWithAggregatesFilter<"messages"> | number
-    sender?: StringWithAggregatesFilter<"messages"> | string
-    content?: StringWithAggregatesFilter<"messages"> | string
-    timestamp?: DateTimeWithAggregatesFilter<"messages"> | Date | string
-  }
-
-  export type token_logsWhereInput = {
-    AND?: token_logsWhereInput | token_logsWhereInput[]
-    OR?: token_logsWhereInput[]
-    NOT?: token_logsWhereInput | token_logsWhereInput[]
-    id?: IntFilter<"token_logs"> | number
-    sender_id?: StringFilter<"token_logs"> | string
-    model?: StringFilter<"token_logs"> | string
-    intent?: StringFilter<"token_logs"> | string
-    prompt_tokens?: IntFilter<"token_logs"> | number
-    completion_tokens?: IntFilter<"token_logs"> | number
-    total_tokens?: IntFilter<"token_logs"> | number
-    timestamp?: DateTimeFilter<"token_logs"> | Date | string
-  }
-
-  export type token_logsOrderByWithRelationInput = {
-    id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     model?: SortOrder
     intent?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
     timestamp?: SortOrder
   }
 
-  export type token_logsWhereUniqueInput = Prisma.AtLeast<{
+  export type TokenLogWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: token_logsWhereInput | token_logsWhereInput[]
-    OR?: token_logsWhereInput[]
-    NOT?: token_logsWhereInput | token_logsWhereInput[]
-    sender_id?: StringFilter<"token_logs"> | string
-    model?: StringFilter<"token_logs"> | string
-    intent?: StringFilter<"token_logs"> | string
-    prompt_tokens?: IntFilter<"token_logs"> | number
-    completion_tokens?: IntFilter<"token_logs"> | number
-    total_tokens?: IntFilter<"token_logs"> | number
-    timestamp?: DateTimeFilter<"token_logs"> | Date | string
+    AND?: TokenLogWhereInput | TokenLogWhereInput[]
+    OR?: TokenLogWhereInput[]
+    NOT?: TokenLogWhereInput | TokenLogWhereInput[]
+    senderId?: StringFilter<"TokenLog"> | string
+    model?: StringFilter<"TokenLog"> | string
+    intent?: StringFilter<"TokenLog"> | string
+    promptTokens?: IntFilter<"TokenLog"> | number
+    completionTokens?: IntFilter<"TokenLog"> | number
+    totalTokens?: IntFilter<"TokenLog"> | number
+    timestamp?: DateTimeFilter<"TokenLog"> | Date | string
   }, "id">
 
-  export type token_logsOrderByWithAggregationInput = {
+  export type TokenLogOrderByWithAggregationInput = {
     id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     model?: SortOrder
     intent?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
     timestamp?: SortOrder
-    _count?: token_logsCountOrderByAggregateInput
-    _avg?: token_logsAvgOrderByAggregateInput
-    _max?: token_logsMaxOrderByAggregateInput
-    _min?: token_logsMinOrderByAggregateInput
-    _sum?: token_logsSumOrderByAggregateInput
+    _count?: TokenLogCountOrderByAggregateInput
+    _avg?: TokenLogAvgOrderByAggregateInput
+    _max?: TokenLogMaxOrderByAggregateInput
+    _min?: TokenLogMinOrderByAggregateInput
+    _sum?: TokenLogSumOrderByAggregateInput
   }
 
-  export type token_logsScalarWhereWithAggregatesInput = {
-    AND?: token_logsScalarWhereWithAggregatesInput | token_logsScalarWhereWithAggregatesInput[]
-    OR?: token_logsScalarWhereWithAggregatesInput[]
-    NOT?: token_logsScalarWhereWithAggregatesInput | token_logsScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"token_logs"> | number
-    sender_id?: StringWithAggregatesFilter<"token_logs"> | string
-    model?: StringWithAggregatesFilter<"token_logs"> | string
-    intent?: StringWithAggregatesFilter<"token_logs"> | string
-    prompt_tokens?: IntWithAggregatesFilter<"token_logs"> | number
-    completion_tokens?: IntWithAggregatesFilter<"token_logs"> | number
-    total_tokens?: IntWithAggregatesFilter<"token_logs"> | number
-    timestamp?: DateTimeWithAggregatesFilter<"token_logs"> | Date | string
+  export type TokenLogScalarWhereWithAggregatesInput = {
+    AND?: TokenLogScalarWhereWithAggregatesInput | TokenLogScalarWhereWithAggregatesInput[]
+    OR?: TokenLogScalarWhereWithAggregatesInput[]
+    NOT?: TokenLogScalarWhereWithAggregatesInput | TokenLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TokenLog"> | number
+    senderId?: StringWithAggregatesFilter<"TokenLog"> | string
+    model?: StringWithAggregatesFilter<"TokenLog"> | string
+    intent?: StringWithAggregatesFilter<"TokenLog"> | string
+    promptTokens?: IntWithAggregatesFilter<"TokenLog"> | number
+    completionTokens?: IntWithAggregatesFilter<"TokenLog"> | number
+    totalTokens?: IntWithAggregatesFilter<"TokenLog"> | number
+    timestamp?: DateTimeWithAggregatesFilter<"TokenLog"> | Date | string
+  }
+
+  export type AuditLogWhereInput = {
+    AND?: AuditLogWhereInput | AuditLogWhereInput[]
+    OR?: AuditLogWhereInput[]
+    NOT?: AuditLogWhereInput | AuditLogWhereInput[]
+    id?: IntFilter<"AuditLog"> | number
+    leadId?: IntFilter<"AuditLog"> | number
+    oldStatus?: StringFilter<"AuditLog"> | string
+    newStatus?: StringFilter<"AuditLog"> | string
+    reason?: StringFilter<"AuditLog"> | string
+    triggeredBy?: StringFilter<"AuditLog"> | string
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
+  }
+
+  export type AuditLogOrderByWithRelationInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    reason?: SortOrder
+    triggeredBy?: SortOrder
+    createdAt?: SortOrder
+    lead?: LeadOrderByWithRelationInput
+  }
+
+  export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AuditLogWhereInput | AuditLogWhereInput[]
+    OR?: AuditLogWhereInput[]
+    NOT?: AuditLogWhereInput | AuditLogWhereInput[]
+    leadId?: IntFilter<"AuditLog"> | number
+    oldStatus?: StringFilter<"AuditLog"> | string
+    newStatus?: StringFilter<"AuditLog"> | string
+    reason?: StringFilter<"AuditLog"> | string
+    triggeredBy?: StringFilter<"AuditLog"> | string
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
+  }, "id">
+
+  export type AuditLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    reason?: SortOrder
+    triggeredBy?: SortOrder
+    createdAt?: SortOrder
+    _count?: AuditLogCountOrderByAggregateInput
+    _avg?: AuditLogAvgOrderByAggregateInput
+    _max?: AuditLogMaxOrderByAggregateInput
+    _min?: AuditLogMinOrderByAggregateInput
+    _sum?: AuditLogSumOrderByAggregateInput
+  }
+
+  export type AuditLogScalarWhereWithAggregatesInput = {
+    AND?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
+    OR?: AuditLogScalarWhereWithAggregatesInput[]
+    NOT?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AuditLog"> | number
+    leadId?: IntWithAggregatesFilter<"AuditLog"> | number
+    oldStatus?: StringWithAggregatesFilter<"AuditLog"> | string
+    newStatus?: StringWithAggregatesFilter<"AuditLog"> | string
+    reason?: StringWithAggregatesFilter<"AuditLog"> | string
+    triggeredBy?: StringWithAggregatesFilter<"AuditLog"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
 
   export type LeadCreateInput = {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    createdAt?: Date | string
     updatedAt?: Date | string
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
     agent?: AgentCreateNestedOneWithoutLeadsInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateInput = {
@@ -14317,30 +13122,32 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
-    assignedAgentId?: number | null
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    assignedAgentId?: number | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUpdateInput = {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
     agent?: AgentUpdateOneWithoutLeadsNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateInput = {
@@ -14348,15 +13155,16 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadCreateManyInput = {
@@ -14364,11 +13172,11 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
-    assignedAgentId?: number | null
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    assignedAgentId?: number | null
+    createdAt?: Date | string
     updatedAt?: Date | string
   }
 
@@ -14376,10 +13184,10 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14388,99 +13196,99 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentCreateInput = {
     name: string
-    createdAt?: Date | string
     email: string
-    isOnline?: boolean
     passwordHash: string
     role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    leads?: LeadCreateNestedManyWithoutAgentInput
     conversations?: ConversationCreateNestedManyWithoutAgentInput
     escalations?: EscalationLogCreateNestedManyWithoutAgentInput
-    leads?: LeadCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUncheckedCreateInput = {
     id?: number
     name: string
-    createdAt?: Date | string
     email: string
-    isOnline?: boolean
     passwordHash: string
     role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
     passwordHash?: StringFieldUpdateOperationsInput | string
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUpdateManyWithoutAgentNestedInput
     conversations?: ConversationUpdateManyWithoutAgentNestedInput
     escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
-    leads?: LeadUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
     passwordHash?: StringFieldUpdateOperationsInput | string
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentCreateManyInput = {
     id?: number
     name: string
-    createdAt?: Date | string
     email: string
-    isOnline?: boolean
     passwordHash: string
     role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
   }
 
   export type AgentUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
     passwordHash?: StringFieldUpdateOperationsInput | string
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
     passwordHash?: StringFieldUpdateOperationsInput | string
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ConversationCreateInput = {
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
-    agent?: AgentCreateNestedOneWithoutConversationsInput
     lead: LeadCreateNestedOneWithoutConversationsInput
+    agent?: AgentCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
@@ -14488,18 +13296,18 @@ export namespace Prisma {
     id?: number
     leadId: number
     agentId?: number | null
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
   export type ConversationUpdateInput = {
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
-    agent?: AgentUpdateOneWithoutConversationsNestedInput
     lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
+    agent?: AgentUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
@@ -14507,9 +13315,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
     agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
@@ -14517,171 +13325,171 @@ export namespace Prisma {
     id?: number
     leadId: number
     agentId?: number | null
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
   }
 
   export type ConversationUpdateManyMutationInput = {
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
   }
 
   export type ConversationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
     agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
   }
 
   export type MessageCreateInput = {
-    content: string
-    createdAt?: Date | string
-    confidence?: number | null
-    intent?: string | null
     role?: $Enums.MessageRole
+    content: string
+    intent?: string | null
+    confidence?: number | null
+    createdAt?: Date | string
     conversation: ConversationCreateNestedOneWithoutMessagesInput
   }
 
   export type MessageUncheckedCreateInput = {
     id?: number
     conversationId: number
-    content: string
-    createdAt?: Date | string
-    confidence?: number | null
-    intent?: string | null
     role?: $Enums.MessageRole
+    content: string
+    intent?: string | null
+    confidence?: number | null
+    createdAt?: Date | string
   }
 
   export type MessageUpdateInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
+    content?: StringFieldUpdateOperationsInput | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversation?: ConversationUpdateOneRequiredWithoutMessagesNestedInput
   }
 
   export type MessageUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     conversationId?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
+    content?: StringFieldUpdateOperationsInput | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageCreateManyInput = {
     id?: number
     conversationId: number
-    content: string
-    createdAt?: Date | string
-    confidence?: number | null
-    intent?: string | null
     role?: $Enums.MessageRole
+    content: string
+    intent?: string | null
+    confidence?: number | null
+    createdAt?: Date | string
   }
 
   export type MessageUpdateManyMutationInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
+    content?: StringFieldUpdateOperationsInput | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     conversationId?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
+    content?: StringFieldUpdateOperationsInput | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentCreateInput = {
-    amount: number
-    createdAt?: Date | string
-    currency?: string
-    paidAt?: Date | string | null
     razorpayLinkId?: string | null
+    amount: number
+    currency?: string
     status?: $Enums.PaymentStatus
+    paidAt?: Date | string | null
+    createdAt?: Date | string
     lead: LeadCreateNestedOneWithoutPaymentsInput
   }
 
   export type PaymentUncheckedCreateInput = {
     id?: number
     leadId: number
-    amount: number
-    createdAt?: Date | string
-    currency?: string
-    paidAt?: Date | string | null
     razorpayLinkId?: string | null
+    amount: number
+    currency?: string
     status?: $Enums.PaymentStatus
+    paidAt?: Date | string | null
+    createdAt?: Date | string
   }
 
   export type PaymentUpdateInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
   export type PaymentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentCreateManyInput = {
     id?: number
     leadId: number
-    amount: number
-    createdAt?: Date | string
-    currency?: string
-    paidAt?: Date | string | null
     razorpayLinkId?: string | null
+    amount: number
+    currency?: string
     status?: $Enums.PaymentStatus
+    paidAt?: Date | string | null
+    createdAt?: Date | string
   }
 
   export type PaymentUpdateManyMutationInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EscalationLogCreateInput = {
     reason: string
     escalatedAt?: Date | string
     resolvedAt?: Date | string | null
-    agent?: AgentCreateNestedOneWithoutEscalationsInput
     lead: LeadCreateNestedOneWithoutEscalationsInput
+    agent?: AgentCreateNestedOneWithoutEscalationsInput
   }
 
   export type EscalationLogUncheckedCreateInput = {
@@ -14697,8 +13505,8 @@ export namespace Prisma {
     reason?: StringFieldUpdateOperationsInput | string
     escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    agent?: AgentUpdateOneWithoutEscalationsNestedInput
     lead?: LeadUpdateOneRequiredWithoutEscalationsNestedInput
+    agent?: AgentUpdateOneWithoutEscalationsNestedInput
   }
 
   export type EscalationLogUncheckedUpdateInput = {
@@ -14734,79 +13542,29 @@ export namespace Prisma {
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type conversationsCreateInput = {
-    platform_thread_id: string
-    status: string
-    last_message_at: Date | string
-    messages?: messagesCreateNestedManyWithoutConversationsInput
-  }
-
-  export type conversationsUncheckedCreateInput = {
-    id?: number
-    platform_thread_id: string
-    status: string
-    last_message_at: Date | string
-    messages?: messagesUncheckedCreateNestedManyWithoutConversationsInput
-  }
-
-  export type conversationsUpdateInput = {
-    platform_thread_id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    last_message_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: messagesUpdateManyWithoutConversationsNestedInput
-  }
-
-  export type conversationsUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    platform_thread_id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    last_message_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: messagesUncheckedUpdateManyWithoutConversationsNestedInput
-  }
-
-  export type conversationsCreateManyInput = {
-    id?: number
-    platform_thread_id: string
-    status: string
-    last_message_at: Date | string
-  }
-
-  export type conversationsUpdateManyMutationInput = {
-    platform_thread_id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    last_message_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type conversationsUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    platform_thread_id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    last_message_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type intent_logsCreateInput = {
-    sender_id: string
+  export type IntentLogCreateInput = {
+    senderId: string
     message: string
     intent: string
     confidence: number
     reason: string
-    escalated: boolean
-    timestamp: Date | string
+    escalated?: boolean
+    timestamp?: Date | string
   }
 
-  export type intent_logsUncheckedCreateInput = {
+  export type IntentLogUncheckedCreateInput = {
     id?: number
-    sender_id: string
+    senderId: string
     message: string
     intent: string
     confidence: number
     reason: string
-    escalated: boolean
-    timestamp: Date | string
+    escalated?: boolean
+    timestamp?: Date | string
   }
 
-  export type intent_logsUpdateInput = {
-    sender_id?: StringFieldUpdateOperationsInput | string
+  export type IntentLogUpdateInput = {
+    senderId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
     confidence?: FloatFieldUpdateOperationsInput | number
@@ -14815,9 +13573,9 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type intent_logsUncheckedUpdateInput = {
+  export type IntentLogUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sender_id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
     confidence?: FloatFieldUpdateOperationsInput | number
@@ -14826,19 +13584,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type intent_logsCreateManyInput = {
+  export type IntentLogCreateManyInput = {
     id?: number
-    sender_id: string
+    senderId: string
     message: string
     intent: string
     confidence: number
     reason: string
-    escalated: boolean
-    timestamp: Date | string
+    escalated?: boolean
+    timestamp?: Date | string
   }
 
-  export type intent_logsUpdateManyMutationInput = {
-    sender_id?: StringFieldUpdateOperationsInput | string
+  export type IntentLogUpdateManyMutationInput = {
+    senderId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
     confidence?: FloatFieldUpdateOperationsInput | number
@@ -14847,9 +13605,9 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type intent_logsUncheckedUpdateManyInput = {
+  export type IntentLogUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sender_id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
     confidence?: FloatFieldUpdateOperationsInput | number
@@ -14858,130 +13616,144 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type messagesCreateInput = {
-    sender: string
-    content: string
-    timestamp: Date | string
-    conversations: conversationsCreateNestedOneWithoutMessagesInput
-  }
-
-  export type messagesUncheckedCreateInput = {
-    id?: number
-    conversation_id: number
-    sender: string
-    content: string
-    timestamp: Date | string
-  }
-
-  export type messagesUpdateInput = {
-    sender?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: conversationsUpdateOneRequiredWithoutMessagesNestedInput
-  }
-
-  export type messagesUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    conversation_id?: IntFieldUpdateOperationsInput | number
-    sender?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type messagesCreateManyInput = {
-    id?: number
-    conversation_id: number
-    sender: string
-    content: string
-    timestamp: Date | string
-  }
-
-  export type messagesUpdateManyMutationInput = {
-    sender?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type messagesUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    conversation_id?: IntFieldUpdateOperationsInput | number
-    sender?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type token_logsCreateInput = {
-    sender_id: string
+  export type TokenLogCreateInput = {
+    senderId: string
     model: string
     intent: string
-    prompt_tokens: number
-    completion_tokens: number
-    total_tokens: number
-    timestamp: Date | string
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
+    timestamp?: Date | string
   }
 
-  export type token_logsUncheckedCreateInput = {
+  export type TokenLogUncheckedCreateInput = {
     id?: number
-    sender_id: string
+    senderId: string
     model: string
     intent: string
-    prompt_tokens: number
-    completion_tokens: number
-    total_tokens: number
-    timestamp: Date | string
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
+    timestamp?: Date | string
   }
 
-  export type token_logsUpdateInput = {
-    sender_id?: StringFieldUpdateOperationsInput | string
+  export type TokenLogUpdateInput = {
+    senderId?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
-    prompt_tokens?: IntFieldUpdateOperationsInput | number
-    completion_tokens?: IntFieldUpdateOperationsInput | number
-    total_tokens?: IntFieldUpdateOperationsInput | number
+    promptTokens?: IntFieldUpdateOperationsInput | number
+    completionTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type token_logsUncheckedUpdateInput = {
+  export type TokenLogUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sender_id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
-    prompt_tokens?: IntFieldUpdateOperationsInput | number
-    completion_tokens?: IntFieldUpdateOperationsInput | number
-    total_tokens?: IntFieldUpdateOperationsInput | number
+    promptTokens?: IntFieldUpdateOperationsInput | number
+    completionTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type token_logsCreateManyInput = {
+  export type TokenLogCreateManyInput = {
     id?: number
-    sender_id: string
+    senderId: string
     model: string
     intent: string
-    prompt_tokens: number
-    completion_tokens: number
-    total_tokens: number
-    timestamp: Date | string
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
+    timestamp?: Date | string
   }
 
-  export type token_logsUpdateManyMutationInput = {
-    sender_id?: StringFieldUpdateOperationsInput | string
+  export type TokenLogUpdateManyMutationInput = {
+    senderId?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
-    prompt_tokens?: IntFieldUpdateOperationsInput | number
-    completion_tokens?: IntFieldUpdateOperationsInput | number
-    total_tokens?: IntFieldUpdateOperationsInput | number
+    promptTokens?: IntFieldUpdateOperationsInput | number
+    completionTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type token_logsUncheckedUpdateManyInput = {
+  export type TokenLogUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sender_id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     intent?: StringFieldUpdateOperationsInput | string
-    prompt_tokens?: IntFieldUpdateOperationsInput | number
-    completion_tokens?: IntFieldUpdateOperationsInput | number
-    total_tokens?: IntFieldUpdateOperationsInput | number
+    promptTokens?: IntFieldUpdateOperationsInput | number
+    completionTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogCreateInput = {
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt?: Date | string
+    lead: LeadCreateNestedOneWithoutAuditLogsInput
+  }
+
+  export type AuditLogUncheckedCreateInput = {
+    id?: number
+    leadId: number
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUpdateInput = {
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lead?: LeadUpdateOneRequiredWithoutAuditLogsNestedInput
+  }
+
+  export type AuditLogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leadId?: IntFieldUpdateOperationsInput | number
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogCreateManyInput = {
+    id?: number
+    leadId: number
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUpdateManyMutationInput = {
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leadId?: IntFieldUpdateOperationsInput | number
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -15010,28 +13782,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15054,10 +13804,43 @@ export namespace Prisma {
     not?: NestedEnumLeadStatusFilter<$PrismaModel> | $Enums.LeadStatus
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type AgentNullableScalarRelationFilter = {
+    is?: AgentWhereInput | null
+    isNot?: AgentWhereInput | null
+  }
+
   export type ConversationListRelationFilter = {
     every?: ConversationWhereInput
     some?: ConversationWhereInput
     none?: ConversationWhereInput
+  }
+
+  export type PaymentListRelationFilter = {
+    every?: PaymentWhereInput
+    some?: PaymentWhereInput
+    none?: PaymentWhereInput
   }
 
   export type EscalationLogListRelationFilter = {
@@ -15066,15 +13849,10 @@ export namespace Prisma {
     none?: EscalationLogWhereInput
   }
 
-  export type AgentNullableScalarRelationFilter = {
-    is?: AgentWhereInput | null
-    isNot?: AgentWhereInput | null
-  }
-
-  export type PaymentListRelationFilter = {
-    every?: PaymentWhereInput
-    some?: PaymentWhereInput
-    none?: PaymentWhereInput
+  export type AuditLogListRelationFilter = {
+    every?: AuditLogWhereInput
+    some?: AuditLogWhereInput
+    none?: AuditLogWhereInput
   }
 
   export type SortOrderInput = {
@@ -15086,11 +13864,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type PaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type EscalationLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type PaymentOrderByRelationAggregateInput = {
+  export type AuditLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15099,11 +13881,11 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    createdAt?: SortOrder
-    assignedAgentId?: SortOrder
     platform?: SortOrder
     sourceId?: SortOrder
     status?: SortOrder
+    assignedAgentId?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -15117,11 +13899,11 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    createdAt?: SortOrder
-    assignedAgentId?: SortOrder
     platform?: SortOrder
     sourceId?: SortOrder
     status?: SortOrder
+    assignedAgentId?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -15130,11 +13912,11 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    createdAt?: SortOrder
-    assignedAgentId?: SortOrder
     platform?: SortOrder
     sourceId?: SortOrder
     status?: SortOrder
+    assignedAgentId?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -15177,36 +13959,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15235,9 +13987,34 @@ export namespace Prisma {
     _max?: NestedEnumLeadStatusFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type EnumAgentRoleFilter<$PrismaModel = never> = {
@@ -15245,6 +14022,11 @@ export namespace Prisma {
     in?: $Enums.AgentRole[] | ListEnumAgentRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.AgentRole[] | ListEnumAgentRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumAgentRoleFilter<$PrismaModel> | $Enums.AgentRole
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type LeadListRelationFilter = {
@@ -15260,11 +14042,11 @@ export namespace Prisma {
   export type AgentCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    createdAt?: SortOrder
     email?: SortOrder
-    isOnline?: SortOrder
     passwordHash?: SortOrder
     role?: SortOrder
+    isOnline?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AgentAvgOrderByAggregateInput = {
@@ -15274,33 +14056,25 @@ export namespace Prisma {
   export type AgentMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    createdAt?: SortOrder
     email?: SortOrder
-    isOnline?: SortOrder
     passwordHash?: SortOrder
     role?: SortOrder
+    isOnline?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AgentMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    createdAt?: SortOrder
     email?: SortOrder
-    isOnline?: SortOrder
     passwordHash?: SortOrder
     role?: SortOrder
+    isOnline?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AgentSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumAgentRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -15311,6 +14085,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAgentRoleFilter<$PrismaModel>
     _max?: NestedEnumAgentRoleFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type LeadScalarRelationFilter = {
@@ -15332,9 +14114,9 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     agentId?: SortOrder
+    platform?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-    platform?: SortOrder
   }
 
   export type ConversationAvgOrderByAggregateInput = {
@@ -15347,24 +14129,31 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     agentId?: SortOrder
+    platform?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-    platform?: SortOrder
   }
 
   export type ConversationMinOrderByAggregateInput = {
     id?: SortOrder
     leadId?: SortOrder
     agentId?: SortOrder
+    platform?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-    platform?: SortOrder
   }
 
   export type ConversationSumOrderByAggregateInput = {
     id?: SortOrder
     leadId?: SortOrder
     agentId?: SortOrder
+  }
+
+  export type EnumMessageRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageRoleFilter<$PrismaModel> | $Enums.MessageRole
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -15378,13 +14167,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type EnumMessageRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageRoleFilter<$PrismaModel> | $Enums.MessageRole
-  }
-
   export type ConversationScalarRelationFilter = {
     is?: ConversationWhereInput
     isNot?: ConversationWhereInput
@@ -15393,11 +14175,11 @@ export namespace Prisma {
   export type MessageCountOrderByAggregateInput = {
     id?: SortOrder
     conversationId?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    confidence?: SortOrder
-    intent?: SortOrder
     role?: SortOrder
+    content?: SortOrder
+    intent?: SortOrder
+    confidence?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type MessageAvgOrderByAggregateInput = {
@@ -15409,27 +14191,37 @@ export namespace Prisma {
   export type MessageMaxOrderByAggregateInput = {
     id?: SortOrder
     conversationId?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    confidence?: SortOrder
-    intent?: SortOrder
     role?: SortOrder
+    content?: SortOrder
+    intent?: SortOrder
+    confidence?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type MessageMinOrderByAggregateInput = {
     id?: SortOrder
     conversationId?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    confidence?: SortOrder
-    intent?: SortOrder
     role?: SortOrder
+    content?: SortOrder
+    intent?: SortOrder
+    confidence?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type MessageSumOrderByAggregateInput = {
     id?: SortOrder
     conversationId?: SortOrder
     confidence?: SortOrder
+  }
+
+  export type EnumMessageRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel> | $Enums.MessageRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMessageRoleFilter<$PrismaModel>
+    _max?: NestedEnumMessageRoleFilter<$PrismaModel>
   }
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15448,16 +14240,6 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type EnumMessageRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel> | $Enums.MessageRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMessageRoleFilter<$PrismaModel>
-    _max?: NestedEnumMessageRoleFilter<$PrismaModel>
-  }
-
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -15467,6 +14249,13 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type EnumPaymentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -15480,22 +14269,15 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type EnumPaymentStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
-  }
-
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
     leadId?: SortOrder
-    amount?: SortOrder
-    createdAt?: SortOrder
-    currency?: SortOrder
-    paidAt?: SortOrder
     razorpayLinkId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
     status?: SortOrder
+    paidAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PaymentAvgOrderByAggregateInput = {
@@ -15507,23 +14289,23 @@ export namespace Prisma {
   export type PaymentMaxOrderByAggregateInput = {
     id?: SortOrder
     leadId?: SortOrder
-    amount?: SortOrder
-    createdAt?: SortOrder
-    currency?: SortOrder
-    paidAt?: SortOrder
     razorpayLinkId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
     status?: SortOrder
+    paidAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PaymentMinOrderByAggregateInput = {
     id?: SortOrder
     leadId?: SortOrder
-    amount?: SortOrder
-    createdAt?: SortOrder
-    currency?: SortOrder
-    paidAt?: SortOrder
     razorpayLinkId?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
     status?: SortOrder
+    paidAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PaymentSumOrderByAggregateInput = {
@@ -15548,6 +14330,16 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type EnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
+    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  }
+
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -15560,16 +14352,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type EnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
-    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
   export type EscalationLogCountOrderByAggregateInput = {
@@ -15611,48 +14393,9 @@ export namespace Prisma {
     agentId?: SortOrder
   }
 
-  export type MessagesListRelationFilter = {
-    every?: messagesWhereInput
-    some?: messagesWhereInput
-    none?: messagesWhereInput
-  }
-
-  export type messagesOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type conversationsCountOrderByAggregateInput = {
+  export type IntentLogCountOrderByAggregateInput = {
     id?: SortOrder
-    platform_thread_id?: SortOrder
-    status?: SortOrder
-    last_message_at?: SortOrder
-  }
-
-  export type conversationsAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type conversationsMaxOrderByAggregateInput = {
-    id?: SortOrder
-    platform_thread_id?: SortOrder
-    status?: SortOrder
-    last_message_at?: SortOrder
-  }
-
-  export type conversationsMinOrderByAggregateInput = {
-    id?: SortOrder
-    platform_thread_id?: SortOrder
-    status?: SortOrder
-    last_message_at?: SortOrder
-  }
-
-  export type conversationsSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type intent_logsCountOrderByAggregateInput = {
-    id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     message?: SortOrder
     intent?: SortOrder
     confidence?: SortOrder
@@ -15661,14 +14404,14 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
-  export type intent_logsAvgOrderByAggregateInput = {
+  export type IntentLogAvgOrderByAggregateInput = {
     id?: SortOrder
     confidence?: SortOrder
   }
 
-  export type intent_logsMaxOrderByAggregateInput = {
+  export type IntentLogMaxOrderByAggregateInput = {
     id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     message?: SortOrder
     intent?: SortOrder
     confidence?: SortOrder
@@ -15677,9 +14420,9 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
-  export type intent_logsMinOrderByAggregateInput = {
+  export type IntentLogMinOrderByAggregateInput = {
     id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     message?: SortOrder
     intent?: SortOrder
     confidence?: SortOrder
@@ -15688,95 +14431,102 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
-  export type intent_logsSumOrderByAggregateInput = {
+  export type IntentLogSumOrderByAggregateInput = {
     id?: SortOrder
     confidence?: SortOrder
   }
 
-  export type ConversationsScalarRelationFilter = {
-    is?: conversationsWhereInput
-    isNot?: conversationsWhereInput
-  }
-
-  export type messagesCountOrderByAggregateInput = {
+  export type TokenLogCountOrderByAggregateInput = {
     id?: SortOrder
-    conversation_id?: SortOrder
-    sender?: SortOrder
-    content?: SortOrder
-    timestamp?: SortOrder
-  }
-
-  export type messagesAvgOrderByAggregateInput = {
-    id?: SortOrder
-    conversation_id?: SortOrder
-  }
-
-  export type messagesMaxOrderByAggregateInput = {
-    id?: SortOrder
-    conversation_id?: SortOrder
-    sender?: SortOrder
-    content?: SortOrder
-    timestamp?: SortOrder
-  }
-
-  export type messagesMinOrderByAggregateInput = {
-    id?: SortOrder
-    conversation_id?: SortOrder
-    sender?: SortOrder
-    content?: SortOrder
-    timestamp?: SortOrder
-  }
-
-  export type messagesSumOrderByAggregateInput = {
-    id?: SortOrder
-    conversation_id?: SortOrder
-  }
-
-  export type token_logsCountOrderByAggregateInput = {
-    id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     model?: SortOrder
     intent?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
     timestamp?: SortOrder
   }
 
-  export type token_logsAvgOrderByAggregateInput = {
+  export type TokenLogAvgOrderByAggregateInput = {
     id?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
   }
 
-  export type token_logsMaxOrderByAggregateInput = {
+  export type TokenLogMaxOrderByAggregateInput = {
     id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     model?: SortOrder
     intent?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
     timestamp?: SortOrder
   }
 
-  export type token_logsMinOrderByAggregateInput = {
+  export type TokenLogMinOrderByAggregateInput = {
     id?: SortOrder
-    sender_id?: SortOrder
+    senderId?: SortOrder
     model?: SortOrder
     intent?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
     timestamp?: SortOrder
   }
 
-  export type token_logsSumOrderByAggregateInput = {
+  export type TokenLogSumOrderByAggregateInput = {
     id?: SortOrder
-    prompt_tokens?: SortOrder
-    completion_tokens?: SortOrder
-    total_tokens?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
+  }
+
+  export type AuditLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    reason?: SortOrder
+    triggeredBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+  }
+
+  export type AuditLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    reason?: SortOrder
+    triggeredBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    reason?: SortOrder
+    triggeredBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogSumOrderByAggregateInput = {
+    id?: SortOrder
+    leadId?: SortOrder
+  }
+
+  export type AgentCreateNestedOneWithoutLeadsInput = {
+    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
+    connect?: AgentWhereUniqueInput
   }
 
   export type ConversationCreateNestedManyWithoutLeadInput = {
@@ -15786,6 +14536,13 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
+  export type PaymentCreateNestedManyWithoutLeadInput = {
+    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
+    createMany?: PaymentCreateManyLeadInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
   export type EscalationLogCreateNestedManyWithoutLeadInput = {
     create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
@@ -15793,17 +14550,11 @@ export namespace Prisma {
     connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
-  export type AgentCreateNestedOneWithoutLeadsInput = {
-    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
-    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
-    connect?: AgentWhereUniqueInput
-  }
-
-  export type PaymentCreateNestedManyWithoutLeadInput = {
-    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
-    createMany?: PaymentCreateManyLeadInputEnvelope
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  export type AuditLogCreateNestedManyWithoutLeadInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
   export type ConversationUncheckedCreateNestedManyWithoutLeadInput = {
@@ -15813,13 +14564,6 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
-  export type EscalationLogUncheckedCreateNestedManyWithoutLeadInput = {
-    create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
-    createMany?: EscalationLogCreateManyLeadInputEnvelope
-    connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
-  }
-
   export type PaymentUncheckedCreateNestedManyWithoutLeadInput = {
     create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
@@ -15827,12 +14571,22 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type EscalationLogUncheckedCreateNestedManyWithoutLeadInput = {
+    create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
+    createMany?: EscalationLogCreateManyLeadInputEnvelope
+    connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type AuditLogUncheckedCreateNestedManyWithoutLeadInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -15841,6 +14595,20 @@ export namespace Prisma {
 
   export type EnumLeadStatusFieldUpdateOperationsInput = {
     set?: $Enums.LeadStatus
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type AgentUpdateOneWithoutLeadsNestedInput = {
+    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
+    upsert?: AgentUpsertWithoutLeadsInput
+    disconnect?: AgentWhereInput | boolean
+    delete?: AgentWhereInput | boolean
+    connect?: AgentWhereUniqueInput
+    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutLeadsInput, AgentUpdateWithoutLeadsInput>, AgentUncheckedUpdateWithoutLeadsInput>
   }
 
   export type ConversationUpdateManyWithoutLeadNestedInput = {
@@ -15857,6 +14625,20 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
+  export type PaymentUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: PaymentCreateManyLeadInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
   export type EscalationLogUpdateManyWithoutLeadNestedInput = {
     create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
@@ -15871,28 +14653,18 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
-  export type AgentUpdateOneWithoutLeadsNestedInput = {
-    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
-    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
-    upsert?: AgentUpsertWithoutLeadsInput
-    disconnect?: AgentWhereInput | boolean
-    delete?: AgentWhereInput | boolean
-    connect?: AgentWhereUniqueInput
-    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutLeadsInput, AgentUpdateWithoutLeadsInput>, AgentUncheckedUpdateWithoutLeadsInput>
-  }
-
-  export type PaymentUpdateManyWithoutLeadNestedInput = {
-    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
-    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
-    createMany?: PaymentCreateManyLeadInputEnvelope
-    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
-    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
-    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  export type AuditLogUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutLeadInput | AuditLogUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutLeadInput | AuditLogUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutLeadInput | AuditLogUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -15925,6 +14697,20 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
+  export type PaymentUncheckedUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: PaymentCreateManyLeadInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
   export type EscalationLogUncheckedUpdateManyWithoutLeadNestedInput = {
     create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
@@ -15939,18 +14725,25 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
-  export type PaymentUncheckedUpdateManyWithoutLeadNestedInput = {
-    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
-    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
-    createMany?: PaymentCreateManyLeadInputEnvelope
-    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
-    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
-    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  export type AuditLogUncheckedUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutLeadInput | AuditLogUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutLeadInput | AuditLogUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutLeadInput | AuditLogUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type LeadCreateNestedManyWithoutAgentInput = {
+    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
+    createMany?: LeadCreateManyAgentInputEnvelope
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
   }
 
   export type ConversationCreateNestedManyWithoutAgentInput = {
@@ -15967,7 +14760,7 @@ export namespace Prisma {
     connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
-  export type LeadCreateNestedManyWithoutAgentInput = {
+  export type LeadUncheckedCreateNestedManyWithoutAgentInput = {
     create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
     createMany?: LeadCreateManyAgentInputEnvelope
@@ -15988,19 +14781,26 @@ export namespace Prisma {
     connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
-  export type LeadUncheckedCreateNestedManyWithoutAgentInput = {
-    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
-    createMany?: LeadCreateManyAgentInputEnvelope
-    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  export type EnumAgentRoleFieldUpdateOperationsInput = {
+    set?: $Enums.AgentRole
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
 
-  export type EnumAgentRoleFieldUpdateOperationsInput = {
-    set?: $Enums.AgentRole
+  export type LeadUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
+    upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: LeadCreateManyAgentInputEnvelope
+    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    update?: LeadUpdateWithWhereUniqueWithoutAgentInput | LeadUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: LeadUpdateManyWithWhereWithoutAgentInput | LeadUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
   }
 
   export type ConversationUpdateManyWithoutAgentNestedInput = {
@@ -16031,7 +14831,7 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
-  export type LeadUpdateManyWithoutAgentNestedInput = {
+  export type LeadUncheckedUpdateManyWithoutAgentNestedInput = {
     create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
     upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
@@ -16073,30 +14873,16 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
-  export type LeadUncheckedUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
-    upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: LeadCreateManyAgentInputEnvelope
-    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    update?: LeadUpdateWithWhereUniqueWithoutAgentInput | LeadUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: LeadUpdateManyWithWhereWithoutAgentInput | LeadUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
+  export type LeadCreateNestedOneWithoutConversationsInput = {
+    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
+    connect?: LeadWhereUniqueInput
   }
 
   export type AgentCreateNestedOneWithoutConversationsInput = {
     create?: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutConversationsInput
     connect?: AgentWhereUniqueInput
-  }
-
-  export type LeadCreateNestedOneWithoutConversationsInput = {
-    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
-    connect?: LeadWhereUniqueInput
   }
 
   export type MessageCreateNestedManyWithoutConversationInput = {
@@ -16113,6 +14899,14 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
+  export type LeadUpdateOneRequiredWithoutConversationsNestedInput = {
+    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
+    upsert?: LeadUpsertWithoutConversationsInput
+    connect?: LeadWhereUniqueInput
+    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutConversationsInput, LeadUpdateWithoutConversationsInput>, LeadUncheckedUpdateWithoutConversationsInput>
+  }
+
   export type AgentUpdateOneWithoutConversationsNestedInput = {
     create?: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutConversationsInput
@@ -16121,14 +14915,6 @@ export namespace Prisma {
     delete?: AgentWhereInput | boolean
     connect?: AgentWhereUniqueInput
     update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutConversationsInput, AgentUpdateWithoutConversationsInput>, AgentUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type LeadUpdateOneRequiredWithoutConversationsNestedInput = {
-    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
-    upsert?: LeadUpsertWithoutConversationsInput
-    connect?: LeadWhereUniqueInput
-    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutConversationsInput, LeadUpdateWithoutConversationsInput>, LeadUncheckedUpdateWithoutConversationsInput>
   }
 
   export type MessageUpdateManyWithoutConversationNestedInput = {
@@ -16165,16 +14951,16 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput
   }
 
+  export type EnumMessageRoleFieldUpdateOperationsInput = {
+    set?: $Enums.MessageRole
+  }
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type EnumMessageRoleFieldUpdateOperationsInput = {
-    set?: $Enums.MessageRole
   }
 
   export type ConversationUpdateOneRequiredWithoutMessagesNestedInput = {
@@ -16199,12 +14985,12 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type EnumPaymentStatusFieldUpdateOperationsInput = {
     set?: $Enums.PaymentStatus
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type LeadUpdateOneRequiredWithoutPaymentsNestedInput = {
@@ -16215,16 +15001,24 @@ export namespace Prisma {
     update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutPaymentsInput, LeadUpdateWithoutPaymentsInput>, LeadUncheckedUpdateWithoutPaymentsInput>
   }
 
+  export type LeadCreateNestedOneWithoutEscalationsInput = {
+    create?: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutEscalationsInput
+    connect?: LeadWhereUniqueInput
+  }
+
   export type AgentCreateNestedOneWithoutEscalationsInput = {
     create?: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutEscalationsInput
     connect?: AgentWhereUniqueInput
   }
 
-  export type LeadCreateNestedOneWithoutEscalationsInput = {
+  export type LeadUpdateOneRequiredWithoutEscalationsNestedInput = {
     create?: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
     connectOrCreate?: LeadCreateOrConnectWithoutEscalationsInput
+    upsert?: LeadUpsertWithoutEscalationsInput
     connect?: LeadWhereUniqueInput
+    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutEscalationsInput, LeadUpdateWithoutEscalationsInput>, LeadUncheckedUpdateWithoutEscalationsInput>
   }
 
   export type AgentUpdateOneWithoutEscalationsNestedInput = {
@@ -16237,68 +15031,18 @@ export namespace Prisma {
     update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutEscalationsInput, AgentUpdateWithoutEscalationsInput>, AgentUncheckedUpdateWithoutEscalationsInput>
   }
 
-  export type LeadUpdateOneRequiredWithoutEscalationsNestedInput = {
-    create?: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
-    connectOrCreate?: LeadCreateOrConnectWithoutEscalationsInput
-    upsert?: LeadUpsertWithoutEscalationsInput
+  export type LeadCreateNestedOneWithoutAuditLogsInput = {
+    create?: XOR<LeadCreateWithoutAuditLogsInput, LeadUncheckedCreateWithoutAuditLogsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutAuditLogsInput
     connect?: LeadWhereUniqueInput
-    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutEscalationsInput, LeadUpdateWithoutEscalationsInput>, LeadUncheckedUpdateWithoutEscalationsInput>
   }
 
-  export type messagesCreateNestedManyWithoutConversationsInput = {
-    create?: XOR<messagesCreateWithoutConversationsInput, messagesUncheckedCreateWithoutConversationsInput> | messagesCreateWithoutConversationsInput[] | messagesUncheckedCreateWithoutConversationsInput[]
-    connectOrCreate?: messagesCreateOrConnectWithoutConversationsInput | messagesCreateOrConnectWithoutConversationsInput[]
-    createMany?: messagesCreateManyConversationsInputEnvelope
-    connect?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-  }
-
-  export type messagesUncheckedCreateNestedManyWithoutConversationsInput = {
-    create?: XOR<messagesCreateWithoutConversationsInput, messagesUncheckedCreateWithoutConversationsInput> | messagesCreateWithoutConversationsInput[] | messagesUncheckedCreateWithoutConversationsInput[]
-    connectOrCreate?: messagesCreateOrConnectWithoutConversationsInput | messagesCreateOrConnectWithoutConversationsInput[]
-    createMany?: messagesCreateManyConversationsInputEnvelope
-    connect?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-  }
-
-  export type messagesUpdateManyWithoutConversationsNestedInput = {
-    create?: XOR<messagesCreateWithoutConversationsInput, messagesUncheckedCreateWithoutConversationsInput> | messagesCreateWithoutConversationsInput[] | messagesUncheckedCreateWithoutConversationsInput[]
-    connectOrCreate?: messagesCreateOrConnectWithoutConversationsInput | messagesCreateOrConnectWithoutConversationsInput[]
-    upsert?: messagesUpsertWithWhereUniqueWithoutConversationsInput | messagesUpsertWithWhereUniqueWithoutConversationsInput[]
-    createMany?: messagesCreateManyConversationsInputEnvelope
-    set?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    disconnect?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    delete?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    connect?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    update?: messagesUpdateWithWhereUniqueWithoutConversationsInput | messagesUpdateWithWhereUniqueWithoutConversationsInput[]
-    updateMany?: messagesUpdateManyWithWhereWithoutConversationsInput | messagesUpdateManyWithWhereWithoutConversationsInput[]
-    deleteMany?: messagesScalarWhereInput | messagesScalarWhereInput[]
-  }
-
-  export type messagesUncheckedUpdateManyWithoutConversationsNestedInput = {
-    create?: XOR<messagesCreateWithoutConversationsInput, messagesUncheckedCreateWithoutConversationsInput> | messagesCreateWithoutConversationsInput[] | messagesUncheckedCreateWithoutConversationsInput[]
-    connectOrCreate?: messagesCreateOrConnectWithoutConversationsInput | messagesCreateOrConnectWithoutConversationsInput[]
-    upsert?: messagesUpsertWithWhereUniqueWithoutConversationsInput | messagesUpsertWithWhereUniqueWithoutConversationsInput[]
-    createMany?: messagesCreateManyConversationsInputEnvelope
-    set?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    disconnect?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    delete?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    connect?: messagesWhereUniqueInput | messagesWhereUniqueInput[]
-    update?: messagesUpdateWithWhereUniqueWithoutConversationsInput | messagesUpdateWithWhereUniqueWithoutConversationsInput[]
-    updateMany?: messagesUpdateManyWithWhereWithoutConversationsInput | messagesUpdateManyWithWhereWithoutConversationsInput[]
-    deleteMany?: messagesScalarWhereInput | messagesScalarWhereInput[]
-  }
-
-  export type conversationsCreateNestedOneWithoutMessagesInput = {
-    create?: XOR<conversationsCreateWithoutMessagesInput, conversationsUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: conversationsCreateOrConnectWithoutMessagesInput
-    connect?: conversationsWhereUniqueInput
-  }
-
-  export type conversationsUpdateOneRequiredWithoutMessagesNestedInput = {
-    create?: XOR<conversationsCreateWithoutMessagesInput, conversationsUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: conversationsCreateOrConnectWithoutMessagesInput
-    upsert?: conversationsUpsertWithoutMessagesInput
-    connect?: conversationsWhereUniqueInput
-    update?: XOR<XOR<conversationsUpdateToOneWithWhereWithoutMessagesInput, conversationsUpdateWithoutMessagesInput>, conversationsUncheckedUpdateWithoutMessagesInput>
+  export type LeadUpdateOneRequiredWithoutAuditLogsNestedInput = {
+    create?: XOR<LeadCreateWithoutAuditLogsInput, LeadUncheckedCreateWithoutAuditLogsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutAuditLogsInput
+    upsert?: LeadUpsertWithoutAuditLogsInput
+    connect?: LeadWhereUniqueInput
+    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutAuditLogsInput, LeadUpdateWithoutAuditLogsInput>, LeadUncheckedUpdateWithoutAuditLogsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -16326,28 +15070,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16367,6 +15089,28 @@ export namespace Prisma {
     in?: $Enums.LeadStatus[] | ListEnumLeadStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.LeadStatus[] | ListEnumLeadStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumLeadStatusFilter<$PrismaModel> | $Enums.LeadStatus
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -16413,18 +15157,31 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLeadStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LeadStatus | EnumLeadStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LeadStatus[] | ListEnumLeadStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LeadStatus[] | ListEnumLeadStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLeadStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeadStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLeadStatusFilter<$PrismaModel>
+    _max?: NestedEnumLeadStatusFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16454,36 +15211,18 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedEnumLeadStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.LeadStatus | EnumLeadStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.LeadStatus[] | ListEnumLeadStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.LeadStatus[] | ListEnumLeadStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumLeadStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeadStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLeadStatusFilter<$PrismaModel>
-    _max?: NestedEnumLeadStatusFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedEnumAgentRoleFilter<$PrismaModel = never> = {
@@ -16493,12 +15232,9 @@ export namespace Prisma {
     not?: NestedEnumAgentRoleFilter<$PrismaModel> | $Enums.AgentRole
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedEnumAgentRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -16511,11 +15247,29 @@ export namespace Prisma {
     _max?: NestedEnumAgentRoleFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumMessageRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
     in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumMessageRoleFilter<$PrismaModel> | $Enums.MessageRole
+  }
+
+  export type NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel> | $Enums.MessageRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMessageRoleFilter<$PrismaModel>
+    _max?: NestedEnumMessageRoleFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16534,14 +15288,11 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageRole | EnumMessageRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageRole[] | ListEnumMessageRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageRoleWithAggregatesFilter<$PrismaModel> | $Enums.MessageRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMessageRoleFilter<$PrismaModel>
-    _max?: NestedEnumMessageRoleFilter<$PrismaModel>
+  export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -16553,13 +15304,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -16578,6 +15322,16 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
+    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -16592,20 +15346,38 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
-    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  export type AgentCreateWithoutLeadsInput = {
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutAgentInput
+    escalations?: EscalationLogCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutLeadsInput = {
+    id?: number
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutLeadsInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
   }
 
   export type ConversationCreateWithoutLeadInput = {
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
     agent?: AgentCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
@@ -16613,9 +15385,9 @@ export namespace Prisma {
   export type ConversationUncheckedCreateWithoutLeadInput = {
     id?: number
     agentId?: number | null
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
@@ -16626,6 +15398,35 @@ export namespace Prisma {
 
   export type ConversationCreateManyLeadInputEnvelope = {
     data: ConversationCreateManyLeadInput | ConversationCreateManyLeadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaymentCreateWithoutLeadInput = {
+    razorpayLinkId?: string | null
+    amount: number
+    currency?: string
+    status?: $Enums.PaymentStatus
+    paidAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type PaymentUncheckedCreateWithoutLeadInput = {
+    id?: number
+    razorpayLinkId?: string | null
+    amount: number
+    currency?: string
+    status?: $Enums.PaymentStatus
+    paidAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type PaymentCreateOrConnectWithoutLeadInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput>
+  }
+
+  export type PaymentCreateManyLeadInputEnvelope = {
+    data: PaymentCreateManyLeadInput | PaymentCreateManyLeadInput[]
     skipDuplicates?: boolean
   }
 
@@ -16654,61 +15455,65 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AgentCreateWithoutLeadsInput = {
-    name: string
+  export type AuditLogCreateWithoutLeadInput = {
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
     createdAt?: Date | string
-    email: string
-    isOnline?: boolean
-    passwordHash: string
-    role?: $Enums.AgentRole
-    conversations?: ConversationCreateNestedManyWithoutAgentInput
-    escalations?: EscalationLogCreateNestedManyWithoutAgentInput
   }
 
-  export type AgentUncheckedCreateWithoutLeadsInput = {
+  export type AuditLogUncheckedCreateWithoutLeadInput = {
     id?: number
-    name: string
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
     createdAt?: Date | string
-    email: string
-    isOnline?: boolean
-    passwordHash: string
-    role?: $Enums.AgentRole
-    conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
   }
 
-  export type AgentCreateOrConnectWithoutLeadsInput = {
-    where: AgentWhereUniqueInput
-    create: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
+  export type AuditLogCreateOrConnectWithoutLeadInput = {
+    where: AuditLogWhereUniqueInput
+    create: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput>
   }
 
-  export type PaymentCreateWithoutLeadInput = {
-    amount: number
-    createdAt?: Date | string
-    currency?: string
-    paidAt?: Date | string | null
-    razorpayLinkId?: string | null
-    status?: $Enums.PaymentStatus
-  }
-
-  export type PaymentUncheckedCreateWithoutLeadInput = {
-    id?: number
-    amount: number
-    createdAt?: Date | string
-    currency?: string
-    paidAt?: Date | string | null
-    razorpayLinkId?: string | null
-    status?: $Enums.PaymentStatus
-  }
-
-  export type PaymentCreateOrConnectWithoutLeadInput = {
-    where: PaymentWhereUniqueInput
-    create: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput>
-  }
-
-  export type PaymentCreateManyLeadInputEnvelope = {
-    data: PaymentCreateManyLeadInput | PaymentCreateManyLeadInput[]
+  export type AuditLogCreateManyLeadInputEnvelope = {
+    data: AuditLogCreateManyLeadInput | AuditLogCreateManyLeadInput[]
     skipDuplicates?: boolean
+  }
+
+  export type AgentUpsertWithoutLeadsInput = {
+    update: XOR<AgentUpdateWithoutLeadsInput, AgentUncheckedUpdateWithoutLeadsInput>
+    create: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
+    where?: AgentWhereInput
+  }
+
+  export type AgentUpdateToOneWithWhereWithoutLeadsInput = {
+    where?: AgentWhereInput
+    data: XOR<AgentUpdateWithoutLeadsInput, AgentUncheckedUpdateWithoutLeadsInput>
+  }
+
+  export type AgentUpdateWithoutLeadsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutAgentNestedInput
+    escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutLeadsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type ConversationUpsertWithWhereUniqueWithoutLeadInput = {
@@ -16734,9 +15539,39 @@ export namespace Prisma {
     id?: IntFilter<"Conversation"> | number
     leadId?: IntFilter<"Conversation"> | number
     agentId?: IntNullableFilter<"Conversation"> | number | null
+    platform?: StringFilter<"Conversation"> | string
     status?: StringFilter<"Conversation"> | string
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    platform?: StringFilter<"Conversation"> | string
+  }
+
+  export type PaymentUpsertWithWhereUniqueWithoutLeadInput = {
+    where: PaymentWhereUniqueInput
+    update: XOR<PaymentUpdateWithoutLeadInput, PaymentUncheckedUpdateWithoutLeadInput>
+    create: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput>
+  }
+
+  export type PaymentUpdateWithWhereUniqueWithoutLeadInput = {
+    where: PaymentWhereUniqueInput
+    data: XOR<PaymentUpdateWithoutLeadInput, PaymentUncheckedUpdateWithoutLeadInput>
+  }
+
+  export type PaymentUpdateManyWithWhereWithoutLeadInput = {
+    where: PaymentScalarWhereInput
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutLeadInput>
+  }
+
+  export type PaymentScalarWhereInput = {
+    AND?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+    OR?: PaymentScalarWhereInput[]
+    NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+    id?: IntFilter<"Payment"> | number
+    leadId?: IntFilter<"Payment"> | number
+    razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
+    amount?: FloatFilter<"Payment"> | number
+    currency?: StringFilter<"Payment"> | string
+    status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
   }
 
   export type EscalationLogUpsertWithWhereUniqueWithoutLeadInput = {
@@ -16767,74 +15602,80 @@ export namespace Prisma {
     resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
   }
 
-  export type AgentUpsertWithoutLeadsInput = {
-    update: XOR<AgentUpdateWithoutLeadsInput, AgentUncheckedUpdateWithoutLeadsInput>
-    create: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
-    where?: AgentWhereInput
+  export type AuditLogUpsertWithWhereUniqueWithoutLeadInput = {
+    where: AuditLogWhereUniqueInput
+    update: XOR<AuditLogUpdateWithoutLeadInput, AuditLogUncheckedUpdateWithoutLeadInput>
+    create: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput>
   }
 
-  export type AgentUpdateToOneWithWhereWithoutLeadsInput = {
-    where?: AgentWhereInput
-    data: XOR<AgentUpdateWithoutLeadsInput, AgentUncheckedUpdateWithoutLeadsInput>
+  export type AuditLogUpdateWithWhereUniqueWithoutLeadInput = {
+    where: AuditLogWhereUniqueInput
+    data: XOR<AuditLogUpdateWithoutLeadInput, AuditLogUncheckedUpdateWithoutLeadInput>
   }
 
-  export type AgentUpdateWithoutLeadsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    conversations?: ConversationUpdateManyWithoutAgentNestedInput
-    escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
+  export type AuditLogUpdateManyWithWhereWithoutLeadInput = {
+    where: AuditLogScalarWhereInput
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutLeadInput>
   }
 
-  export type AgentUncheckedUpdateWithoutLeadsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
+  export type AuditLogScalarWhereInput = {
+    AND?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+    OR?: AuditLogScalarWhereInput[]
+    NOT?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+    id?: IntFilter<"AuditLog"> | number
+    leadId?: IntFilter<"AuditLog"> | number
+    oldStatus?: StringFilter<"AuditLog"> | string
+    newStatus?: StringFilter<"AuditLog"> | string
+    reason?: StringFilter<"AuditLog"> | string
+    triggeredBy?: StringFilter<"AuditLog"> | string
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
   }
 
-  export type PaymentUpsertWithWhereUniqueWithoutLeadInput = {
-    where: PaymentWhereUniqueInput
-    update: XOR<PaymentUpdateWithoutLeadInput, PaymentUncheckedUpdateWithoutLeadInput>
-    create: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput>
+  export type LeadCreateWithoutAgentInput = {
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
   }
 
-  export type PaymentUpdateWithWhereUniqueWithoutLeadInput = {
-    where: PaymentWhereUniqueInput
-    data: XOR<PaymentUpdateWithoutLeadInput, PaymentUncheckedUpdateWithoutLeadInput>
+  export type LeadUncheckedCreateWithoutAgentInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
   }
 
-  export type PaymentUpdateManyWithWhereWithoutLeadInput = {
-    where: PaymentScalarWhereInput
-    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutLeadInput>
+  export type LeadCreateOrConnectWithoutAgentInput = {
+    where: LeadWhereUniqueInput
+    create: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput>
   }
 
-  export type PaymentScalarWhereInput = {
-    AND?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-    OR?: PaymentScalarWhereInput[]
-    NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-    id?: IntFilter<"Payment"> | number
-    leadId?: IntFilter<"Payment"> | number
-    amount?: FloatFilter<"Payment"> | number
-    createdAt?: DateTimeFilter<"Payment"> | Date | string
-    currency?: StringFilter<"Payment"> | string
-    paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
-    razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
-    status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+  export type LeadCreateManyAgentInputEnvelope = {
+    data: LeadCreateManyAgentInput | LeadCreateManyAgentInput[]
+    skipDuplicates?: boolean
   }
 
   export type ConversationCreateWithoutAgentInput = {
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
     lead: LeadCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
@@ -16842,9 +15683,9 @@ export namespace Prisma {
   export type ConversationUncheckedCreateWithoutAgentInput = {
     id?: number
     leadId: number
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
@@ -16883,43 +15724,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type LeadCreateWithoutAgentInput = {
-    name?: string | null
-    email?: string | null
-    phone?: string | null
-    createdAt?: Date | string
-    platform: string
-    sourceId: string
-    status?: $Enums.LeadStatus
-    updatedAt?: Date | string
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
-  }
-
-  export type LeadUncheckedCreateWithoutAgentInput = {
-    id?: number
-    name?: string | null
-    email?: string | null
-    phone?: string | null
-    createdAt?: Date | string
-    platform: string
-    sourceId: string
-    status?: $Enums.LeadStatus
-    updatedAt?: Date | string
-    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
-  }
-
-  export type LeadCreateOrConnectWithoutAgentInput = {
+  export type LeadUpsertWithWhereUniqueWithoutAgentInput = {
     where: LeadWhereUniqueInput
+    update: XOR<LeadUpdateWithoutAgentInput, LeadUncheckedUpdateWithoutAgentInput>
     create: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput>
   }
 
-  export type LeadCreateManyAgentInputEnvelope = {
-    data: LeadCreateManyAgentInput | LeadCreateManyAgentInput[]
-    skipDuplicates?: boolean
+  export type LeadUpdateWithWhereUniqueWithoutAgentInput = {
+    where: LeadWhereUniqueInput
+    data: XOR<LeadUpdateWithoutAgentInput, LeadUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type LeadUpdateManyWithWhereWithoutAgentInput = {
+    where: LeadScalarWhereInput
+    data: XOR<LeadUpdateManyMutationInput, LeadUncheckedUpdateManyWithoutAgentInput>
+  }
+
+  export type LeadScalarWhereInput = {
+    AND?: LeadScalarWhereInput | LeadScalarWhereInput[]
+    OR?: LeadScalarWhereInput[]
+    NOT?: LeadScalarWhereInput | LeadScalarWhereInput[]
+    id?: IntFilter<"Lead"> | number
+    name?: StringNullableFilter<"Lead"> | string | null
+    email?: StringNullableFilter<"Lead"> | string | null
+    phone?: StringNullableFilter<"Lead"> | string | null
+    platform?: StringFilter<"Lead"> | string
+    sourceId?: StringFilter<"Lead"> | string
+    status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
+    assignedAgentId?: IntNullableFilter<"Lead"> | number | null
+    createdAt?: DateTimeFilter<"Lead"> | Date | string
+    updatedAt?: DateTimeFilter<"Lead"> | Date | string
   }
 
   export type ConversationUpsertWithWhereUniqueWithoutAgentInput = {
@@ -16954,78 +15788,19 @@ export namespace Prisma {
     data: XOR<EscalationLogUpdateManyMutationInput, EscalationLogUncheckedUpdateManyWithoutAgentInput>
   }
 
-  export type LeadUpsertWithWhereUniqueWithoutAgentInput = {
-    where: LeadWhereUniqueInput
-    update: XOR<LeadUpdateWithoutAgentInput, LeadUncheckedUpdateWithoutAgentInput>
-    create: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput>
-  }
-
-  export type LeadUpdateWithWhereUniqueWithoutAgentInput = {
-    where: LeadWhereUniqueInput
-    data: XOR<LeadUpdateWithoutAgentInput, LeadUncheckedUpdateWithoutAgentInput>
-  }
-
-  export type LeadUpdateManyWithWhereWithoutAgentInput = {
-    where: LeadScalarWhereInput
-    data: XOR<LeadUpdateManyMutationInput, LeadUncheckedUpdateManyWithoutAgentInput>
-  }
-
-  export type LeadScalarWhereInput = {
-    AND?: LeadScalarWhereInput | LeadScalarWhereInput[]
-    OR?: LeadScalarWhereInput[]
-    NOT?: LeadScalarWhereInput | LeadScalarWhereInput[]
-    id?: IntFilter<"Lead"> | number
-    name?: StringNullableFilter<"Lead"> | string | null
-    email?: StringNullableFilter<"Lead"> | string | null
-    phone?: StringNullableFilter<"Lead"> | string | null
-    createdAt?: DateTimeFilter<"Lead"> | Date | string
-    assignedAgentId?: IntNullableFilter<"Lead"> | number | null
-    platform?: StringFilter<"Lead"> | string
-    sourceId?: StringFilter<"Lead"> | string
-    status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
-    updatedAt?: DateTimeFilter<"Lead"> | Date | string
-  }
-
-  export type AgentCreateWithoutConversationsInput = {
-    name: string
-    createdAt?: Date | string
-    email: string
-    isOnline?: boolean
-    passwordHash: string
-    role?: $Enums.AgentRole
-    escalations?: EscalationLogCreateNestedManyWithoutAgentInput
-    leads?: LeadCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentUncheckedCreateWithoutConversationsInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    email: string
-    isOnline?: boolean
-    passwordHash: string
-    role?: $Enums.AgentRole
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentCreateOrConnectWithoutConversationsInput = {
-    where: AgentWhereUniqueInput
-    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
-  }
-
   export type LeadCreateWithoutConversationsInput = {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    createdAt?: Date | string
     updatedAt?: Date | string
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
     agent?: AgentCreateNestedOneWithoutLeadsInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutConversationsInput = {
@@ -17033,14 +15808,15 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
-    assignedAgentId?: number | null
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    assignedAgentId?: number | null
+    createdAt?: Date | string
     updatedAt?: Date | string
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutConversationsInput = {
@@ -17048,21 +15824,49 @@ export namespace Prisma {
     create: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
   }
 
-  export type MessageCreateWithoutConversationInput = {
-    content: string
+  export type AgentCreateWithoutConversationsInput = {
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
     createdAt?: Date | string
-    confidence?: number | null
-    intent?: string | null
+    leads?: LeadCreateNestedManyWithoutAgentInput
+    escalations?: EscalationLogCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutConversationsInput = {
+    id?: number
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutConversationsInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
+  }
+
+  export type MessageCreateWithoutConversationInput = {
     role?: $Enums.MessageRole
+    content: string
+    intent?: string | null
+    confidence?: number | null
+    createdAt?: Date | string
   }
 
   export type MessageUncheckedCreateWithoutConversationInput = {
     id?: number
-    content: string
-    createdAt?: Date | string
-    confidence?: number | null
-    intent?: string | null
     role?: $Enums.MessageRole
+    content: string
+    intent?: string | null
+    confidence?: number | null
+    createdAt?: Date | string
   }
 
   export type MessageCreateOrConnectWithoutConversationInput = {
@@ -17073,40 +15877,6 @@ export namespace Prisma {
   export type MessageCreateManyConversationInputEnvelope = {
     data: MessageCreateManyConversationInput | MessageCreateManyConversationInput[]
     skipDuplicates?: boolean
-  }
-
-  export type AgentUpsertWithoutConversationsInput = {
-    update: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
-    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
-    where?: AgentWhereInput
-  }
-
-  export type AgentUpdateToOneWithWhereWithoutConversationsInput = {
-    where?: AgentWhereInput
-    data: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type AgentUpdateWithoutConversationsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
-    leads?: LeadUpdateManyWithoutAgentNestedInput
-  }
-
-  export type AgentUncheckedUpdateWithoutConversationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type LeadUpsertWithoutConversationsInput = {
@@ -17124,14 +15894,15 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutConversationsInput = {
@@ -17139,14 +15910,49 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+  }
+
+  export type AgentUpsertWithoutConversationsInput = {
+    update: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
+    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
+    where?: AgentWhereInput
+  }
+
+  export type AgentUpdateToOneWithWhereWithoutConversationsInput = {
+    where?: AgentWhereInput
+    data: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type AgentUpdateWithoutConversationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUpdateManyWithoutAgentNestedInput
+    escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutConversationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -17171,28 +15977,28 @@ export namespace Prisma {
     NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
     id?: IntFilter<"Message"> | number
     conversationId?: IntFilter<"Message"> | number
-    content?: StringFilter<"Message"> | string
-    createdAt?: DateTimeFilter<"Message"> | Date | string
-    confidence?: FloatNullableFilter<"Message"> | number | null
-    intent?: StringNullableFilter<"Message"> | string | null
     role?: EnumMessageRoleFilter<"Message"> | $Enums.MessageRole
+    content?: StringFilter<"Message"> | string
+    intent?: StringNullableFilter<"Message"> | string | null
+    confidence?: FloatNullableFilter<"Message"> | number | null
+    createdAt?: DateTimeFilter<"Message"> | Date | string
   }
 
   export type ConversationCreateWithoutMessagesInput = {
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
-    agent?: AgentCreateNestedOneWithoutConversationsInput
     lead: LeadCreateNestedOneWithoutConversationsInput
+    agent?: AgentCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutMessagesInput = {
     id?: number
     leadId: number
     agentId?: number | null
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
   }
 
   export type ConversationCreateOrConnectWithoutMessagesInput = {
@@ -17212,34 +16018,35 @@ export namespace Prisma {
   }
 
   export type ConversationUpdateWithoutMessagesInput = {
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
-    agent?: AgentUpdateOneWithoutConversationsNestedInput
     lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
+    agent?: AgentUpdateOneWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutMessagesInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
     agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
   }
 
   export type LeadCreateWithoutPaymentsInput = {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    createdAt?: Date | string
     updatedAt?: Date | string
+    agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogCreateNestedManyWithoutLeadInput
-    agent?: AgentCreateNestedOneWithoutLeadsInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutPaymentsInput = {
@@ -17247,14 +16054,15 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
-    assignedAgentId?: number | null
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    assignedAgentId?: number | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutPaymentsInput = {
@@ -17277,14 +16085,15 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutPaymentsInput = {
@@ -17292,56 +16101,30 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
-  }
-
-  export type AgentCreateWithoutEscalationsInput = {
-    name: string
-    createdAt?: Date | string
-    email: string
-    isOnline?: boolean
-    passwordHash: string
-    role?: $Enums.AgentRole
-    conversations?: ConversationCreateNestedManyWithoutAgentInput
-    leads?: LeadCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentUncheckedCreateWithoutEscalationsInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    email: string
-    isOnline?: boolean
-    passwordHash: string
-    role?: $Enums.AgentRole
-    conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentCreateOrConnectWithoutEscalationsInput = {
-    where: AgentWhereUniqueInput
-    create: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadCreateWithoutEscalationsInput = {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    createdAt?: Date | string
     updatedAt?: Date | string
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
     agent?: AgentCreateNestedOneWithoutLeadsInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutEscalationsInput = {
@@ -17349,14 +16132,15 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     phone?: string | null
-    createdAt?: Date | string
-    assignedAgentId?: number | null
     platform: string
     sourceId: string
     status?: $Enums.LeadStatus
+    assignedAgentId?: number | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutEscalationsInput = {
@@ -17364,38 +16148,32 @@ export namespace Prisma {
     create: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
   }
 
-  export type AgentUpsertWithoutEscalationsInput = {
-    update: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
+  export type AgentCreateWithoutEscalationsInput = {
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    leads?: LeadCreateNestedManyWithoutAgentInput
+    conversations?: ConversationCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutEscalationsInput = {
+    id?: number
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutEscalationsInput = {
+    where: AgentWhereUniqueInput
     create: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
-    where?: AgentWhereInput
-  }
-
-  export type AgentUpdateToOneWithWhereWithoutEscalationsInput = {
-    where?: AgentWhereInput
-    data: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
-  }
-
-  export type AgentUpdateWithoutEscalationsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    conversations?: ConversationUpdateManyWithoutAgentNestedInput
-    leads?: LeadUpdateManyWithoutAgentNestedInput
-  }
-
-  export type AgentUncheckedUpdateWithoutEscalationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type LeadUpsertWithoutEscalationsInput = {
@@ -17413,14 +16191,15 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
     agent?: AgentUpdateOneWithoutLeadsNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutEscalationsInput = {
@@ -17428,114 +16207,145 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     platform?: StringFieldUpdateOperationsInput | string
     sourceId?: StringFieldUpdateOperationsInput | string
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
   }
 
-  export type messagesCreateWithoutConversationsInput = {
-    sender: string
-    content: string
-    timestamp: Date | string
+  export type AgentUpsertWithoutEscalationsInput = {
+    update: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
+    create: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
+    where?: AgentWhereInput
   }
 
-  export type messagesUncheckedCreateWithoutConversationsInput = {
-    id?: number
-    sender: string
-    content: string
-    timestamp: Date | string
+  export type AgentUpdateToOneWithWhereWithoutEscalationsInput = {
+    where?: AgentWhereInput
+    data: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
   }
 
-  export type messagesCreateOrConnectWithoutConversationsInput = {
-    where: messagesWhereUniqueInput
-    create: XOR<messagesCreateWithoutConversationsInput, messagesUncheckedCreateWithoutConversationsInput>
+  export type AgentUpdateWithoutEscalationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUpdateManyWithoutAgentNestedInput
+    conversations?: ConversationUpdateManyWithoutAgentNestedInput
   }
 
-  export type messagesCreateManyConversationsInputEnvelope = {
-    data: messagesCreateManyConversationsInput | messagesCreateManyConversationsInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type messagesUpsertWithWhereUniqueWithoutConversationsInput = {
-    where: messagesWhereUniqueInput
-    update: XOR<messagesUpdateWithoutConversationsInput, messagesUncheckedUpdateWithoutConversationsInput>
-    create: XOR<messagesCreateWithoutConversationsInput, messagesUncheckedCreateWithoutConversationsInput>
-  }
-
-  export type messagesUpdateWithWhereUniqueWithoutConversationsInput = {
-    where: messagesWhereUniqueInput
-    data: XOR<messagesUpdateWithoutConversationsInput, messagesUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type messagesUpdateManyWithWhereWithoutConversationsInput = {
-    where: messagesScalarWhereInput
-    data: XOR<messagesUpdateManyMutationInput, messagesUncheckedUpdateManyWithoutConversationsInput>
-  }
-
-  export type messagesScalarWhereInput = {
-    AND?: messagesScalarWhereInput | messagesScalarWhereInput[]
-    OR?: messagesScalarWhereInput[]
-    NOT?: messagesScalarWhereInput | messagesScalarWhereInput[]
-    id?: IntFilter<"messages"> | number
-    conversation_id?: IntFilter<"messages"> | number
-    sender?: StringFilter<"messages"> | string
-    content?: StringFilter<"messages"> | string
-    timestamp?: DateTimeFilter<"messages"> | Date | string
-  }
-
-  export type conversationsCreateWithoutMessagesInput = {
-    platform_thread_id: string
-    status: string
-    last_message_at: Date | string
-  }
-
-  export type conversationsUncheckedCreateWithoutMessagesInput = {
-    id?: number
-    platform_thread_id: string
-    status: string
-    last_message_at: Date | string
-  }
-
-  export type conversationsCreateOrConnectWithoutMessagesInput = {
-    where: conversationsWhereUniqueInput
-    create: XOR<conversationsCreateWithoutMessagesInput, conversationsUncheckedCreateWithoutMessagesInput>
-  }
-
-  export type conversationsUpsertWithoutMessagesInput = {
-    update: XOR<conversationsUpdateWithoutMessagesInput, conversationsUncheckedUpdateWithoutMessagesInput>
-    create: XOR<conversationsCreateWithoutMessagesInput, conversationsUncheckedCreateWithoutMessagesInput>
-    where?: conversationsWhereInput
-  }
-
-  export type conversationsUpdateToOneWithWhereWithoutMessagesInput = {
-    where?: conversationsWhereInput
-    data: XOR<conversationsUpdateWithoutMessagesInput, conversationsUncheckedUpdateWithoutMessagesInput>
-  }
-
-  export type conversationsUpdateWithoutMessagesInput = {
-    platform_thread_id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    last_message_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type conversationsUncheckedUpdateWithoutMessagesInput = {
+  export type AgentUncheckedUpdateWithoutEscalationsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    platform_thread_id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    last_message_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
+  }
+
+  export type LeadCreateWithoutAuditLogsInput = {
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agent?: AgentCreateNestedOneWithoutLeadsInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+  }
+
+  export type LeadUncheckedCreateWithoutAuditLogsInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    assignedAgentId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+  }
+
+  export type LeadCreateOrConnectWithoutAuditLogsInput = {
+    where: LeadWhereUniqueInput
+    create: XOR<LeadCreateWithoutAuditLogsInput, LeadUncheckedCreateWithoutAuditLogsInput>
+  }
+
+  export type LeadUpsertWithoutAuditLogsInput = {
+    update: XOR<LeadUpdateWithoutAuditLogsInput, LeadUncheckedUpdateWithoutAuditLogsInput>
+    create: XOR<LeadCreateWithoutAuditLogsInput, LeadUncheckedCreateWithoutAuditLogsInput>
+    where?: LeadWhereInput
+  }
+
+  export type LeadUpdateToOneWithWhereWithoutAuditLogsInput = {
+    where?: LeadWhereInput
+    data: XOR<LeadUpdateWithoutAuditLogsInput, LeadUncheckedUpdateWithoutAuditLogsInput>
+  }
+
+  export type LeadUpdateWithoutAuditLogsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+  }
+
+  export type LeadUncheckedUpdateWithoutAuditLogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type ConversationCreateManyLeadInput = {
     id?: number
     agentId?: number | null
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
+  }
+
+  export type PaymentCreateManyLeadInput = {
+    id?: number
+    razorpayLinkId?: string | null
+    amount: number
+    currency?: string
+    status?: $Enums.PaymentStatus
+    paidAt?: Date | string | null
+    createdAt?: Date | string
   }
 
   export type EscalationLogCreateManyLeadInput = {
@@ -17546,20 +16356,19 @@ export namespace Prisma {
     resolvedAt?: Date | string | null
   }
 
-  export type PaymentCreateManyLeadInput = {
+  export type AuditLogCreateManyLeadInput = {
     id?: number
-    amount: number
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
     createdAt?: Date | string
-    currency?: string
-    paidAt?: Date | string | null
-    razorpayLinkId?: string | null
-    status?: $Enums.PaymentStatus
   }
 
   export type ConversationUpdateWithoutLeadInput = {
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
     agent?: AgentUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
@@ -17567,18 +16376,47 @@ export namespace Prisma {
   export type ConversationUncheckedUpdateWithoutLeadInput = {
     id?: IntFieldUpdateOperationsInput | number
     agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
   export type ConversationUncheckedUpdateManyWithoutLeadInput = {
     id?: IntFieldUpdateOperationsInput | number
     agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PaymentUpdateWithoutLeadInput = {
+    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EscalationLogUpdateWithoutLeadInput = {
@@ -17604,41 +16442,50 @@ export namespace Prisma {
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type PaymentUpdateWithoutLeadInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
+  export type AuditLogUpdateWithoutLeadInput = {
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
-  export type PaymentUncheckedUpdateWithoutLeadInput = {
+  export type AuditLogUncheckedUpdateWithoutLeadInput = {
     id?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
-  export type PaymentUncheckedUpdateManyWithoutLeadInput = {
+  export type AuditLogUncheckedUpdateManyWithoutLeadInput = {
     id?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
+    oldStatus?: StringFieldUpdateOperationsInput | string
+    newStatus?: StringFieldUpdateOperationsInput | string
+    reason?: StringFieldUpdateOperationsInput | string
+    triggeredBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    currency?: StringFieldUpdateOperationsInput | string
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  }
+
+  export type LeadCreateManyAgentInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ConversationCreateManyAgentInput = {
     id?: number
     leadId: number
+    platform: string
     status?: string
     createdAt?: Date | string
-    platform: string
   }
 
   export type EscalationLogCreateManyAgentInput = {
@@ -17649,22 +16496,53 @@ export namespace Prisma {
     resolvedAt?: Date | string | null
   }
 
-  export type LeadCreateManyAgentInput = {
-    id?: number
-    name?: string | null
-    email?: string | null
-    phone?: string | null
-    createdAt?: Date | string
-    platform: string
-    sourceId: string
-    status?: $Enums.LeadStatus
-    updatedAt?: Date | string
+  export type LeadUpdateWithoutAgentInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+  }
+
+  export type LeadUncheckedUpdateWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+  }
+
+  export type LeadUncheckedUpdateManyWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ConversationUpdateWithoutAgentInput = {
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
     lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
@@ -17672,18 +16550,18 @@ export namespace Prisma {
   export type ConversationUncheckedUpdateWithoutAgentInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
   export type ConversationUncheckedUpdateManyWithoutAgentInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
+    platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
   }
 
   export type EscalationLogUpdateWithoutAgentInput = {
@@ -17709,107 +16587,39 @@ export namespace Prisma {
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type LeadUpdateWithoutAgentInput = {
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
-    sourceId?: StringFieldUpdateOperationsInput | string
-    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
-  }
-
-  export type LeadUncheckedUpdateWithoutAgentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
-    sourceId?: StringFieldUpdateOperationsInput | string
-    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
-  }
-
-  export type LeadUncheckedUpdateManyWithoutAgentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    platform?: StringFieldUpdateOperationsInput | string
-    sourceId?: StringFieldUpdateOperationsInput | string
-    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type MessageCreateManyConversationInput = {
     id?: number
-    content: string
-    createdAt?: Date | string
-    confidence?: number | null
-    intent?: string | null
     role?: $Enums.MessageRole
+    content: string
+    intent?: string | null
+    confidence?: number | null
+    createdAt?: Date | string
   }
 
   export type MessageUpdateWithoutConversationInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
+    content?: StringFieldUpdateOperationsInput | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageUncheckedUpdateWithoutConversationInput = {
     id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
+    content?: StringFieldUpdateOperationsInput | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageUncheckedUpdateManyWithoutConversationInput = {
     id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
-    intent?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumMessageRoleFieldUpdateOperationsInput | $Enums.MessageRole
-  }
-
-  export type messagesCreateManyConversationsInput = {
-    id?: number
-    sender: string
-    content: string
-    timestamp: Date | string
-  }
-
-  export type messagesUpdateWithoutConversationsInput = {
-    sender?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type messagesUncheckedUpdateWithoutConversationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    sender?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type messagesUncheckedUpdateManyWithoutConversationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    sender?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    intent?: NullableStringFieldUpdateOperationsInput | string | null
+    confidence?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
