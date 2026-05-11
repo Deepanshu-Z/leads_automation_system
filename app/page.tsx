@@ -4,11 +4,11 @@ import { useEffect } from "react";
 export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/leads");
+      const response = await fetch("/api/analytics/summary");
 
       const data = await response.json();
 
-      console.log(data.data);
+      console.log(data);
     };
     fetchData();
   }, []);
