@@ -82,6 +82,10 @@ model Payment {
 
   status PaymentStatus @default(PENDING)
 
+  retryCount Int @default(0)
+
+  failureReason String?
+
   paidAt DateTime?
 
   createdAt DateTime @default(now())

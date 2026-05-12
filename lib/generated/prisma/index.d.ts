@@ -6609,12 +6609,14 @@ export namespace Prisma {
     id: number | null
     leadId: number | null
     amount: number | null
+    retryCount: number | null
   }
 
   export type PaymentSumAggregateOutputType = {
     id: number | null
     leadId: number | null
     amount: number | null
+    retryCount: number | null
   }
 
   export type PaymentMinAggregateOutputType = {
@@ -6626,6 +6628,8 @@ export namespace Prisma {
     amount: number | null
     currency: string | null
     status: $Enums.PaymentStatus | null
+    retryCount: number | null
+    failureReason: string | null
     paidAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6640,6 +6644,8 @@ export namespace Prisma {
     amount: number | null
     currency: string | null
     status: $Enums.PaymentStatus | null
+    retryCount: number | null
+    failureReason: string | null
     paidAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6654,6 +6660,8 @@ export namespace Prisma {
     amount: number
     currency: number
     status: number
+    retryCount: number
+    failureReason: number
     paidAt: number
     createdAt: number
     updatedAt: number
@@ -6665,12 +6673,14 @@ export namespace Prisma {
     id?: true
     leadId?: true
     amount?: true
+    retryCount?: true
   }
 
   export type PaymentSumAggregateInputType = {
     id?: true
     leadId?: true
     amount?: true
+    retryCount?: true
   }
 
   export type PaymentMinAggregateInputType = {
@@ -6682,6 +6692,8 @@ export namespace Prisma {
     amount?: true
     currency?: true
     status?: true
+    retryCount?: true
+    failureReason?: true
     paidAt?: true
     createdAt?: true
     updatedAt?: true
@@ -6696,6 +6708,8 @@ export namespace Prisma {
     amount?: true
     currency?: true
     status?: true
+    retryCount?: true
+    failureReason?: true
     paidAt?: true
     createdAt?: true
     updatedAt?: true
@@ -6710,6 +6724,8 @@ export namespace Prisma {
     amount?: true
     currency?: true
     status?: true
+    retryCount?: true
+    failureReason?: true
     paidAt?: true
     createdAt?: true
     updatedAt?: true
@@ -6811,6 +6827,8 @@ export namespace Prisma {
     amount: number
     currency: string
     status: $Enums.PaymentStatus
+    retryCount: number
+    failureReason: string | null
     paidAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -6844,6 +6862,8 @@ export namespace Prisma {
     amount?: boolean
     currency?: boolean
     status?: boolean
+    retryCount?: boolean
+    failureReason?: boolean
     paidAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6859,6 +6879,8 @@ export namespace Prisma {
     amount?: boolean
     currency?: boolean
     status?: boolean
+    retryCount?: boolean
+    failureReason?: boolean
     paidAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6874,6 +6896,8 @@ export namespace Prisma {
     amount?: boolean
     currency?: boolean
     status?: boolean
+    retryCount?: boolean
+    failureReason?: boolean
     paidAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6889,12 +6913,14 @@ export namespace Prisma {
     amount?: boolean
     currency?: boolean
     status?: boolean
+    retryCount?: boolean
+    failureReason?: boolean
     paidAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "retryCount" | "failureReason" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
@@ -6919,6 +6945,8 @@ export namespace Prisma {
       amount: number
       currency: string
       status: $Enums.PaymentStatus
+      retryCount: number
+      failureReason: string | null
       paidAt: Date | null
       createdAt: Date
       updatedAt: Date
@@ -7354,6 +7382,8 @@ export namespace Prisma {
     readonly amount: FieldRef<"Payment", 'Float'>
     readonly currency: FieldRef<"Payment", 'String'>
     readonly status: FieldRef<"Payment", 'PaymentStatus'>
+    readonly retryCount: FieldRef<"Payment", 'Int'>
+    readonly failureReason: FieldRef<"Payment", 'String'>
     readonly paidAt: FieldRef<"Payment", 'DateTime'>
     readonly createdAt: FieldRef<"Payment", 'DateTime'>
     readonly updatedAt: FieldRef<"Payment", 'DateTime'>
@@ -12287,6 +12317,8 @@ export namespace Prisma {
     amount: 'amount',
     currency: 'currency',
     status: 'status',
+    retryCount: 'retryCount',
+    failureReason: 'failureReason',
     paidAt: 'paidAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -12813,6 +12845,8 @@ export namespace Prisma {
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    retryCount?: IntFilter<"Payment"> | number
+    failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
@@ -12828,6 +12862,8 @@ export namespace Prisma {
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
+    retryCount?: SortOrder
+    failureReason?: SortOrderInput | SortOrder
     paidAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12846,6 +12882,8 @@ export namespace Prisma {
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    retryCount?: IntFilter<"Payment"> | number
+    failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
@@ -12861,6 +12899,8 @@ export namespace Prisma {
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
+    retryCount?: SortOrder
+    failureReason?: SortOrderInput | SortOrder
     paidAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12883,6 +12923,8 @@ export namespace Prisma {
     amount?: FloatWithAggregatesFilter<"Payment"> | number
     currency?: StringWithAggregatesFilter<"Payment"> | string
     status?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
+    retryCount?: IntWithAggregatesFilter<"Payment"> | number
+    failureReason?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -13475,6 +13517,8 @@ export namespace Prisma {
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13490,6 +13534,8 @@ export namespace Prisma {
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13502,6 +13548,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13517,6 +13565,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13531,6 +13581,8 @@ export namespace Prisma {
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13543,6 +13595,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13557,6 +13611,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14356,6 +14412,8 @@ export namespace Prisma {
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
+    retryCount?: SortOrder
+    failureReason?: SortOrder
     paidAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14365,6 +14423,7 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     amount?: SortOrder
+    retryCount?: SortOrder
   }
 
   export type PaymentMaxOrderByAggregateInput = {
@@ -14376,6 +14435,8 @@ export namespace Prisma {
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
+    retryCount?: SortOrder
+    failureReason?: SortOrder
     paidAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14390,6 +14451,8 @@ export namespace Prisma {
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
+    retryCount?: SortOrder
+    failureReason?: SortOrder
     paidAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14399,6 +14462,7 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     amount?: SortOrder
+    retryCount?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -15495,6 +15559,8 @@ export namespace Prisma {
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15508,6 +15574,8 @@ export namespace Prisma {
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15665,6 +15733,8 @@ export namespace Prisma {
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    retryCount?: IntFilter<"Payment"> | number
+    failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
@@ -16442,6 +16512,8 @@ export namespace Prisma {
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16496,6 +16568,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16509,6 +16583,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16522,6 +16598,8 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
