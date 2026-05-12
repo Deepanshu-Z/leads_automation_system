@@ -66,15 +66,32 @@ model Message {
 }
 
 model Payment {
-  id             Int           @id @default(autoincrement())
-  leadId         Int
+  id Int @id @default(autoincrement())
+
+  leadId Int
+
   razorpayLinkId String?
-  amount         Float
-  currency       String        @default("INR")
-  status         PaymentStatus @default(PENDING)
-  paidAt         DateTime?
-  createdAt      DateTime      @default(now())
-  lead           Lead          @relation(fields: [leadId], references: [id])
+
+  razorpayPaymentId String?
+
+  shortUrl String?
+
+  amount Float
+
+  currency String @default("INR")
+
+  status PaymentStatus @default(PENDING)
+
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  lead Lead @relation(fields: [leadId], references: [id])
+
+  @@index([leadId])
+  @@map("payments")
 }
 
 model EscalationLog {

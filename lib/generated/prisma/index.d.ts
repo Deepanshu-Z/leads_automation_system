@@ -6621,33 +6621,42 @@ export namespace Prisma {
     id: number | null
     leadId: number | null
     razorpayLinkId: string | null
+    razorpayPaymentId: string | null
+    shortUrl: string | null
     amount: number | null
     currency: string | null
     status: $Enums.PaymentStatus | null
     paidAt: Date | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type PaymentMaxAggregateOutputType = {
     id: number | null
     leadId: number | null
     razorpayLinkId: string | null
+    razorpayPaymentId: string | null
+    shortUrl: string | null
     amount: number | null
     currency: string | null
     status: $Enums.PaymentStatus | null
     paidAt: Date | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type PaymentCountAggregateOutputType = {
     id: number
     leadId: number
     razorpayLinkId: number
+    razorpayPaymentId: number
+    shortUrl: number
     amount: number
     currency: number
     status: number
     paidAt: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -6668,33 +6677,42 @@ export namespace Prisma {
     id?: true
     leadId?: true
     razorpayLinkId?: true
+    razorpayPaymentId?: true
+    shortUrl?: true
     amount?: true
     currency?: true
     status?: true
     paidAt?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type PaymentMaxAggregateInputType = {
     id?: true
     leadId?: true
     razorpayLinkId?: true
+    razorpayPaymentId?: true
+    shortUrl?: true
     amount?: true
     currency?: true
     status?: true
     paidAt?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type PaymentCountAggregateInputType = {
     id?: true
     leadId?: true
     razorpayLinkId?: true
+    razorpayPaymentId?: true
+    shortUrl?: true
     amount?: true
     currency?: true
     status?: true
     paidAt?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -6788,11 +6806,14 @@ export namespace Prisma {
     id: number
     leadId: number
     razorpayLinkId: string | null
+    razorpayPaymentId: string | null
+    shortUrl: string | null
     amount: number
     currency: string
     status: $Enums.PaymentStatus
     paidAt: Date | null
     createdAt: Date
+    updatedAt: Date
     _count: PaymentCountAggregateOutputType | null
     _avg: PaymentAvgAggregateOutputType | null
     _sum: PaymentSumAggregateOutputType | null
@@ -6818,11 +6839,14 @@ export namespace Prisma {
     id?: boolean
     leadId?: boolean
     razorpayLinkId?: boolean
+    razorpayPaymentId?: boolean
+    shortUrl?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
     paidAt?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -6830,11 +6854,14 @@ export namespace Prisma {
     id?: boolean
     leadId?: boolean
     razorpayLinkId?: boolean
+    razorpayPaymentId?: boolean
+    shortUrl?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
     paidAt?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -6842,11 +6869,14 @@ export namespace Prisma {
     id?: boolean
     leadId?: boolean
     razorpayLinkId?: boolean
+    razorpayPaymentId?: boolean
+    shortUrl?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
     paidAt?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -6854,14 +6884,17 @@ export namespace Prisma {
     id?: boolean
     leadId?: boolean
     razorpayLinkId?: boolean
+    razorpayPaymentId?: boolean
+    shortUrl?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
     paidAt?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "amount" | "currency" | "status" | "paidAt" | "createdAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
@@ -6881,11 +6914,14 @@ export namespace Prisma {
       id: number
       leadId: number
       razorpayLinkId: string | null
+      razorpayPaymentId: string | null
+      shortUrl: string | null
       amount: number
       currency: string
       status: $Enums.PaymentStatus
       paidAt: Date | null
       createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["payment"]>
     composites: {}
   }
@@ -7313,11 +7349,14 @@ export namespace Prisma {
     readonly id: FieldRef<"Payment", 'Int'>
     readonly leadId: FieldRef<"Payment", 'Int'>
     readonly razorpayLinkId: FieldRef<"Payment", 'String'>
+    readonly razorpayPaymentId: FieldRef<"Payment", 'String'>
+    readonly shortUrl: FieldRef<"Payment", 'String'>
     readonly amount: FieldRef<"Payment", 'Float'>
     readonly currency: FieldRef<"Payment", 'String'>
     readonly status: FieldRef<"Payment", 'PaymentStatus'>
     readonly paidAt: FieldRef<"Payment", 'DateTime'>
     readonly createdAt: FieldRef<"Payment", 'DateTime'>
+    readonly updatedAt: FieldRef<"Payment", 'DateTime'>
   }
     
 
@@ -12243,11 +12282,14 @@ export namespace Prisma {
     id: 'id',
     leadId: 'leadId',
     razorpayLinkId: 'razorpayLinkId',
+    razorpayPaymentId: 'razorpayPaymentId',
+    shortUrl: 'shortUrl',
     amount: 'amount',
     currency: 'currency',
     status: 'status',
     paidAt: 'paidAt',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
@@ -12766,11 +12808,14 @@ export namespace Prisma {
     id?: IntFilter<"Payment"> | number
     leadId?: IntFilter<"Payment"> | number
     razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
+    razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
+    shortUrl?: StringNullableFilter<"Payment"> | string | null
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }
 
@@ -12778,11 +12823,14 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     razorpayLinkId?: SortOrderInput | SortOrder
+    razorpayPaymentId?: SortOrderInput | SortOrder
+    shortUrl?: SortOrderInput | SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
     paidAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     lead?: LeadOrderByWithRelationInput
   }
 
@@ -12793,11 +12841,14 @@ export namespace Prisma {
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     leadId?: IntFilter<"Payment"> | number
     razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
+    razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
+    shortUrl?: StringNullableFilter<"Payment"> | string | null
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }, "id">
 
@@ -12805,11 +12856,14 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     razorpayLinkId?: SortOrderInput | SortOrder
+    razorpayPaymentId?: SortOrderInput | SortOrder
+    shortUrl?: SortOrderInput | SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
     paidAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: PaymentCountOrderByAggregateInput
     _avg?: PaymentAvgOrderByAggregateInput
     _max?: PaymentMaxOrderByAggregateInput
@@ -12824,11 +12878,14 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Payment"> | number
     leadId?: IntWithAggregatesFilter<"Payment"> | number
     razorpayLinkId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    razorpayPaymentId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    shortUrl?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     amount?: FloatWithAggregatesFilter<"Payment"> | number
     currency?: StringWithAggregatesFilter<"Payment"> | string
     status?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
     paidAt?: DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
   }
 
   export type EscalationLogWhereInput = {
@@ -13413,11 +13470,14 @@ export namespace Prisma {
 
   export type PaymentCreateInput = {
     razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
     paidAt?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     lead: LeadCreateNestedOneWithoutPaymentsInput
   }
 
@@ -13425,20 +13485,26 @@ export namespace Prisma {
     id?: number
     leadId: number
     razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
     paidAt?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PaymentUpdateInput = {
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
@@ -13446,42 +13512,54 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentCreateManyInput = {
     id?: number
     leadId: number
     razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
     paidAt?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PaymentUpdateManyMutationInput = {
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     leadId?: IntFieldUpdateOperationsInput | number
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EscalationLogCreateInput = {
@@ -14273,11 +14351,14 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     razorpayLinkId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    shortUrl?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
     paidAt?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type PaymentAvgOrderByAggregateInput = {
@@ -14290,22 +14371,28 @@ export namespace Prisma {
     id?: SortOrder
     leadId?: SortOrder
     razorpayLinkId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    shortUrl?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
     paidAt?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type PaymentMinOrderByAggregateInput = {
     id?: SortOrder
     leadId?: SortOrder
     razorpayLinkId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    shortUrl?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
     paidAt?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type PaymentSumOrderByAggregateInput = {
@@ -15403,21 +15490,27 @@ export namespace Prisma {
 
   export type PaymentCreateWithoutLeadInput = {
     razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
     paidAt?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PaymentUncheckedCreateWithoutLeadInput = {
     id?: number
     razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
     paidAt?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PaymentCreateOrConnectWithoutLeadInput = {
@@ -15567,11 +15660,14 @@ export namespace Prisma {
     id?: IntFilter<"Payment"> | number
     leadId?: IntFilter<"Payment"> | number
     razorpayLinkId?: StringNullableFilter<"Payment"> | string | null
+    razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
+    shortUrl?: StringNullableFilter<"Payment"> | string | null
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
   }
 
   export type EscalationLogUpsertWithWhereUniqueWithoutLeadInput = {
@@ -16341,11 +16437,14 @@ export namespace Prisma {
   export type PaymentCreateManyLeadInput = {
     id?: number
     razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
     paidAt?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type EscalationLogCreateManyLeadInput = {
@@ -16392,31 +16491,40 @@ export namespace Prisma {
 
   export type PaymentUpdateWithoutLeadInput = {
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentUncheckedUpdateWithoutLeadInput = {
     id?: IntFieldUpdateOperationsInput | number
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentUncheckedUpdateManyWithoutLeadInput = {
     id?: IntFieldUpdateOperationsInput | number
     razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EscalationLogUpdateWithoutLeadInput = {
