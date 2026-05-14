@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 
 import { NextRequest, NextResponse } from "next/server";
 
+import { sendMessage } from "@/lib/messaging/sendMessage";
+
 export async function POST(req: NextRequest) {
   try {
     // =====================================================
@@ -32,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     // =====================================================
-    // VERIFY HMAC
+    // VERIFY SIGNATURE
     // =====================================================
 
     const expectedSignature = crypto
@@ -40,12 +42,8 @@ export async function POST(req: NextRequest) {
       .update(rawBody)
       .digest("hex");
 
-    // =====================================================
-    // INVALID SIGNATURE
-    // =====================================================
-
     if (expectedSignature !== signature) {
-      console.log("❌ Invalid Razorpay webhook signature");
+      console.log("❌ Invalid webhook signature");
 
       return NextResponse.json(
         {
@@ -58,7 +56,7 @@ export async function POST(req: NextRequest) {
     }
 
     // =====================================================
-    // PARSE EVENT
+    // PARSE BODY
     // =====================================================
 
     const body = JSON.parse(rawBody);
@@ -68,15 +66,19 @@ export async function POST(req: NextRequest) {
     console.log(`📩 Razorpay event: ${event}`);
 
     // =====================================================
-    // PAYMENT LINK PAID
+    // PAYMENT SUCCESS
     // =====================================================
 
     if (event === "payment_link.paid") {
-      const paymentEntity = body.payload.payment_link.entity;
+      const paymentLinkEntity = body.payload.payment_link.entity;
 
-      const razorpayLinkId = paymentEntity.id;
+      const paymentEntity = body.payload.payment.entity;
 
-      const razorpayPaymentId = body.payload.payment.entity.id;
+      const razorpayLinkId = paymentLinkEntity.id;
+
+      const razorpayPaymentId = paymentEntity.id;
+
+      const amount = paymentEntity.amount / 100;
 
       // ===============================================
       // FIND PAYMENT
@@ -103,6 +105,18 @@ export async function POST(req: NextRequest) {
             status: 404,
           },
         );
+      }
+
+      // ===============================================
+      // PREVENT DUPLICATE WEBHOOKS
+      // ===============================================
+
+      if (payment.status === "PAID") {
+        console.log("⚠️ Payment already processed");
+
+        return NextResponse.json({
+          success: true,
+        });
       }
 
       // ===============================================
@@ -137,7 +151,51 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      console.log("✅ Payment marked as PAID");
+      // ===============================================
+      // AUDIT LOG
+      // ===============================================
+
+      await prisma.auditLog.create({
+        data: {
+          leadId: payment.leadId,
+
+          oldStatus: payment.lead.status,
+
+          newStatus: "PAID",
+
+          reason: "Payment completed successfully",
+
+          triggeredBy: "razorpay",
+        },
+      });
+
+      // ===============================================
+      // SEND WHATSAPP MESSAGE
+      // ===============================================
+
+      const message = `Thank you ${payment.lead.name || ""}!
+
+Your payment of ₹${amount}
+has been received.
+
+Reference:
+${razorpayPaymentId}
+
+Our team will contact you shortly.`;
+
+      try {
+        await sendMessage(
+          "whatsapp",
+
+          payment.lead.phone || "",
+
+          message,
+        );
+      } catch (error) {
+        console.log("❌ WhatsApp send failed:", error);
+      }
+
+      console.log(`✅ Payment success: ${razorpayPaymentId}`);
     }
 
     // =====================================================
@@ -149,6 +207,12 @@ export async function POST(req: NextRequest) {
 
       const razorpayPaymentId = paymentEntity.id;
 
+      console.log(`❌ Payment failed: ${razorpayPaymentId}`);
+
+      // ===============================================
+      // FIND PAYMENT
+      // ===============================================
+
       const payment = await prisma.payment.findFirst({
         where: {
           razorpayPaymentId,
@@ -159,28 +223,96 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      if (payment) {
-        await prisma.payment.update({
+      if (!payment) {
+        console.log("⚠️ Failed payment not found");
+
+        return NextResponse.json({
+          success: true,
+        });
+      }
+
+      // ===============================================
+      // UPDATE FAILED PAYMENT
+      // ===============================================
+
+      const updatedPayment = await prisma.payment.update({
+        where: {
+          id: payment.id,
+        },
+
+        data: {
+          status: "FAILED",
+
+          retryCount: {
+            increment: 1,
+          },
+        },
+      });
+
+      console.log(`❌ Retry count: ${updatedPayment.retryCount}`);
+
+      // ===============================================
+      // ESCALATE AFTER 3 FAILURES
+      // ===============================================
+
+      if (updatedPayment.retryCount >= 3) {
+        await prisma.lead.update({
           where: {
-            id: payment.id,
+            id: payment.leadId,
           },
 
           data: {
-            status: "FAILED",
+            status: "ESCALATED",
           },
         });
 
-        console.log("❌ Payment marked FAILED");
+        await prisma.auditLog.create({
+          data: {
+            leadId: payment.leadId,
 
-        // ===========================================
-        // TODO:
-        // trigger WhatsApp retry message
-        // ===========================================
+            oldStatus: payment.lead.status,
+
+            newStatus: "ESCALATED",
+
+            reason: "Payment failed 3 times",
+
+            triggeredBy: "system",
+          },
+        });
+
+        console.log("🚨 Lead escalated");
+
+        return NextResponse.json({
+          success: true,
+        });
       }
+
+      // ===============================================
+      // SEND RETRY MESSAGE
+      // ===============================================
+
+      const retryMessage = `Your payment was not successful.
+
+Would you like us to send
+a new payment link?`;
+
+      try {
+        await sendMessage(
+          "whatsapp",
+
+          payment.lead.phone || "",
+
+          retryMessage,
+        );
+      } catch (error) {
+        console.log("❌ Retry message failed:", error);
+      }
+
+      console.log("📩 Retry message sent");
     }
 
     // =====================================================
-    // SUCCESS
+    // SUCCESS RESPONSE
     // =====================================================
 
     return NextResponse.json({
