@@ -31,15 +31,6 @@ export const leadQueue =
     },
   });
 
-// ================= ESCALATION QUEUE =================
-export const escalationQueue = new Queue("escalation", {
-  connection,
-  defaultJobOptions: {
-    priority: 1,
-    attempts: 1,
-  },
-});
-
 // ================= HELPER FUNCTION =================
 export async function addSendMessageJob(data: SendMessageJob) {
   return leadQueue.add("send-message", data);

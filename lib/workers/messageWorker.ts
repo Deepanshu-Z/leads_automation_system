@@ -3,6 +3,7 @@ import { Worker } from "bullmq";
 import IORedis from "ioredis";
 import { sendMessage } from "@/lib/messaging/sendMessage";
 import { BASE_URL } from "@/config/api";
+import { scheduleEscalation } from "../queue/escalation_queue";
 
 const connection = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
@@ -36,13 +37,19 @@ export const messageWorker = new Worker(
         throw new Error(`Python API failed: ${response.status}`);
       }
 
-      const { reply } = await response.json();
+      const { reply, leadId } = await response.json();
 
       console.log(`🤖 AI Reply: ${reply}`);
-
+      console.log("LEAD ID IS: ", leadId);
       // ── Send reply back to user via Meta ──
       await sendMessage(platform, senderId, reply);
+      await scheduleEscalation(
+        leadId,
 
+        senderId,
+
+        platform,
+      );
       console.log(`✅ Reply sent to ${senderId}`);
     }
   },
