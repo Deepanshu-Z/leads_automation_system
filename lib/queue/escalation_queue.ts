@@ -1,70 +1,72 @@
+// lib/queue/escalation.queue.ts
 import { Queue } from "bullmq";
-import { redis } from "@/lib/redis/redis";
-import IORedis from "ioredis";
+import { redis, bullmqConnection } from "../redis/redis"; // ← from your lib
 
-const connection = new IORedis(process.env.REDIS_URL!);
-
-export const escalationQueue = new Queue(
-  "escalation",
-
-  {
-    connection,
+export const escalationQueue = new Queue("escalation", {
+  connection: bullmqConnection, // ← BullMQ connection
+  defaultJobOptions: {
+    attempts: 3,
+    backoff: { type: "exponential", delay: 5000 },
+    removeOnComplete: 100,
+    removeOnFail: 50,
   },
-);
+});
 
 export async function scheduleEscalation(
   leadId: number,
-
   senderId: string,
-
   platform: string,
+  reason: string = "No response from AI",
 ) {
-  // ==========================================
-  // REMOVE OLD JOB
-  // ==========================================
+  // const timeoutMinutes = Number(process.env.ESCALATION_TIMEOUT_MINUTES) || 30;
+  // const delay = timeoutMinutes * 60 * 1000;
+  const timeoutMinutes = 0;
+  const delay = 0;
 
-  const existingJobId = await redis.get(`escalation:${senderId}`);
+  // ─── Remove existing job ──────────────────────────────
+  const existingJobId = await redis.get(`escalation:${senderId}`); // ← redis for get/set
 
   if (existingJobId) {
     const existingJob = await escalationQueue.getJob(existingJobId);
-
     if (existingJob) {
       await existingJob.remove();
-
-      console.log("🗑️ Old escalation removed");
+      console.log(`🗑️ Old escalation removed for ${senderId}`);
     }
   }
 
-  // ==========================================
-  // CREATE NEW JOB
-  // ==========================================
-
-  const timeoutMinutes = Number(process.env.ESCALATION_TIMEOUT_MINUTES);
-
-  const delay = timeoutMinutes * 60 * 1000;
-
+  // ─── Add new job ──────────────────────────────────────
   const job = await escalationQueue.add(
     "lead-escalation",
-
-    {
-      leadId,
-      senderId,
-      platform,
-    },
-
-    {
-      delay,
-    },
+    { leadId, senderId, platform, reason },
+    { delay },
   );
+
   if (!job.id) {
-    console.log("error setting up job ");
+    console.error(`❌ Failed to schedule escalation for ${senderId}`);
     return;
   }
-  // ==========================================
-  // SAVE JOB MAPPING
-  // ==========================================
 
-  await redis.set(`escalation:${senderId}`, job?.id ?? "");
+  // ─── Save job ID ──────────────────────────────────────
+  await redis.set(
+    // ← redis for get/set
+    `escalation:${senderId}`,
+    job.id,
+    "EX",
+    timeoutMinutes * 60 + 300,
+  );
 
-  console.log(`⏰ Escalation scheduled for ${senderId}`);
+  console.log(`✅ Escalation job ${job.id} scheduled (${timeoutMinutes} mins)`);
+}
+
+export async function cancelEscalation(senderId: string) {
+  const jobId = await redis.get(`escalation:${senderId}`); // ← redis for get/set
+
+  if (jobId) {
+    const job = await escalationQueue.getJob(jobId);
+    if (job) {
+      await job.remove();
+      console.log(`🗑️ Escalation cancelled for ${senderId}`);
+    }
+    await redis.del(`escalation:${senderId}`);
+  }
 }

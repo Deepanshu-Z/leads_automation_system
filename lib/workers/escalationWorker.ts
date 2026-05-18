@@ -1,9 +1,7 @@
+// workers/escalation.worker.ts
 import "dotenv/config";
-
 import { Worker } from "bullmq";
-
 import IORedis from "ioredis";
-
 import { prisma } from "@/lib/prisma";
 
 const connection = new IORedis(process.env.REDIS_URL!, {
@@ -14,113 +12,66 @@ export const escalationWorker = new Worker(
   "escalation",
 
   async (job) => {
-    // ==========================================
-    // ONLY HANDLE ESCALATION JOBS
-    // ==========================================
+    if (job.name !== "lead-escalation") return;
 
-    if (job.name !== "lead-escalation") {
-      return;
-    }
-
-    const {
-      leadId,
-
-      senderId,
-
-      platform,
-    } = job.data;
+    const { leadId, senderId, platform } = job.data;
 
     console.log(`🚨 Processing escalation for lead ${leadId}`);
 
-    // ==========================================
-    // FETCH LEAD
-    // ==========================================
-
+    // ─── Fetch lead ───────────────────────────────────
     const lead = await prisma.lead.findUnique({
-      where: {
-        id: leadId,
-      },
+      where: { id: leadId },
     });
-
-    // ==========================================
-    // LEAD NOT FOUND
-    // ==========================================
 
     if (!lead) {
       console.log("❌ Lead not found");
-
       return;
     }
 
-    // ==========================================
-    // STALE JOB CHECK
-    // ==========================================
+    // ─── Already escalated — just ensure AI is paused ─
+    if (lead.status === "ESCALATED") {
+      console.log(`⚠️ Lead ${leadId} already ESCALATED — ensuring AI paused`);
 
-    const CLOSED_STATUSES = ["PAID", "CLOSED", "CONVERTED"];
+      await connection.set(
+        `ai_paused:${senderId}`,
+        "true",
+        "EX",
+        86400, // 24hr TTL
+      );
 
-    if (CLOSED_STATUSES.includes(lead.status)) {
-      console.log(`⏭️ Skipping stale escalation for lead ${leadId}`);
-
+      console.log(`🛑 AI pause confirmed for sender: ${senderId}`);
       return;
     }
 
-    // ==========================================
-    // UPDATE LEAD STATUS
-    // ==========================================
-
+    // ─── Fresh escalation ─────────────────────────────
     await prisma.lead.update({
-      where: {
-        id: leadId,
-      },
+      where: { id: leadId },
+      data: { status: "ESCALATED" },
+    });
 
+    await connection.set(`ai_paused:${senderId}`, "true", "EX", 86400);
+
+    await prisma.escalationLog.create({
       data: {
-        status: "ESCALATED",
+        leadId,
+        reason: job.data.reason || "Low confidence AI response",
+        escalatedAt: new Date(),
       },
     });
 
     console.log(`🚨 Lead ${leadId} escalated`);
+    console.log(`🛑 AI paused for sender: ${senderId}`);
 
-    // ==========================================
-    // PAUSE AI
-    // ==========================================
-
-    await connection.set(
-      `ai_paused:${leadId}`,
-
-      "true",
-    );
-
-    console.log(`🛑 AI paused for lead ${leadId}`);
-
-    // ==========================================
-    // TODO:
-    // notify human agent
-    // send Slack alert
-    // assign support rep
-    // ==========================================
+    // TODO: notify human agent / Slack alert / assign rep
   },
 
-  {
-    connection,
-  },
+  { connection },
 );
 
-escalationWorker.on(
-  "completed",
-
-  (job) => {
-    console.log(`✅ Escalation job ${job.id} completed`);
-  },
+escalationWorker.on("completed", (job) =>
+  console.log(`✅ Escalation job ${job.id} completed`),
 );
 
-escalationWorker.on(
-  "failed",
-
-  (job, err) => {
-    console.error(
-      `❌ Escalation job ${job?.id} failed:`,
-
-      err.message,
-    );
-  },
+escalationWorker.on("failed", (job, err) =>
+  console.error(`❌ Escalation job ${job?.id} failed:`, err.message),
 );

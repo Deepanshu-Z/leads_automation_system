@@ -60,5 +60,5 @@ messageWorker.on("completed", (job) =>
   console.log(`✅ Job ${job.id} completed`),
 );
 messageWorker.on("failed", (job, err) =>
-  console.error(`❌ Job ${job?.id} failed:`, err.message),
+  console.error(`❌ Job ${job?.id} failed:`, err.message, err),
 );
