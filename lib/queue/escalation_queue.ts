@@ -14,48 +14,91 @@ export const escalationQueue = new Queue("escalation", {
 
 export async function scheduleEscalation(
   leadId: number,
-  senderId: string,
-  platform: string,
-  reason: string = "No response from AI",
-) {
-  // const timeoutMinutes = Number(process.env.ESCALATION_TIMEOUT_MINUTES) || 30;
-  // const delay = timeoutMinutes * 60 * 1000;
-  const timeoutMinutes = 0;
-  const delay = 0;
 
-  // ─── Remove existing job ──────────────────────────────
-  const existingJobId = await redis.get(`escalation:${senderId}`); // ← redis for get/set
+  senderId: string,
+
+  platform: string,
+
+  reason: string = "No response from AI",
+
+  type: "INACTIVITY" | "LOW_AI_CONFIDENCE" = "INACTIVITY",
+) {
+  // =====================================
+  // TEST MODE
+  // =====================================
+
+  const timeoutMinutes =
+    type === "LOW_AI_CONFIDENCE"
+      ? 0
+      : Number(process.env.ESCALATION_TIMEOUT_MINUTES) || 30;
+
+  const delay = timeoutMinutes * 60 * 1000;
+
+  // =====================================
+  // REMOVE EXISTING JOB
+  // =====================================
+
+  const existingJobId = await redis.get(`escalation:${senderId}`);
 
   if (existingJobId) {
     const existingJob = await escalationQueue.getJob(existingJobId);
+
     if (existingJob) {
       await existingJob.remove();
+
       console.log(`🗑️ Old escalation removed for ${senderId}`);
     }
   }
 
-  // ─── Add new job ──────────────────────────────────────
+  // =====================================
+  // CREATE JOB
+  // =====================================
+
   const job = await escalationQueue.add(
     "lead-escalation",
-    { leadId, senderId, platform, reason },
-    { delay },
+
+    {
+      leadId,
+
+      senderId,
+
+      platform,
+
+      reason,
+
+      type,
+    },
+
+    {
+      delay,
+    },
   );
+
+  // =====================================
+  // FAILED
+  // =====================================
 
   if (!job.id) {
     console.error(`❌ Failed to schedule escalation for ${senderId}`);
+
     return;
   }
 
-  // ─── Save job ID ──────────────────────────────────────
+  // =====================================
+  // SAVE JOB ID
+  // =====================================
+
   await redis.set(
-    // ← redis for get/set
     `escalation:${senderId}`,
+
     job.id,
+
     "EX",
-    timeoutMinutes * 60 + 300,
+
+    300,
   );
 
-  console.log(`✅ Escalation job ${job.id} scheduled (${timeoutMinutes} mins)`);
+  console.log(`⏰ Escalation job ${job.id} scheduled`);
 }
 
 export async function cancelEscalation(senderId: string) {

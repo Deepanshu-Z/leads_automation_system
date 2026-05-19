@@ -1,64 +1,198 @@
 import "dotenv/config";
+
 import { Worker } from "bullmq";
+
 import IORedis from "ioredis";
+
 import { sendMessage } from "@/lib/messaging/sendMessage";
+
 import { BASE_URL } from "@/config/api";
+
 import { scheduleEscalation } from "../queue/escalation_queue";
 
-const connection = new IORedis(process.env.REDIS_URL!, {
-  maxRetriesPerRequest: null,
-});
+const connection = new IORedis(
+  process.env.REDIS_URL!,
+
+  {
+    maxRetriesPerRequest: null,
+  },
+);
 
 export const messageWorker = new Worker(
   "lead-processing",
+
   async (job) => {
+    // =====================================
+    // SEND MESSAGE JOB
+    // =====================================
+
     if (job.name === "send-message") {
-      // ── existing send-message logic ──
-      const { platform, recipientId, text } = job.data;
-      await sendMessage(platform, recipientId, text);
+      const {
+        platform,
+
+        recipientId,
+
+        text,
+      } = job.data;
+
+      await sendMessage(
+        platform,
+
+        recipientId,
+
+        text,
+      );
+
       console.log("✅ Message sent");
-    } else if (job.name === "incoming-message") {
-      const { platform, senderId, text } = job.data;
 
-      console.log(`📨 Processing incoming message from ${senderId}`);
+      return;
+    }
 
-      // ── Call Python to process AI + save to DB ──
-      const response = await fetch(`${BASE_URL}/process`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          platform,
-          senderId,
-          message: text,
-        }),
-      });
+    // =====================================
+    // INCOMING MESSAGE JOB
+    // =====================================
+
+    if (job.name === "incoming-message") {
+      const {
+        platform,
+
+        senderId,
+
+        text,
+      } = job.data;
+
+      console.log(`📨 Processing message from ${senderId}`);
+
+      // =====================================
+      // CALL PYTHON AI API
+      // =====================================
+
+      const response = await fetch(
+        `${BASE_URL}/process`,
+
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            platform,
+
+            senderId,
+
+            message: text,
+          }),
+        },
+      );
+
+      // =====================================
+      // FETCH FAILED
+      // =====================================
 
       if (!response.ok) {
         throw new Error(`Python API failed: ${response.status}`);
       }
 
-      const { reply, leadId } = await response.json();
+      // =====================================
+      // PARSE JSON
+      // =====================================
+
+      const data = await response.json();
+
+      console.log(data);
+
+      const {
+        reply,
+
+        leadId,
+
+        escalate,
+
+        escalationType,
+      } = data;
 
       console.log(`🤖 AI Reply: ${reply}`);
-      console.log("LEAD ID IS: ", leadId);
-      // ── Send reply back to user via Meta ──
-      await sendMessage(platform, senderId, reply);
+
+      console.log(`🆔 Lead ID: ${leadId}`);
+
+      // =====================================
+      // SEND MESSAGE TO USER
+      // =====================================
+
+      await sendMessage(
+        platform,
+
+        senderId,
+
+        reply,
+      );
+
+      console.log(`✅ Reply sent to ${senderId}`);
+
+      // =====================================
+      // LOW CONFIDENCE ESCALATION
+      // =====================================
+
+      if (escalate && escalationType === "LOW_AI_CONFIDENCE") {
+        console.log("🚨 Immediate escalation");
+
+        await scheduleEscalation(
+          leadId,
+
+          senderId,
+
+          platform,
+
+          "Low AI confidence",
+
+          "LOW_AI_CONFIDENCE",
+        );
+
+        return;
+      }
+
+      // =====================================
+      // NORMAL INACTIVITY TIMER
+      // =====================================
+
       await scheduleEscalation(
         leadId,
 
         senderId,
 
         platform,
+
+        "No user response",
+
+        "INACTIVITY",
       );
-      console.log(`✅ Reply sent to ${senderId}`);
+
+      console.log(`⏰ Escalation timer started`);
     }
   },
-  { connection },
+
+  {
+    connection,
+  },
 );
 
-messageWorker.on("completed", (job) =>
-  console.log(`✅ Job ${job.id} completed`),
+messageWorker.on(
+  "completed",
+
+  (job) => console.log(`✅ Job ${job.id} completed`),
 );
-messageWorker.on("failed", (job, err) =>
-  console.error(`❌ Job ${job?.id} failed:`, err.message, err),
+
+messageWorker.on(
+  "failed",
+
+  (job, err) =>
+    console.error(
+      `❌ Job ${job?.id} failed:`,
+
+      err.message,
+
+      err,
+    ),
 );
