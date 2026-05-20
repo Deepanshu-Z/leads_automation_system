@@ -7,8 +7,9 @@ const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!;
 
 /**
  * Retry helper (3 retries, 1s delay)
+ * FOR NOW WE HAVE ONLY 1 RETRY I WILL UPDATE IT LATER
  */
-async function retry(fn: () => Promise<any>, retries = 3) {
+async function retry(fn: () => Promise<any>, retries = 1) {
   let lastError;
 
   for (let i = 0; i < retries; i++) {

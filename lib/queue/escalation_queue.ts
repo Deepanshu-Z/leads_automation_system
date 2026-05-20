@@ -27,11 +27,7 @@ export async function scheduleEscalation(
   // TEST MODE
   // =====================================
 
-  const timeoutMinutes =
-    type === "LOW_AI_CONFIDENCE"
-      ? 0
-      : Number(process.env.ESCALATION_TIMEOUT_MINUTES) || 30;
-
+  const timeoutMinutes = Number(process.env.ESCALATION_TIMEOUT_MINUTES);
   const delay = timeoutMinutes * 60 * 1000;
 
   // =====================================

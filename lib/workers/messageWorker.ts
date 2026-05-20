@@ -112,7 +112,10 @@ export const messageWorker = new Worker(
 
         escalationType,
       } = data;
-
+      if (escalate) {
+        console.log("HEY WE WILL NOT PROCEED BCS OF ESCALATION!");
+        return;
+      }
       console.log(`🤖 AI Reply: ${reply}`);
 
       console.log(`🆔 Lead ID: ${leadId}`);
@@ -131,29 +134,6 @@ export const messageWorker = new Worker(
 
       console.log(`✅ Reply sent to ${senderId}`);
 
-      // =====================================
-      // LOW CONFIDENCE ESCALATION
-      // =====================================
-
-      if (escalate && escalationType === "LOW_AI_CONFIDENCE") {
-        console.log("🚨 Immediate escalation");
-
-        await scheduleEscalation(
-          leadId,
-
-          senderId,
-
-          platform,
-
-          "Low AI confidence",
-
-          "LOW_AI_CONFIDENCE",
-        );
-
-        return;
-      }
-
-      // =====================================
       // NORMAL INACTIVITY TIMER
       // =====================================
 

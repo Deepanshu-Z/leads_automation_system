@@ -1,4 +1,3 @@
-// workers/escalation.worker.ts
 import "dotenv/config";
 import { Worker } from "bullmq";
 import IORedis from "ioredis";
