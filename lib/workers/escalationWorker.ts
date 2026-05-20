@@ -2,6 +2,7 @@ import "dotenv/config";
 import { Worker } from "bullmq";
 import IORedis from "ioredis";
 import { prisma } from "@/lib/prisma";
+import { BASE_URL } from "@/config/api";
 
 const connection = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
@@ -18,48 +19,31 @@ export const escalationWorker = new Worker(
     console.log(`🚨 Processing escalation for lead ${leadId}`);
 
     // ─── Fetch lead ───────────────────────────────────
-    const lead = await prisma.lead.findUnique({
-      where: { id: leadId },
-    });
+    const response = await fetch(
+      `${BASE_URL}/escalate`,
 
-    if (!lead) {
-      console.log("❌ Lead not found");
-      return;
-    }
+      {
+        method: "POST",
 
-    // ─── Already escalated — just ensure AI is paused ─
-    if (lead.status === "ESCALATED") {
-      console.log(`⚠️ Lead ${leadId} already ESCALATED — ensuring AI paused`);
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-      await connection.set(
-        `ai_paused:${senderId}`,
-        "true",
-        "EX",
-        86400, // 24hr TTL
-      );
+        body: JSON.stringify({
+          senderId,
 
-      console.log(`🛑 AI pause confirmed for sender: ${senderId}`);
-      return;
-    }
+          escalationType: "INACTIVITY",
 
-    // ─── Fresh escalation ─────────────────────────────
-    await prisma.lead.update({
-      where: { id: leadId },
-      data: { status: "ESCALATED" },
-    });
-
-    await connection.set(`ai_paused:${senderId}`, "true", "EX", 86400);
-
-    await prisma.escalationLog.create({
-      data: {
-        leadId,
-        reason: job.data.reason || "Low confidence AI response",
-        escalatedAt: new Date(),
+          reason: "User inactive",
+        }),
       },
-    });
+    );
 
-    console.log(`🚨 Lead ${leadId} escalated`);
-    console.log(`🛑 AI paused for sender: ${senderId}`);
+    if (!response.ok) {
+      throw new Error("Escalation API failed");
+    }
+
+    console.log("✅ Escalation handled by Python");
 
     // TODO: notify human agent / Slack alert / assign rep
   },
