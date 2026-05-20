@@ -114,6 +114,14 @@ export const messageWorker = new Worker(
       } = data;
       if (escalate) {
         console.log("HEY WE WILL NOT PROCEED BCS OF ESCALATION!");
+        if (reply)
+          await sendMessage(
+            platform,
+
+            senderId,
+
+            reply,
+          );
         return;
       }
       console.log(`🤖 AI Reply: ${reply}`);
