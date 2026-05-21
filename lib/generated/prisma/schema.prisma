@@ -24,6 +24,7 @@ model Lead {
   payments      Payment[]
   escalations   EscalationLog[]
   auditLogs     AuditLog[]
+  notifications Notification[]
 }
 
 model Agent {
@@ -38,6 +39,7 @@ model Agent {
   leads         Lead[]          @relation("AgentLeads")
   conversations Conversation[]
   escalations   EscalationLog[]
+  notifications Notification[]
 }
 
 model Conversation {
@@ -144,6 +146,26 @@ model AuditLog {
   reason      String
   triggeredBy String // "ai" / "agent" / "system" / "razorpay"
   createdAt   DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id])
+}
+
+model Notification {
+  id Int @id @default(autoincrement())
+
+  agentId Int
+
+  leadId Int
+
+  title String
+
+  message String
+
+  isRead Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  agent Agent @relation(fields: [agentId], references: [id])
 
   lead Lead @relation(fields: [leadId], references: [id])
 }
