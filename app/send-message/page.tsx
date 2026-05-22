@@ -8,7 +8,7 @@ export default function SendMessagePage() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
-
+  const agentId = 1234;
   const handleSend = async () => {
     setLoading(true);
     setResponse("");
@@ -33,6 +33,29 @@ export default function SendMessagePage() {
     setLoading(false);
   };
 
+  const reEnableAi = async () => {
+    setLoading(true);
+    setResponse("");
+
+    try {
+      const res = await fetch(`/api/leads/${1}/reenableai`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          agentId,
+        }),
+      });
+
+      const data = await res.text();
+      setResponse(data);
+    } catch (err) {
+      setResponse("Error sending message");
+    }
+
+    setLoading(false);
+  };
   return (
     <div style={{ padding: 20 }}>
       <h2>Send Message</h2>
@@ -69,6 +92,7 @@ export default function SendMessagePage() {
       </button>
 
       <p>{response}</p>
+      <button onClick={reEnableAi}>RE ENABLE AI</button>
     </div>
   );
 }
