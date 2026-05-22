@@ -14,14 +14,12 @@ export default function SendMessagePage() {
     setResponse("");
 
     try {
-      const res = await fetch("/api/testing/send-message", {
+      const res = await fetch(`/api/leads/${1}/reply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          platform,
-          recipientId,
           text,
         }),
       });
