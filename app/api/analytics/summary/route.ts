@@ -1,36 +1,163 @@
-import { redis } from "@/lib/redis/redis";
-import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-function getToday() {
-  return new Date().toISOString().split("T")[0];
-}
+import { NextRequest, NextResponse } from "next/server";
 
-function buildKey(metric: string) {
-  return `analytics:daily:${getToday()}:${metric}`;
-}
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const [newLeads, messages, payments, escalations] = await Promise.all([
-      redis.get(buildKey("new_leads")),
+    // =====================================
+    // GET DATE
+    // =====================================
 
-      redis.get(buildKey("messages_sent")),
+    const dateParam = req.nextUrl.searchParams.get("date");
 
-      redis.get(buildKey("payments")),
+    const today = dateParam ? new Date(dateParam) : new Date();
 
-      redis.get(buildKey("escalations")),
+    today.setHours(0, 0, 0, 0);
+
+    const tomorrow = new Date(today);
+
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // =====================================
+    // SUMMARY CARDS
+    // =====================================
+
+    const [newLeads, messagesSent, payments, escalations] = await Promise.all([
+      prisma.lead.count({
+        where: {
+          createdAt: {
+            gte: today,
+
+            lt: tomorrow,
+          },
+        },
+      }),
+
+      prisma.message.count({
+        where: {
+          createdAt: {
+            gte: today,
+
+            lt: tomorrow,
+          },
+        },
+      }),
+
+      prisma.payment.count({
+        where: {
+          createdAt: {
+            gte: today,
+
+            lt: tomorrow,
+          },
+        },
+      }),
+
+      prisma.lead.count({
+        where: {
+          status: "ESCALATED",
+        },
+      }),
     ]);
 
+    // =====================================
+    // PLATFORM BAR CHART
+    // =====================================
+
+    const platformCounts = await prisma.lead.groupBy({
+      by: ["platform"],
+
+      _count: {
+        platform: true,
+      },
+
+      where: {
+        createdAt: {
+          gte: today,
+
+          lt: tomorrow,
+        },
+      },
+    });
+
+    // =====================================
+    // STATUS PIE CHART
+    // =====================================
+
+    const statusCounts = await prisma.lead.groupBy({
+      by: ["status"],
+
+      _count: {
+        status: true,
+      },
+    });
+
+    // =====================================
+    // RECENT ESCALATIONS
+    // =====================================
+
+    const recentEscalations = await prisma.lead.findMany({
+      where: {
+        status: "ESCALATED",
+      },
+
+      orderBy: {
+        updatedAt: "desc",
+      },
+
+      take: 5,
+
+      include: {
+        agent: true,
+      },
+    });
+
+    // =====================================
+    // FORMAT PLATFORM DATA
+    // =====================================
+
+    const platformData = platformCounts.map((item) => ({
+      platform: item.platform,
+
+      leads: item._count.platform,
+    }));
+
+    // =====================================
+    // FORMAT STATUS DATA
+    // =====================================
+
+    const statusData = statusCounts.map((item) => ({
+      status: item.status,
+
+      value: item._count.status,
+    }));
+
     return NextResponse.json({
-      newLeads: Number(newLeads || 0),
+      newLeads,
 
-      messagesSent: Number(messages || 0),
+      messagesSent,
 
-      payments: Number(payments || 0),
+      payments,
 
-      escalations: Number(escalations || 0),
+      escalations,
+
+      platformData,
+
+      statusData,
+
+      recentEscalations,
     });
   } catch (error) {
-    return NextResponse.json({ message: "ERROR GETTING ANALYTICS", error });
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        message: "ERROR FETCHING ANALYTICS",
+      },
+
+      {
+        status: 500,
+      },
+    );
   }
 }
