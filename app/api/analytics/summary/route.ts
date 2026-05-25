@@ -71,13 +71,13 @@ export async function GET(req: NextRequest) {
         platform: true,
       },
 
-      where: {
-        createdAt: {
-          gte: today,
+      // where: {
+      //   createdAt: {
+      //     gte: today,
 
-          lt: tomorrow,
-        },
-      },
+      //     lt: tomorrow,
+      //   },
+      // },
     });
 
     // =====================================

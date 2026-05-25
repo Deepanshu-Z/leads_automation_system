@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   BarChart,
@@ -27,7 +27,7 @@ export default function DashboardPage() {
     const res = await fetch(`/api/analytics/summary?date=${today}`);
 
     const data = await res.json();
-
+    console.log(data);
     setAnalytics(data);
   }
 
@@ -46,6 +46,75 @@ export default function DashboardPage() {
 
     return () => clearInterval(interval);
   }, []);
+  const platformData = useMemo(() => {
+    if (!analytics?.platformData) {
+      return [];
+    }
+
+    return [
+      {
+        platform: "whatsapp",
+
+        leads:
+          analytics.platformData.find((p: any) => p.platform === "whatsapp")
+            ?.leads || 0,
+      },
+
+      {
+        platform: "instagram",
+
+        leads:
+          analytics.platformData.find((p: any) => p.platform === "instagram")
+            ?.leads || 0,
+      },
+
+      {
+        platform: "facebook",
+
+        leads:
+          analytics.platformData.find((p: any) => p.platform === "facebook")
+            ?.leads || 0,
+      },
+    ];
+  }, [analytics]);
+  const statusData = useMemo(() => {
+    if (!analytics?.statusData) {
+      return [];
+    }
+
+    return [
+      {
+        status: "NEW",
+
+        value:
+          analytics.statusData.find((s: any) => s.status === "NEW")?.value || 0,
+      },
+
+      {
+        status: "ENGAGED",
+
+        value:
+          analytics.statusData.find((s: any) => s.status === "ENGAGED")
+            ?.value || 0,
+      },
+
+      {
+        status: "ESCALATED",
+
+        value:
+          analytics.statusData.find((s: any) => s.status === "ESCALATED")
+            ?.value || 0,
+      },
+
+      {
+        status: "CLOSED",
+
+        value:
+          analytics.statusData.find((s: any) => s.status === "CLOSED")?.value ||
+          0,
+      },
+    ];
+  }, [analytics]);
 
   if (!analytics) {
     return <div>Loading...</div>;
@@ -55,55 +124,58 @@ export default function DashboardPage() {
   // BAR CHART DATA
   // =====================================
 
-  const platformData = [
-    {
-      platform: "whatsapp",
+  // const platformData = [
+  //   {
+  //     platform: "whatsapp",
 
-      leads: analytics.whatsappLeads || 0,
-    },
+  //     leads:
+  //       analytics.platformData?.platform === "whatsapp"
+  //         ? analytics.platformData?.leads
+  //         : 0,
+  //   },
 
-    {
-      platform: "instagram",
+  //   {
+  //     platform: "instagram",
 
-      leads: analytics.instagramLeads || 0,
-    },
+  //     leads: analytics.instagramLeads || 0,
+  //   },
 
-    {
-      platform: "facebook",
+  //   {
+  //     platform: "facebook",
 
-      leads: analytics.facebookLeads || 0,
-    },
-  ];
+  //     leads: analytics.facebookLeads || 0,
+  //   },
+  // ];
 
   // =====================================
   // PIE CHART DATA
   // =====================================
 
-  const statusData = [
-    {
-      name: "NEW",
+  // const statusData = [
+  //   {
+  //     name: "NEW",
 
-      value: analytics.newStatus || 0,
-    },
+  //     value: analytics.newStatus || 0,
+  //   },
 
-    {
-      name: "ENGAGED",
+  //   {
+  //     name: "ENGAGED",
 
-      value: analytics.engagedStatus || 0,
-    },
+  //     value: analytics.engagedStatus || 0,
+  //   },
 
-    {
-      name: "ESCALATED",
+  //   {
+  //     name: "ESCALATED",
 
-      value: analytics.escalatedStatus || 0,
-    },
+  //     value: analytics.escalatedStatus || 0,
+  //   },
 
-    {
-      name: "CLOSED",
+  //   {
+  //     name: "CLOSED",
 
-      value: analytics.closedStatus || 0,
-    },
-  ];
+  //     value: analytics.closedStatus || 0,
+  //   },
+  // ];
 
   return (
     <div className="p-6 space-y-8">
@@ -157,7 +229,7 @@ export default function DashboardPage() {
                 <Pie
                   data={statusData}
                   dataKey="value"
-                  nameKey="name"
+                  nameKey="status"
                   outerRadius={120}
                 >
                   {statusData.map(
