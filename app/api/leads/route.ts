@@ -10,11 +10,35 @@ export async function GET(req: NextRequest) {
     const limit = Number(searchParams.get("limit") || 20);
 
     const status = searchParams.get("status");
-
+    const searchInput = searchParams.get("search");
     const platform = searchParams.get("platform");
 
     const where: any = {};
+    if (searchInput) {
+      where.OR = [
+        {
+          name: {
+            contains: searchInput,
 
+            mode: "insensitive",
+          },
+        },
+
+        {
+          email: {
+            contains: searchInput,
+
+            mode: "insensitive",
+          },
+        },
+
+        {
+          phone: {
+            contains: searchInput,
+          },
+        },
+      ];
+    }
     if (status) {
       where.status = status;
     }
