@@ -26,6 +26,7 @@ const fetchleads = async ({
   const res = await fetch(`/api/leads?${params}`);
 
   if (!res.ok) {
+    console.error("Failed to fetch leads:", res.statusText);
     throw new Error("Failed to fetch leads");
   }
 
