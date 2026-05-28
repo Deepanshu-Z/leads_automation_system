@@ -120,6 +120,13 @@ export async function POST(req: NextRequest) {
       }
 
       // ===============================================
+      // READ COURSE INFO FROM NOTES
+      // ===============================================
+
+      const notes = paymentLinkEntity.notes || {};
+      console.log(`📋 Payment notes:`, notes);
+
+      // ===============================================
       // UPDATE PAYMENT
       // ===============================================
 
@@ -134,6 +141,11 @@ export async function POST(req: NextRequest) {
           razorpayPaymentId,
 
           paidAt: new Date(),
+
+          // Save course info from notes (fallback to existing DB values)
+          courseName:     notes.course_name     || payment.courseName,
+          courseTiming:   notes.batch_timing     || payment.courseTiming,
+          courseDuration: notes.course_duration  || payment.courseDuration,
         },
       });
 
@@ -173,15 +185,16 @@ export async function POST(req: NextRequest) {
       // SEND WHATSAPP MESSAGE
       // ===============================================
 
-      const message = `Thank you ${payment.lead.name || ""}!
+      const courseLine = notes.course_name ? `\nCourse: ${notes.course_name}` : "";
+      const timingLine = notes.batch_timing ? `\nBatch: ${notes.batch_timing}` : "";
 
-Your payment of ₹${amount}
-has been received.
+      const message = `Thank you ${payment.lead.name || ""}! \u{1F389}
 
-Reference:
-${razorpayPaymentId}
+Your payment of \u20B9${amount} has been received.${courseLine}${timingLine}
 
-Our team will contact you shortly.`;
+Reference: ${razorpayPaymentId}
+
+Your enrollment is confirmed. Our team will contact you shortly with class details. \u{1F64F}`;
 
       try {
         await sendMessage(
@@ -192,10 +205,10 @@ Our team will contact you shortly.`;
           message,
         );
       } catch (error) {
-        console.log("❌ WhatsApp send failed:", error);
+        console.log("\u274C WhatsApp send failed:", error);
       }
 
-      console.log(`✅ Payment success: ${razorpayPaymentId}`);
+      console.log(`\u2705 Payment success: ${razorpayPaymentId} | Course: ${notes.course_name || "unknown"}`);
     }
 
     // =====================================================
@@ -207,24 +220,40 @@ Our team will contact you shortly.`;
 
       const razorpayPaymentId = paymentEntity.id;
 
-      console.log(`❌ Payment failed: ${razorpayPaymentId}`);
+      // Try to get linkId from notes or order_id for reliable lookup
+      const notes = paymentEntity.notes || {};
+      const orderId = paymentEntity.order_id;
+
+      console.log(`\u274C Payment failed: ${razorpayPaymentId}`);
 
       // ===============================================
-      // FIND PAYMENT
+      // FIND PAYMENT — try multiple strategies
       // ===============================================
 
-      const payment = await prisma.payment.findFirst({
-        where: {
-          razorpayPaymentId,
-        },
+      let payment = null;
 
-        include: {
-          lead: true,
-        },
-      });
+      // Strategy 1: Find by lead_id from notes (most reliable)
+      if (notes.lead_id) {
+        payment = await prisma.payment.findFirst({
+          where: {
+            leadId: parseInt(notes.lead_id),
+            status: "PENDING",
+          },
+          include: { lead: true },
+          orderBy: { createdAt: "desc" },
+        });
+      }
+
+      // Strategy 2: Find by razorpayPaymentId (works on retry)
+      if (!payment) {
+        payment = await prisma.payment.findFirst({
+          where: { razorpayPaymentId },
+          include: { lead: true },
+        });
+      }
 
       if (!payment) {
-        console.log("⚠️ Failed payment not found");
+        console.log("\u26A0\uFE0F Failed payment not found");
 
         return NextResponse.json({
           success: true,

@@ -6796,6 +6796,9 @@ export namespace Prisma {
     retryCount: number | null
     failureReason: string | null
     paidAt: Date | null
+    courseName: string | null
+    courseTiming: string | null
+    courseDuration: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6812,6 +6815,9 @@ export namespace Prisma {
     retryCount: number | null
     failureReason: string | null
     paidAt: Date | null
+    courseName: string | null
+    courseTiming: string | null
+    courseDuration: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6828,6 +6834,9 @@ export namespace Prisma {
     retryCount: number
     failureReason: number
     paidAt: number
+    courseName: number
+    courseTiming: number
+    courseDuration: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6860,6 +6869,9 @@ export namespace Prisma {
     retryCount?: true
     failureReason?: true
     paidAt?: true
+    courseName?: true
+    courseTiming?: true
+    courseDuration?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6876,6 +6888,9 @@ export namespace Prisma {
     retryCount?: true
     failureReason?: true
     paidAt?: true
+    courseName?: true
+    courseTiming?: true
+    courseDuration?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6892,6 +6907,9 @@ export namespace Prisma {
     retryCount?: true
     failureReason?: true
     paidAt?: true
+    courseName?: true
+    courseTiming?: true
+    courseDuration?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6995,6 +7013,9 @@ export namespace Prisma {
     retryCount: number
     failureReason: string | null
     paidAt: Date | null
+    courseName: string | null
+    courseTiming: string | null
+    courseDuration: string | null
     createdAt: Date
     updatedAt: Date
     _count: PaymentCountAggregateOutputType | null
@@ -7030,6 +7051,9 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
+    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
@@ -7047,6 +7071,9 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
+    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
@@ -7064,6 +7091,9 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
+    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
@@ -7081,11 +7111,14 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
+    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "retryCount" | "failureReason" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "retryCount" | "failureReason" | "paidAt" | "courseName" | "courseTiming" | "courseDuration" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
@@ -7113,6 +7146,9 @@ export namespace Prisma {
       retryCount: number
       failureReason: string | null
       paidAt: Date | null
+      courseName: string | null
+      courseTiming: string | null
+      courseDuration: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["payment"]>
@@ -7550,6 +7586,9 @@ export namespace Prisma {
     readonly retryCount: FieldRef<"Payment", 'Int'>
     readonly failureReason: FieldRef<"Payment", 'String'>
     readonly paidAt: FieldRef<"Payment", 'DateTime'>
+    readonly courseName: FieldRef<"Payment", 'String'>
+    readonly courseTiming: FieldRef<"Payment", 'String'>
+    readonly courseDuration: FieldRef<"Payment", 'String'>
     readonly createdAt: FieldRef<"Payment", 'DateTime'>
     readonly updatedAt: FieldRef<"Payment", 'DateTime'>
   }
@@ -13624,6 +13663,9 @@ export namespace Prisma {
     retryCount: 'retryCount',
     failureReason: 'failureReason',
     paidAt: 'paidAt',
+    courseName: 'courseName',
+    courseTiming: 'courseTiming',
+    courseDuration: 'courseDuration',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -14171,6 +14213,9 @@ export namespace Prisma {
     retryCount?: IntFilter<"Payment"> | number
     failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
+    courseName?: StringNullableFilter<"Payment"> | string | null
+    courseTiming?: StringNullableFilter<"Payment"> | string | null
+    courseDuration?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
@@ -14188,6 +14233,9 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrderInput | SortOrder
     paidAt?: SortOrderInput | SortOrder
+    courseName?: SortOrderInput | SortOrder
+    courseTiming?: SortOrderInput | SortOrder
+    courseDuration?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lead?: LeadOrderByWithRelationInput
@@ -14208,6 +14256,9 @@ export namespace Prisma {
     retryCount?: IntFilter<"Payment"> | number
     failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
+    courseName?: StringNullableFilter<"Payment"> | string | null
+    courseTiming?: StringNullableFilter<"Payment"> | string | null
+    courseDuration?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
@@ -14225,6 +14276,9 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrderInput | SortOrder
     paidAt?: SortOrderInput | SortOrder
+    courseName?: SortOrderInput | SortOrder
+    courseTiming?: SortOrderInput | SortOrder
+    courseDuration?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PaymentCountOrderByAggregateInput
@@ -14249,6 +14303,9 @@ export namespace Prisma {
     retryCount?: IntWithAggregatesFilter<"Payment"> | number
     failureReason?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+    courseName?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    courseTiming?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    courseDuration?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
   }
@@ -14921,6 +14978,9 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
+    courseName?: string | null
+    courseTiming?: string | null
+    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lead: LeadCreateNestedOneWithoutPaymentsInput
@@ -14938,6 +14998,9 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
+    courseName?: string | null
+    courseTiming?: string | null
+    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14952,6 +15015,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneRequiredWithoutPaymentsNestedInput
@@ -14969,6 +15035,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14985,6 +15054,9 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
+    courseName?: string | null
+    courseTiming?: string | null
+    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14999,6 +15071,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15015,6 +15090,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15891,6 +15969,9 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrder
     paidAt?: SortOrder
+    courseName?: SortOrder
+    courseTiming?: SortOrder
+    courseDuration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15914,6 +15995,9 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrder
     paidAt?: SortOrder
+    courseName?: SortOrder
+    courseTiming?: SortOrder
+    courseDuration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15930,6 +16014,9 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrder
     paidAt?: SortOrder
+    courseName?: SortOrder
+    courseTiming?: SortOrder
+    courseDuration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -17199,6 +17286,9 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
+    courseName?: string | null
+    courseTiming?: string | null
+    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17214,6 +17304,9 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
+    courseName?: string | null
+    courseTiming?: string | null
+    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17402,6 +17495,9 @@ export namespace Prisma {
     retryCount?: IntFilter<"Payment"> | number
     failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
+    courseName?: StringNullableFilter<"Payment"> | string | null
+    courseTiming?: StringNullableFilter<"Payment"> | string | null
+    courseDuration?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
   }
@@ -18427,6 +18523,9 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
+    courseName?: string | null
+    courseTiming?: string | null
+    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18492,6 +18591,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18507,6 +18609,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18522,6 +18627,9 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
