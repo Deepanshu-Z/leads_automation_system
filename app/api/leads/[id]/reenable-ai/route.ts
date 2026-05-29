@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { redis } from "@/lib/redis/redis";
 
 import { sendMessage } from "@/lib/messaging/sendMessage";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(
   req: NextRequest,
@@ -22,10 +24,8 @@ export async function POST(
 
     const { id } = await context.params;
 
-    const body = await req.json();
-
-    const { agentId } = body;
-
+    const session = await getServerSession(authOptions);
+    const agentId = Number(session?.user?.id);
     // =====================================
     // FIND LEAD
     // =====================================
@@ -68,6 +68,7 @@ export async function POST(
       data: {
         status: "ENGAGED",
         aiEnabled: true,
+        assignedAgentId: null,
       },
     });
 
@@ -82,7 +83,31 @@ export async function POST(
 
       "You are now chatting with our AI assistant again. 😊",
     );
+    const conversation = await prisma.conversation.findFirst({
+      where: {
+        leadId: lead.id,
+      },
+    });
+    if (!conversation) {
+      return NextResponse.json(
+        {
+          error: "Conversation not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
 
+    await prisma.message.create({
+      data: {
+        conversationId: conversation.id,
+
+        content: "You are now chatting with our AI assistant again. 😊",
+
+        role: "AI",
+      },
+    });
     // =====================================
     // AUDIT LOG
     // =====================================

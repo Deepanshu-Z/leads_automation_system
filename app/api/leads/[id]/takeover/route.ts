@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 import { redis } from "@/lib/redis/redis";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(
   req: NextRequest,
@@ -14,12 +16,11 @@ export async function POST(
   },
 ) {
   try {
+    const session = await getServerSession(authOptions);
+    const agentId = Number(session?.user?.id);
     const { id } = await context.params;
 
-    const body = await req.json();
-
-    const { agentId } = body;
-
+    console.log("Taking over lead with ID:", id, "by agent:", agentId);
     // =====================================
     // FIND LEAD
     // =====================================
