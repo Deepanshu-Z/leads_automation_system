@@ -5,16 +5,11 @@ import { NextResponse } from "next/server";
 export async function GET(
   _: Request,
 
-  {
-    params,
-  }: {
-    params: {
-      id: string;
-    };
-  },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const leadId = Number(params.id);
+    const { id } = await params;
+    const leadId = Number(id);
 
     // =====================================
     // FIND CONVERSATION
