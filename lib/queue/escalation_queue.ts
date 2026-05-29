@@ -1,7 +1,9 @@
 // lib/queue/escalation.queue.ts
 import { Queue } from "bullmq";
 import { redis, bullmqConnection } from "../redis/redis"; // ← from your lib
-
+const timeoutMinutes = Number(process.env.ESCALATION_TIMEOUT_MINUTES);
+const delay = timeoutMinutes * 60 * 1000;
+const ttlSeconds = timeoutMinutes * 60 + 60;
 export const escalationQueue = new Queue("escalation", {
   connection: bullmqConnection, // ← BullMQ connection
   defaultJobOptions: {
@@ -35,15 +37,21 @@ export async function scheduleEscalation(
   // =====================================
 
   const existingJobId = await redis.get(`escalation:${senderId}`);
-
   if (existingJobId) {
     const existingJob = await escalationQueue.getJob(existingJobId);
-
     if (existingJob) {
-      await existingJob.remove();
-
-      console.log(`🗑️ Old escalation removed for ${senderId}`);
+      const state = await existingJob.getState();
+      // Only remove if not already executing or done
+      if (state === "delayed" || state === "waiting") {
+        await existingJob.remove();
+        console.log(`🗑️ Old escalation removed for ${senderId} (was ${state})`);
+      } else {
+        console.warn(
+          `⚠️ Could not remove job ${existingJobId} — state: ${state}`,
+        );
+      }
     }
+    await redis.del(`escalation:${senderId}`); // always clean up stale key
   }
 
   // =====================================
@@ -67,6 +75,7 @@ export async function scheduleEscalation(
 
     {
       delay,
+      jobId: `escalation:${senderId}`,
     },
   );
 
@@ -84,15 +93,7 @@ export async function scheduleEscalation(
   // SAVE JOB ID
   // =====================================
 
-  await redis.set(
-    `escalation:${senderId}`,
-
-    job.id,
-
-    "EX",
-
-    300,
-  );
+  await redis.set(`escalation:${senderId}`, job.id, "EX", ttlSeconds);
 
   console.log(`⏰ Escalation job ${job.id} scheduled`);
 }

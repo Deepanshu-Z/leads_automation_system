@@ -9,8 +9,6 @@ import fetchleads from "@/lib/actions/fetch/leads/fetchLeads";
 export default function LeadsPage() {
   const router = useRouter();
 
-  const [leads, setLeads] = useState<any[]>([]);
-
   const [search, setSearch] = useState("");
 
   const [status, setStatus] = useState("");
@@ -30,10 +28,10 @@ export default function LeadsPage() {
     error,
   } = useQuery({
     queryKey: ["leads", page, search, status, platform],
-    queryFn: () => fetchleads({ page, search, status, platform, setLeads }),
+    queryFn: () => fetchleads({ page, search, status, platform }),
     staleTime: 1000 * 60,
   });
-
+  const leads = data?.data || [];
   if (error) {
     return <div className="p-6">couldnt find leads!!!...</div>;
   }
@@ -127,33 +125,40 @@ export default function LeadsPage() {
         </thead>
 
         <tbody>
-          {leads.map((lead) => (
-            <tr
-              key={lead.id}
-              onClick={() => router.push(`/dashboard/leads/${lead.id}`)}
-              className="
+          {isLoading ? (
+            <tr>
+              <td colSpan={7}>Loading...</td>
+            </tr>
+          ) : (
+            //to be updated with actual type using any for testing
+            leads.map((lead: any) => (
+              <tr
+                key={lead.id}
+                onClick={() => router.push(`/dashboard/leads/${lead.id}`)}
+                className="
                   border-b
                   cursor-pointer
                   hover:bg-gray-100
                 "
-            >
-              <td>{lead.name}</td>
+              >
+                <td>{lead.name}</td>
 
-              <td>{lead.phone}</td>
+                <td>{lead.phone}</td>
 
-              <td>{lead.email}</td>
+                <td>{lead.email}</td>
 
-              <td>{lead.platform}</td>
+                <td>{lead.platform}</td>
 
-              <td>
-                <StatusBadge status={lead.status} />
-              </td>
+                <td>
+                  <StatusBadge status={lead.status} />
+                </td>
 
-              <td>{lead.assignedAgent?.name || "Unassigned"}</td>
+                <td>{lead.assignedAgent?.name || "Unassigned"}</td>
 
-              <td>{new Date(lead.updatedAt).toLocaleString()}</td>
-            </tr>
-          ))}
+                <td>{new Date(lead.updatedAt).toLocaleString()}</td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 

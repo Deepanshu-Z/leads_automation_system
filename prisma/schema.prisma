@@ -8,23 +8,23 @@ datasource db {
 }
 
 model Lead {
-  id              Int        @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String?
   email           String?
   phone           String?
   platform        String
-  sourceId        String     @unique
-  status          LeadStatus @default(NEW)
+  sourceId        String          @unique
+  status          LeadStatus      @default(NEW)
   assignedAgentId Int?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-
-  agent         Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
-  conversations Conversation[]
-  payments      Payment[]
-  escalations   EscalationLog[]
-  auditLogs     AuditLog[]
-  notifications Notification[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  aiEnabled       Boolean         @default(true)
+  agent           Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
+  conversations   Conversation[]
+  payments        Payment[]
+  escalations     EscalationLog[]
+  auditLogs       AuditLog[]
+  notifications   Notification[]
 }
 
 model Agent {
@@ -182,6 +182,7 @@ enum LeadStatus {
   PAYMENT_SENT // ← new
   PAID // ← new
   ESCALATED // ← new
+  HUMAN_ASSIGNED
   CONVERTED
   CLOSED // ← new
   LOST

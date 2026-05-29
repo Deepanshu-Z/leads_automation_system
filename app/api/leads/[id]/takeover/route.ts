@@ -62,7 +62,9 @@ export async function POST(
       },
 
       data: {
-        status: "ESCALATED",
+        aiEnabled: false,
+
+        status: "HUMAN_ASSIGNED",
 
         assignedAgentId: agentId,
       },

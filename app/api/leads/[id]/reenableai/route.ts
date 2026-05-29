@@ -67,6 +67,7 @@ export async function POST(
 
       data: {
         status: "ENGAGED",
+        aiEnabled: true,
       },
     });
 

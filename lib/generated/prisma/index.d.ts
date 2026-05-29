@@ -78,6 +78,7 @@ export namespace $Enums {
   PAYMENT_SENT: 'PAYMENT_SENT',
   PAID: 'PAID',
   ESCALATED: 'ESCALATED',
+  HUMAN_ASSIGNED: 'HUMAN_ASSIGNED',
   CONVERTED: 'CONVERTED',
   CLOSED: 'CLOSED',
   LOST: 'LOST'
@@ -1939,6 +1940,7 @@ export namespace Prisma {
     assignedAgentId: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    aiEnabled: boolean | null
   }
 
   export type LeadMaxAggregateOutputType = {
@@ -1952,6 +1954,7 @@ export namespace Prisma {
     assignedAgentId: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    aiEnabled: boolean | null
   }
 
   export type LeadCountAggregateOutputType = {
@@ -1965,6 +1968,7 @@ export namespace Prisma {
     assignedAgentId: number
     createdAt: number
     updatedAt: number
+    aiEnabled: number
     _all: number
   }
 
@@ -1990,6 +1994,7 @@ export namespace Prisma {
     assignedAgentId?: true
     createdAt?: true
     updatedAt?: true
+    aiEnabled?: true
   }
 
   export type LeadMaxAggregateInputType = {
@@ -2003,6 +2008,7 @@ export namespace Prisma {
     assignedAgentId?: true
     createdAt?: true
     updatedAt?: true
+    aiEnabled?: true
   }
 
   export type LeadCountAggregateInputType = {
@@ -2016,6 +2022,7 @@ export namespace Prisma {
     assignedAgentId?: true
     createdAt?: true
     updatedAt?: true
+    aiEnabled?: true
     _all?: true
   }
 
@@ -2116,6 +2123,7 @@ export namespace Prisma {
     assignedAgentId: number | null
     createdAt: Date
     updatedAt: Date
+    aiEnabled: boolean
     _count: LeadCountAggregateOutputType | null
     _avg: LeadAvgAggregateOutputType | null
     _sum: LeadSumAggregateOutputType | null
@@ -2148,6 +2156,7 @@ export namespace Prisma {
     assignedAgentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    aiEnabled?: boolean
     agent?: boolean | Lead$agentArgs<ExtArgs>
     conversations?: boolean | Lead$conversationsArgs<ExtArgs>
     payments?: boolean | Lead$paymentsArgs<ExtArgs>
@@ -2168,6 +2177,7 @@ export namespace Prisma {
     assignedAgentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    aiEnabled?: boolean
     agent?: boolean | Lead$agentArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
@@ -2182,6 +2192,7 @@ export namespace Prisma {
     assignedAgentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    aiEnabled?: boolean
     agent?: boolean | Lead$agentArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
@@ -2196,9 +2207,10 @@ export namespace Prisma {
     assignedAgentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    aiEnabled?: boolean
   }
 
-  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "platform" | "sourceId" | "status" | "assignedAgentId" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
+  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "platform" | "sourceId" | "status" | "assignedAgentId" | "createdAt" | "updatedAt" | "aiEnabled", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     agent?: boolean | Lead$agentArgs<ExtArgs>
     conversations?: boolean | Lead$conversationsArgs<ExtArgs>
@@ -2236,6 +2248,7 @@ export namespace Prisma {
       assignedAgentId: number | null
       createdAt: Date
       updatedAt: Date
+      aiEnabled: boolean
     }, ExtArgs["result"]["lead"]>
     composites: {}
   }
@@ -2675,6 +2688,7 @@ export namespace Prisma {
     readonly assignedAgentId: FieldRef<"Lead", 'Int'>
     readonly createdAt: FieldRef<"Lead", 'DateTime'>
     readonly updatedAt: FieldRef<"Lead", 'DateTime'>
+    readonly aiEnabled: FieldRef<"Lead", 'Boolean'>
   }
     
 
@@ -13607,7 +13621,8 @@ export namespace Prisma {
     status: 'status',
     assignedAgentId: 'assignedAgentId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    aiEnabled: 'aiEnabled'
   };
 
   export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
@@ -13825,6 +13840,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'AgentRole'
    */
   export type EnumAgentRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentRole'>
@@ -13835,13 +13857,6 @@ export namespace Prisma {
    * Reference to a field of type 'AgentRole[]'
    */
   export type ListEnumAgentRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgentRole[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -13904,6 +13919,7 @@ export namespace Prisma {
     assignedAgentId?: IntNullableFilter<"Lead"> | number | null
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
+    aiEnabled?: BoolFilter<"Lead"> | boolean
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     conversations?: ConversationListRelationFilter
     payments?: PaymentListRelationFilter
@@ -13923,6 +13939,7 @@ export namespace Prisma {
     assignedAgentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    aiEnabled?: SortOrder
     agent?: AgentOrderByWithRelationInput
     conversations?: ConversationOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
@@ -13945,6 +13962,7 @@ export namespace Prisma {
     assignedAgentId?: IntNullableFilter<"Lead"> | number | null
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
+    aiEnabled?: BoolFilter<"Lead"> | boolean
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     conversations?: ConversationListRelationFilter
     payments?: PaymentListRelationFilter
@@ -13964,6 +13982,7 @@ export namespace Prisma {
     assignedAgentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    aiEnabled?: SortOrder
     _count?: LeadCountOrderByAggregateInput
     _avg?: LeadAvgOrderByAggregateInput
     _max?: LeadMaxOrderByAggregateInput
@@ -13985,6 +14004,7 @@ export namespace Prisma {
     assignedAgentId?: IntNullableWithAggregatesFilter<"Lead"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
+    aiEnabled?: BoolWithAggregatesFilter<"Lead"> | boolean
   }
 
   export type AgentWhereInput = {
@@ -14659,6 +14679,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
@@ -14678,6 +14699,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
@@ -14694,6 +14716,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
@@ -14713,6 +14736,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -14731,6 +14755,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
   }
 
   export type LeadUpdateManyMutationInput = {
@@ -14742,6 +14767,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LeadUncheckedUpdateManyInput = {
@@ -14755,6 +14781,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AgentCreateInput = {
@@ -15504,6 +15531,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type AgentNullableScalarRelationFilter = {
     is?: AgentWhereInput | null
     isNot?: AgentWhereInput | null
@@ -15575,6 +15607,7 @@ export namespace Prisma {
     assignedAgentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    aiEnabled?: SortOrder
   }
 
   export type LeadAvgOrderByAggregateInput = {
@@ -15593,6 +15626,7 @@ export namespace Prisma {
     assignedAgentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    aiEnabled?: SortOrder
   }
 
   export type LeadMinOrderByAggregateInput = {
@@ -15606,6 +15640,7 @@ export namespace Prisma {
     assignedAgentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    aiEnabled?: SortOrder
   }
 
   export type LeadSumOrderByAggregateInput = {
@@ -15705,16 +15740,19 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type EnumAgentRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.AgentRole | EnumAgentRoleFieldRefInput<$PrismaModel>
     in?: $Enums.AgentRole[] | ListEnumAgentRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.AgentRole[] | ListEnumAgentRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumAgentRoleFilter<$PrismaModel> | $Enums.AgentRole
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type LeadListRelationFilter = {
@@ -15773,14 +15811,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAgentRoleFilter<$PrismaModel>
     _max?: NestedEnumAgentRoleFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type LeadScalarRelationFilter = {
@@ -16376,6 +16406,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type AgentUpdateOneWithoutLeadsNestedInput = {
     create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
@@ -16600,10 +16634,6 @@ export namespace Prisma {
 
   export type EnumAgentRoleFieldUpdateOperationsInput = {
     set?: $Enums.AgentRole
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type LeadUpdateManyWithoutAgentNestedInput = {
@@ -16986,6 +17016,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -17098,16 +17133,19 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumAgentRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.AgentRole | EnumAgentRoleFieldRefInput<$PrismaModel>
     in?: $Enums.AgentRole[] | ListEnumAgentRoleFieldRefInput<$PrismaModel>
     notIn?: $Enums.AgentRole[] | ListEnumAgentRoleFieldRefInput<$PrismaModel>
     not?: NestedEnumAgentRoleFilter<$PrismaModel> | $Enums.AgentRole
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedEnumAgentRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -17118,14 +17156,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAgentRoleFilter<$PrismaModel>
     _max?: NestedEnumAgentRoleFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumMessageRoleFilter<$PrismaModel = never> = {
@@ -17597,6 +17627,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogCreateNestedManyWithoutLeadInput
@@ -17614,6 +17645,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
@@ -17740,6 +17772,7 @@ export namespace Prisma {
     assignedAgentId?: IntNullableFilter<"Lead"> | number | null
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
+    aiEnabled?: BoolFilter<"Lead"> | boolean
   }
 
   export type ConversationUpsertWithWhereUniqueWithoutAgentInput = {
@@ -17799,6 +17832,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     agent?: AgentCreateNestedOneWithoutLeadsInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogCreateNestedManyWithoutLeadInput
@@ -17817,6 +17851,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
@@ -17905,6 +17940,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
@@ -17923,6 +17959,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -18053,6 +18090,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogCreateNestedManyWithoutLeadInput
@@ -18071,6 +18109,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
@@ -18102,6 +18141,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
@@ -18120,6 +18160,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -18135,6 +18176,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
@@ -18153,6 +18195,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
@@ -18214,6 +18257,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
@@ -18232,6 +18276,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -18283,6 +18328,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
@@ -18301,6 +18347,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
@@ -18332,6 +18379,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
@@ -18350,6 +18398,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -18395,6 +18444,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     payments?: PaymentCreateNestedManyWithoutLeadInput
@@ -18413,6 +18463,7 @@ export namespace Prisma {
     assignedAgentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
@@ -18480,6 +18531,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
@@ -18498,6 +18550,7 @@ export namespace Prisma {
     assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -18719,6 +18772,7 @@ export namespace Prisma {
     status?: $Enums.LeadStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    aiEnabled?: boolean
   }
 
   export type ConversationCreateManyAgentInput = {
@@ -18755,6 +18809,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     payments?: PaymentUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
@@ -18772,6 +18827,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
@@ -18789,6 +18845,7 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ConversationUpdateWithoutAgentInput = {

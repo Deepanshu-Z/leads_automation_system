@@ -3,16 +3,9 @@ type LeadsType = {
   search: string;
   status: string;
   platform: string;
-  setLeads: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-const fetchleads = async ({
-  page,
-  search,
-  status,
-  platform,
-  setLeads,
-}: LeadsType) => {
+const fetchleads = async ({ page, search, status, platform }: LeadsType) => {
   const params = new URLSearchParams({
     page: String(page),
 
@@ -31,7 +24,6 @@ const fetchleads = async ({
   }
 
   const data = await res.json();
-  setLeads(data.data);
   return data;
 };
 
