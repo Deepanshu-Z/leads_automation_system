@@ -3,7 +3,14 @@
 import { useLeadActions } from "@/lib/hooks/leads/useLeadActions";
 
 export default function LeadActions({ leadId }: any) {
-  const { takeover, enableAI, closeLead } = useLeadActions(leadId);
+  const {
+    takeover,
+    enableAI,
+    closeLead,
+    isTakingOverPending,
+    isEnablingAIPending,
+    isClosingLeadPending,
+  } = useLeadActions(leadId);
 
   return (
     <div
@@ -15,7 +22,8 @@ export default function LeadActions({ leadId }: any) {
       "
     >
       <button
-        onClick={takeover}
+        onClick={() => takeover()}
+        disabled={isTakingOverPending}
         className="
           bg-orange-500
           text-white
@@ -23,11 +31,12 @@ export default function LeadActions({ leadId }: any) {
           rounded
         "
       >
-        Take Over
+        {isTakingOverPending ? "Loading..." : "Take Over"}
       </button>
 
       <button
-        onClick={enableAI}
+        onClick={() => enableAI()}
+        disabled={isEnablingAIPending}
         className="
           bg-green-500
           text-white
@@ -35,11 +44,12 @@ export default function LeadActions({ leadId }: any) {
           rounded
         "
       >
-        Re-enable AI
+        {isEnablingAIPending ? "Loading..." : "Re-enable AI"}
       </button>
 
       <button
-        onClick={closeLead}
+        onClick={() => closeLead()}
+        disabled={isClosingLeadPending}
         className="
           bg-red-500
           text-white
@@ -47,7 +57,7 @@ export default function LeadActions({ leadId }: any) {
           rounded
         "
       >
-        Mark Closed
+        {isClosingLeadPending ? "Loading..." : "Mark Closed"}
       </button>
     </div>
   );

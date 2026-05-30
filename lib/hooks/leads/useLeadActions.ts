@@ -2,7 +2,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 export function useLeadActions(leadId: number) {
-  const takeover = useMutation({
+  const { mutate: takeover, isPending: isTakingOverPending } = useMutation({
     mutationFn: async () => {
       const res = await fetch(
         `/api/leads/${leadId}/takeover`,
@@ -20,7 +20,7 @@ export function useLeadActions(leadId: number) {
     },
   });
 
-  const enableAI = useMutation({
+  const { mutate: enableAI, isPending: isEnablingAIPending } = useMutation({
     mutationFn: async () => {
       const res = await fetch(
         `/api/leads/${leadId}/reenable-ai`,
@@ -38,7 +38,7 @@ export function useLeadActions(leadId: number) {
     },
   });
 
-  const closeLead = useMutation({
+  const { mutate: closeLead, isPending: isClosingLeadPending } = useMutation({
     mutationFn: async () => {
       const res = await fetch(
         `/api/leads/${leadId}/close`,
@@ -57,10 +57,12 @@ export function useLeadActions(leadId: number) {
   });
 
   return {
-    takeover: () => takeover.mutate(),
+    takeover,
+    enableAI,
+    closeLead,
 
-    enableAI: () => enableAI.mutate(),
-
-    closeLead: () => closeLead.mutate(),
+    isTakingOverPending,
+    isEnablingAIPending,
+    isClosingLeadPending,
   };
 }

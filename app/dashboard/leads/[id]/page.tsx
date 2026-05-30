@@ -22,9 +22,10 @@ export default function LeadDetailPage({
   }
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-h-screen ">
       <div
         className="
+          
           grid
           grid-cols-12
           gap-6

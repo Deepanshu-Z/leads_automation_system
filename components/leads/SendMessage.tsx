@@ -6,7 +6,7 @@ export default function SendMessageBox({ leadId }: any) {
   const [message, setMessage] = useState("");
 
   async function send() {
-    await fetch(`/api/leads/${leadId}/message`, {
+    await fetch(`/api/leads/${leadId}/send-message`, {
       method: "POST",
 
       headers: {

@@ -7,7 +7,7 @@ const ttlSeconds = timeoutMinutes * 60 + 60;
 export const escalationQueue = new Queue("escalation", {
   connection: bullmqConnection, // ← BullMQ connection
   defaultJobOptions: {
-    attempts: 3,
+    attempts: 1,
     backoff: { type: "exponential", delay: 5000 },
     removeOnComplete: 100,
     removeOnFail: 50,
@@ -36,7 +36,7 @@ export async function scheduleEscalation(
   // REMOVE EXISTING JOB
   // =====================================
 
-  const existingJobId = await redis.get(`escalation:${senderId}`);
+  const existingJobId = await redis.get(`escalation_${senderId}`);
   if (existingJobId) {
     const existingJob = await escalationQueue.getJob(existingJobId);
     if (existingJob) {
@@ -51,7 +51,7 @@ export async function scheduleEscalation(
         );
       }
     }
-    await redis.del(`escalation:${senderId}`); // always clean up stale key
+    await redis.del(`escalation_${senderId}`); // always clean up stale key
   }
 
   // =====================================
@@ -75,7 +75,7 @@ export async function scheduleEscalation(
 
     {
       delay,
-      jobId: `escalation:${senderId}`,
+      jobId: `escalation_${senderId}`,
     },
   );
 
@@ -93,13 +93,13 @@ export async function scheduleEscalation(
   // SAVE JOB ID
   // =====================================
 
-  await redis.set(`escalation:${senderId}`, job.id, "EX", ttlSeconds);
+  await redis.set(`escalation_${senderId}`, job.id, "EX", ttlSeconds);
 
   console.log(`⏰ Escalation job ${job.id} scheduled`);
 }
 
 export async function cancelEscalation(senderId: string) {
-  const jobId = await redis.get(`escalation:${senderId}`); // ← redis for get/set
+  const jobId = await redis.get(`escalation_${senderId}`); // ← redis for get/set
 
   if (jobId) {
     const job = await escalationQueue.getJob(jobId);
@@ -107,6 +107,6 @@ export async function cancelEscalation(senderId: string) {
       await job.remove();
       console.log(`🗑️ Escalation cancelled for ${senderId}`);
     }
-    await redis.del(`escalation:${senderId}`);
+    await redis.del(`escalation_${senderId}`);
   }
 }
