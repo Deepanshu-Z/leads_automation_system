@@ -7,29 +7,15 @@ export const POST = async (
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) => {
+  const session = await getServerSession(authOptions);
+  const agentId = Number(session?.user?.id);
+  if (!agentId) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+  const body = await req.json();
+  const { content } = body;
+  const { id } = await params;
   try {
-    const session = await getServerSession(authOptions);
-
-    const agentId = session?.user?.agentId;
-
-    if (!agentId) {
-      return new Response("Unauthorized", {
-        status: 401,
-      });
-    }
-
-    const body = await req.json();
-
-    const content = body.content?.trim();
-
-    if (!content) {
-      return new Response("Message is required", {
-        status: 400,
-      });
-    }
-
-    const { id } = await params;
-
     const existingLead = await prisma.lead.findUnique({
       where: {
         id: Number(id),
@@ -37,15 +23,44 @@ export const POST = async (
     });
 
     if (!existingLead) {
-      return new Response("Lead not found", {
-        status: 404,
+      return new Response("Lead not found", { status: 404 });
+    }
+    await prisma.lead.update({
+      where: { id: Number(id) },
+      data: {
+        status: "HUMAN_ASSIGNED",
+        assignedAgentId: agentId,
+        aiEnabled: false,
+      },
+    });
+    const existingConversation = await prisma.conversation.findFirst({
+      where: {
+        leadId: existingLead.id,
+      },
+    });
+    if (!existingConversation) {
+      const newConversation = await prisma.conversation.create({
+        data: {
+          leadId: existingLead.id,
+          platform: existingLead.platform,
+        },
+      });
+      await prisma.message.create({
+        data: {
+          conversationId: newConversation.id,
+          role: "AGENT",
+          content: content,
+        },
+      });
+    } else {
+      await prisma.message.create({
+        data: {
+          conversationId: existingConversation.id,
+          role: "AGENT",
+          content: content,
+        },
       });
     }
-
-    // =====================================
-    // SEND MESSAGE FIRST
-    // =====================================
-
     await sendMessage(
       existingLead.platform as any,
 
@@ -53,78 +68,9 @@ export const POST = async (
 
       content,
     );
-
-    // =====================================
-    // DB TRANSACTION
-    // =====================================
-
-    await prisma.$transaction(async (tx) => {
-      await tx.lead.update({
-        where: {
-          id: existingLead.id,
-        },
-
-        data: {
-          status: "HUMAN_ASSIGNED",
-
-          assignedAgentId: agentId,
-
-          aiEnabled: false,
-        },
-      });
-
-      let conversation = await tx.conversation.findFirst({
-        where: {
-          leadId: existingLead.id,
-        },
-      });
-
-      if (!conversation) {
-        conversation = await tx.conversation.create({
-          data: {
-            leadId: existingLead.id,
-
-            platform: existingLead.platform,
-
-            agentId,
-          },
-        });
-      }
-
-      await tx.message.create({
-        data: {
-          conversationId: conversation.id,
-
-          role: "AGENT",
-
-          content,
-        },
-      });
-
-      await tx.auditLog.create({
-        data: {
-          leadId: existingLead.id,
-
-          oldStatus: existingLead.status,
-
-          newStatus: "HUMAN_ASSIGNED",
-
-          reason: "Agent replied manually",
-
-          triggeredBy: "agent",
-        },
-      });
-    });
-
-    return Response.json({
-      success: true,
-      message: "Message sent successfully",
-    });
+    return new Response("Message sent successfully", { status: 200 });
   } catch (error) {
-    console.error("SEND MESSAGE ERROR", error);
-
-    return new Response("Failed to send message", {
-      status: 500,
-    });
+    console.error("Error sending message:", error);
+    return new Response("Failed to send message", { status: 500 });
   }
 };

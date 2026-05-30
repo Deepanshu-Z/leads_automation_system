@@ -46,8 +46,8 @@ export function useLeadActions(leadId: number) {
         {
           method: "POST",
         },
-      );
-
+      ).then((res) => res.json());
+      console.log("Close lead response:", res);
       if (!res.ok) {
         throw new Error("Close lead failed");
       }

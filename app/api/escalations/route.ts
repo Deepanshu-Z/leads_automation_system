@@ -1,60 +1,34 @@
-import { NextResponse } from "next/server";
-
 import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const leads = await prisma.lead.findMany({
+    const escalations = await prisma.escalationLog.findMany({
       where: {
-        status: "ESCALATED",
+        resolvedAt: null,
       },
 
       include: {
-        assignedAgent: true,
+        lead: true,
 
-        conversations: {
-          include: {
-            messages: {
-              orderBy: {
-                createdAt: "desc",
-              },
-
-              take: 1,
-            },
-          },
-        },
+        agent: true,
       },
 
       orderBy: {
-        updatedAt: "asc",
+        escalatedAt: "asc",
       },
     });
 
-    const formatted = leads.map((lead) => ({
-      id: lead.id,
-
-      name: lead.name,
-
-      platform: lead.platform,
-
-      status: lead.status,
-
-      waitTime: Date.now() - new Date(lead.updatedAt).getTime(),
-
-      assignedAgent: lead.assignedAgent,
-
-      lastMessage: lead.conversations?.[0]?.messages?.[0]?.content || null,
-    }));
-
-    return NextResponse.json(formatted);
+    return NextResponse.json({
+      escalations,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("GET ESCALATIONS ERROR", error);
 
     return NextResponse.json(
       {
-        error: "Failed",
+        error: "Failed to fetch escalations",
       },
-
       {
         status: 500,
       },
