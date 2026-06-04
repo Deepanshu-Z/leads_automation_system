@@ -6,7 +6,7 @@ const fetchEscalations = async () => {
   }
 
   const data = await res.json();
-
+  console.log("Fetched escalations:", data.escalations);
   return data.escalations;
 };
 

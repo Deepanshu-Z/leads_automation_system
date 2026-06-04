@@ -3,19 +3,17 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const escalations = await prisma.escalationLog.findMany({
+    const escalations = await prisma.lead.findMany({
       where: {
-        resolvedAt: null,
+        status: "ESCALATED",
       },
 
       include: {
-        lead: true,
-
         agent: true,
       },
 
       orderBy: {
-        escalatedAt: "asc",
+        createdAt: "asc",
       },
     });
 

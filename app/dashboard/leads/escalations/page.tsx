@@ -2,10 +2,14 @@
 
 import EscalationTable from "@/components/escalation/EscalationTable";
 import { useEscalations } from "@/lib/hooks/escalations/useEscalation";
+import { useEffect } from "react";
 
 export default function EscalationsPage() {
   const { data, isLoading } = useEscalations();
-
+  useEffect(() => {
+    console.log(data);
+    console.log(Array.isArray(data));
+  }, [data]);
   if (isLoading) {
     return <div>Loading...</div>;
   }

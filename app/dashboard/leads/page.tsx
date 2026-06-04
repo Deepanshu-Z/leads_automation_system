@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import fetchleads from "@/lib/actions/fetch/leads/fetchLeads";
+import fetchleads from "@/lib/actions/leads/fetchLeads";
 
 export default function LeadsPage() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import assignEscalation from "@/lib/actions/fetch/escalations/assignEscalation";
+import assignEscalation from "@/lib/actions/escalations/assignEscalation";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 

@@ -1,4 +1,4 @@
-import fetchEscalations from "@/lib/actions/fetch/escalations/fetchEscalation";
+import fetchEscalations from "@/lib/actions/escalations/fetchEscalation";
 import { useQuery } from "@tanstack/react-query";
 
 export function useEscalations() {

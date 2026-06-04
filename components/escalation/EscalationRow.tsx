@@ -10,11 +10,9 @@ export default function EscalationRow({ escalation }: any) {
         border-b
       "
     >
-      <td>{escalation.lead.name}</td>
+      <td>{escalation.name}</td>
 
-      <td>{escalation.lead.platform}</td>
-
-      <td>{escalation.reason}</td>
+      <td>{escalation.platform}</td>
 
       <td>
         <WaitTimeBadge escalatedAt={escalation.escalatedAt} />
@@ -30,7 +28,7 @@ export default function EscalationRow({ escalation }: any) {
       >
         {!escalation.agent && <AssignButton escalationId={escalation.id} />}
 
-        <Link href={`/dashboard/leads/${escalation.leadId}`}>Open</Link>
+        <Link href={`/dashboard/leads/${escalation.id}`}>Open</Link>
       </td>
     </tr>
   );
