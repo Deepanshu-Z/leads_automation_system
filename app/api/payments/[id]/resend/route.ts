@@ -14,7 +14,9 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
-
+    if (!id) {
+      return NextResponse.json({ error: "Payment not found" }, { status: 404 });
+    }
     const payment = await prisma.payment.findUnique({
       where: {
         id: Number(id),

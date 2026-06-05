@@ -10,7 +10,7 @@ const resendPaymentLink = async (paymentId: number) => {
   if (!res.ok) {
     throw new Error("Failed to resend link");
   }
-
+  console.log("IS IT FAILED??::", res);
   return res.json();
 };
 
