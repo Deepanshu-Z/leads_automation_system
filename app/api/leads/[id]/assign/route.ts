@@ -3,13 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
+  const { id } = await params;
   const body = await req.json();
 
   const lead = await prisma.lead.update({
     where: {
-      id: Number(params.id),
+      id: Number(id),
     },
 
     data: {

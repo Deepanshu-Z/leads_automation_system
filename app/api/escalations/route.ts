@@ -10,6 +10,12 @@ export async function GET() {
 
       include: {
         agent: true,
+        escalations: {
+          orderBy: {
+            escalatedAt: "desc",
+          },
+          take: 1,
+        },
       },
 
       orderBy: {
