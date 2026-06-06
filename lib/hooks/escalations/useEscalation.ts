@@ -6,7 +6,7 @@ export function useEscalations() {
     queryKey: ["escalations"],
 
     queryFn: fetchEscalations,
-
-    refetchInterval: 5000,
+    //to be updated
+    refetchInterval: 50000,
   });
 }

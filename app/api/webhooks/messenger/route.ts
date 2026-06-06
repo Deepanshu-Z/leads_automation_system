@@ -1,5 +1,6 @@
 import { leadQueue } from "@/lib/queue/queue";
 import { isNewMessage } from "@/lib/redis/dedepulication";
+import { prisma } from "@/lib/prisma";
 
 // ─── GET: Meta Webhook Verification ───
 export async function GET(req: Request) {
@@ -26,6 +27,42 @@ export async function POST(req: Request) {
     const entry = body?.entry?.[0];
     const changes = entry?.changes?.[0];
     const value = changes?.value;
+
+    // Handle async message statuses (like delivery failure updates)
+    const statusObj = value?.statuses?.[0];
+    if (statusObj) {
+      const error = statusObj.errors?.[0];
+      if (statusObj.status === "failed" && error?.code === 131047) {
+        const recipientPhone = statusObj.recipient_id;
+        console.warn(
+          `[Webhook] WhatsApp 24h window expired for phone: ${recipientPhone}. Escalating.`,
+        );
+
+        const lead = await prisma.lead.findUnique({
+          where: { sourceId: recipientPhone },
+        });
+
+        if (lead) {
+          await prisma.$transaction([
+            prisma.lead.update({
+              where: { id: lead.id },
+              data: {
+                aiEnabled: false,
+                status: "ESCALATED",
+              },
+            }),
+            prisma.escalationLog.create({
+              data: {
+                leadId: lead.id,
+                reason: "WhatsApp 24-hour communication window expired (reported by webhook status).",
+              },
+            }),
+          ]);
+        }
+      }
+      return new Response("OK", { status: 200 });
+    }
+
     const messages = value?.messages;
     const platform = detectPlatform(value);
 
