@@ -1,5 +1,5 @@
 import { authOptions } from "@/lib/auth";
-import { sendMessage } from "@/lib/messaging/sendMessage";
+import { sendMessage, WhatsAppWindowExpiredError } from "@/lib/messaging/sendMessage";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 
@@ -25,6 +25,15 @@ export const POST = async (
     if (!existingLead) {
       return new Response("Lead not found", { status: 404 });
     }
+
+    // 1. Send the message first
+    await sendMessage(
+      existingLead.platform as any,
+      existingLead.sourceId,
+      content,
+    );
+
+    // 2. If message sending succeeds, update the database
     await prisma.lead.update({
       where: { id: Number(id) },
       data: {
@@ -33,11 +42,13 @@ export const POST = async (
         aiEnabled: false,
       },
     });
+
     const existingConversation = await prisma.conversation.findFirst({
       where: {
         leadId: existingLead.id,
       },
     });
+
     if (!existingConversation) {
       const newConversation = await prisma.conversation.create({
         data: {
@@ -61,16 +72,13 @@ export const POST = async (
         },
       });
     }
-    await sendMessage(
-      existingLead.platform as any,
 
-      existingLead.sourceId,
-
-      content,
-    );
     return new Response("Message sent successfully", { status: 200 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error sending message:", error);
-    return new Response("Failed to send message", { status: 500 });
+    if (error instanceof WhatsAppWindowExpiredError) {
+      return new Response(error.message, { status: 400 });
+    }
+    return new Response(error?.message || "Failed to send message", { status: 500 });
   }
 };
