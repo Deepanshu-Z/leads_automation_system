@@ -59,6 +59,8 @@ export const messageWorker = new Worker(
         senderId,
 
         text,
+
+        phoneNumberId,
       } = job.data;
 
       console.log(`📨 Processing message from ${senderId}`);
@@ -121,6 +123,10 @@ export const messageWorker = new Worker(
             senderId,
 
             reply,
+
+            undefined,
+
+            phoneNumberId,
           );
         return;
       }
@@ -138,6 +144,10 @@ export const messageWorker = new Worker(
         senderId,
 
         reply,
+
+        undefined,
+
+        phoneNumberId,
       );
 
       console.log(`✅ Reply sent to ${senderId}`);
@@ -155,6 +165,8 @@ export const messageWorker = new Worker(
         "No user response",
 
         "INACTIVITY",
+
+        phoneNumberId,
       );
 
       console.log(`⏰ Escalation timer started`);

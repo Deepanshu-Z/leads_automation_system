@@ -24,6 +24,8 @@ export async function scheduleEscalation(
   reason: string = "No response from AI",
 
   type: "INACTIVITY" | "LOW_AI_CONFIDENCE" = "INACTIVITY",
+
+  phoneNumberId?: string, // ← which WA number to reply from
 ) {
   // =====================================
   // TEST MODE
@@ -71,6 +73,8 @@ export async function scheduleEscalation(
       reason,
 
       type,
+
+      phoneNumberId,
     },
 
     {

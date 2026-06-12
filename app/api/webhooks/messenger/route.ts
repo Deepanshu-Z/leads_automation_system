@@ -102,6 +102,7 @@ export async function POST(req: Request) {
         senderId,
         text,
         timestamp: message.timestamp,
+        phoneNumberId: value?.metadata?.phone_number_id, // ← pass the receiving number
         raw: message,
       });
     }

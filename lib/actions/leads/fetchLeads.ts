@@ -24,6 +24,7 @@ const fetchleads = async ({ page, search, status, platform }: LeadsType) => {
   }
 
   const data = await res.json();
+  console.log("Fetched leads data:", data);
   return data;
 };
 

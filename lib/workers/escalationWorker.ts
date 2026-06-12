@@ -14,7 +14,7 @@ export const escalationWorker = new Worker(
   async (job) => {
     if (job.name !== "lead-escalation") return;
 
-    const { leadId, senderId, platform } = job.data;
+    const { leadId, senderId, platform, phoneNumberId } = job.data;
 
     console.log(`🚨 Processing escalation for lead ${leadId}`);
 
@@ -35,6 +35,8 @@ export const escalationWorker = new Worker(
           escalationType: "INACTIVITY",
 
           reason: "User inactive",
+
+          phoneNumberId, // ← forward so Python uses the right WA number
         }),
       },
     );

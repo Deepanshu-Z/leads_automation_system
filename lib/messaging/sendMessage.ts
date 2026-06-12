@@ -5,7 +5,8 @@ type Platform = "whatsapp" | "instagram" | "messenger";
 const GRAPH_API = "https://graph.facebook.com/v18.0";
 
 const ACCESS_TOKEN = process.env.META_APP_SECRET!;
-const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!;
+// NOTE: Do NOT use a global PHONE_NUMBER_ID here — always pass it per-call
+// so replies go out from the same number that received the inbound message.
 export class WhatsAppWindowExpiredError extends Error {
   constructor(message: string) {
     super(message);
@@ -62,11 +63,12 @@ export async function sendMessage(
   recipientId: string,
   text: string,
   templateName?: string,
+  phoneNumberId?: string, // ← which WA business number to send FROM
 ) {
   try {
     switch (platform) {
       case "whatsapp":
-        return await sendWhatsApp(recipientId, text, templateName);
+        return await sendWhatsApp(recipientId, text, templateName, phoneNumberId);
       case "instagram":
         return await sendInstagram(recipientId, text);
       case "messenger":
@@ -89,7 +91,11 @@ export async function sendMessage(
 //
 // ================= WHATSAPP =================
 //
-async function sendWhatsApp(to: string, text: string, templateName?: string) {
+async function sendWhatsApp(to: string, text: string, templateName?: string, phoneNumberId?: string) {
+  // Fall back to env var only for proactive/template sends that don't originate
+  // from an inbound message (e.g. first-touch outreach).
+  const numberId = phoneNumberId ?? process.env.WHATSAPP_PHONE_NUMBER_ID!;
+
   return retry(async () => {
     const payload: any = {
       messaging_product: "whatsapp",
@@ -107,7 +113,7 @@ async function sendWhatsApp(to: string, text: string, templateName?: string) {
       payload.text = { body: text };
     }
 
-    const res = await fetch(`${GRAPH_API}/${PHONE_NUMBER_ID}/messages`, {
+    const res = await fetch(`${GRAPH_API}/${numberId}/messages`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,

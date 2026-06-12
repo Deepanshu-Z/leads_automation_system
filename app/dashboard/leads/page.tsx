@@ -26,11 +26,7 @@ export default function LeadsPage() {
   // =====================================
   // FETCH LEADS
   // =====================================
-  const {
-    data,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["leads", page, search, status, platform],
     queryFn: () => fetchleads({ page, search, status, platform }),
     staleTime: 1000 * 60,
@@ -50,13 +46,17 @@ export default function LeadsPage() {
   const renderPlatformIcon = (plat: string) => {
     switch (plat?.toLowerCase()) {
       case "whatsapp":
-        return <MessageSquare size={16} className="text-emerald-500 shrink-0" />;
+        return (
+          <MessageSquare size={16} className="text-emerald-500 shrink-0" />
+        );
       case "instagram":
         return <Camera size={16} className="text-pink-500 shrink-0" />;
       case "facebook":
         return <Globe size={16} className="text-blue-500 shrink-0" />;
       default:
-        return <MessageSquare size={16} className="text-muted-foreground shrink-0" />;
+        return (
+          <MessageSquare size={16} className="text-muted-foreground shrink-0" />
+        );
     }
   };
 
@@ -147,13 +147,18 @@ export default function LeadsPage() {
                   <td colSpan={7} className="px-6 py-10 text-center">
                     <div className="flex flex-col items-center justify-center gap-2">
                       <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
-                      <span className="text-xs text-muted-foreground font-medium">Loading leads directory...</span>
+                      <span className="text-xs text-muted-foreground font-medium">
+                        Loading leads directory...
+                      </span>
                     </div>
                   </td>
                 </tr>
               ) : leads.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-10 text-center text-muted-foreground">
+                  <td
+                    colSpan={7}
+                    className="px-6 py-10 text-center text-muted-foreground"
+                  >
                     No leads found matching current filter query.
                   </td>
                 </tr>
@@ -167,8 +172,12 @@ export default function LeadsPage() {
                     <td className="px-6 py-4 font-semibold text-foreground truncate max-w-[180px]">
                       {lead.name || "Anonymous User"}
                     </td>
-                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">{lead.phone || "N/A"}</td>
-                    <td className="px-6 py-4 text-muted-foreground truncate max-w-[180px]">{lead.email || "N/A"}</td>
+                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">
+                      {lead.phone || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground truncate max-w-[180px]">
+                      {lead.email || "N/A"}
+                    </td>
                     <td className="px-6 py-4">
                       <span className="inline-flex items-center gap-2 bg-muted px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">
                         {renderPlatformIcon(lead.platform)}
@@ -179,10 +188,10 @@ export default function LeadsPage() {
                       <StatusBadge status={lead.status} />
                     </td>
                     <td className="px-6 py-4">
-                      {lead.assignedAgent?.name ? (
+                      {lead.agent?.name ? (
                         <span className="inline-flex items-center gap-1.5 text-xs text-foreground font-medium">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                          {lead.assignedAgent.name}
+                          {lead.agent.name}
                         </span>
                       ) : (
                         <span className="inline-flex items-center text-xs text-muted-foreground font-normal border border-dashed border-border px-2 py-0.5 rounded">
@@ -206,7 +215,9 @@ export default function LeadsPage() {
       {/* ================================= */}
       <div className="flex items-center justify-between bg-card border border-border p-4 rounded-xl shadow-sm text-sm">
         <div className="text-xs text-muted-foreground font-medium">
-          Showing page <span className="text-foreground font-semibold">{page}</span> of leads directory
+          Showing page{" "}
+          <span className="text-foreground font-semibold">{page}</span> of leads
+          directory
         </div>
 
         <div className="flex items-center gap-2">
@@ -244,7 +255,8 @@ function StatusBadge({ status }: any) {
     ESCALATED: "bg-rose-500/10 text-rose-500 border-rose-500/20",
   };
 
-  const colorStyle = colors[status] || "bg-muted text-muted-foreground border-border";
+  const colorStyle =
+    colors[status] || "bg-muted text-muted-foreground border-border";
 
   return (
     <span
