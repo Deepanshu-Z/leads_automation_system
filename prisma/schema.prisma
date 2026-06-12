@@ -25,6 +25,10 @@ model Lead {
   escalations     EscalationLog[]
   auditLogs       AuditLog[]
   notifications   Notification[]
+
+  @@index([phone])
+  @@index([email])
+  @@index([status])
 }
 
 model Agent {
@@ -53,6 +57,9 @@ model Conversation {
   lead     Lead      @relation(fields: [leadId], references: [id])
   agent    Agent?    @relation(fields: [agentId], references: [id])
   messages Message[]
+
+  @@index([leadId])
+  @@index([status])
 }
 
 model Message {
@@ -112,6 +119,8 @@ model EscalationLog {
 
   lead  Lead   @relation(fields: [leadId], references: [id])
   agent Agent? @relation(fields: [agentId], references: [id])
+
+  @@index([leadId])
 }
 
 model IntentLog {
@@ -150,6 +159,8 @@ model AuditLog {
   createdAt   DateTime @default(now())
 
   lead Lead @relation(fields: [leadId], references: [id])
+
+  @@index([leadId])
 }
 
 model Notification {
@@ -170,6 +181,10 @@ model Notification {
   agent Agent @relation(fields: [agentId], references: [id])
 
   lead Lead @relation(fields: [leadId], references: [id])
+
+  @@index([agentId])
+  @@index([leadId])
+  @@index([isRead])
 }
 
 enum LeadStatus {
