@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "worker:message": "tsx lib/workers/messageWorker.ts",
+    "worker:escalation": "tsx lib/workers/escalationWorker.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
