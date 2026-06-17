@@ -16,6 +16,7 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
+        console.log("credentials", credentials);
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -26,6 +27,7 @@ export const authOptions = {
           },
         });
 
+        console.log("agent", agent);
         if (!agent) {
           return null;
         }
@@ -35,7 +37,7 @@ export const authOptions = {
 
           agent.passwordHash,
         );
-
+        console.log("valid", valid);
         if (!valid) {
           return null;
         }
@@ -66,6 +68,7 @@ export const authOptions = {
       user,
     }: any) {
       if (user) {
+        console.log("user", user);
         token.role = user.role;
 
         token.id = user.id;

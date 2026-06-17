@@ -7,6 +7,11 @@ const redis = new IORedis(process.env.REDIS_URL!, {
   enableAutoPipelining: true,
 });
 
+redis.on("error", (err) => {
+  console.error("Deduplication Redis connection error:", err.message);
+});
+
+
 const TTL_24_HOURS = 60 * 60 * 24; // in seconds
 
 export async function isNewMessage(messageId: string): Promise<boolean> {
