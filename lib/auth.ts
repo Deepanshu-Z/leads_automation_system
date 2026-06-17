@@ -18,6 +18,11 @@ export const authOptions = {
       async authorize(credentials) {
         console.log("credentials", credentials);
         if (!credentials?.email || !credentials?.password) {
+          console.log(
+            "Missing email or password",
+            credentials?.email,
+            credentials?.password,
+          );
           return null;
         }
 
