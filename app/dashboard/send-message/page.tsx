@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Smartphone, MessageSquare, RefreshCw, Loader2, Sparkles, CheckCircle2, AlertTriangle } from "lucide-react";
+import { Send, Smartphone, MessageSquare, RefreshCw, Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export default function SendMessagePage() {
@@ -27,7 +27,30 @@ export default function SendMessagePage() {
     setStatusType("");
 
     try {
-      const res = await fetch(`/api/leads/${1}/reply`, {
+      // 1. Resolve Lead from DB using Search Ingestion API
+      const searchRes = await fetch(`/api/leads?search=${encodeURIComponent(recipientId)}&platform=${platform}`);
+      if (!searchRes.ok) {
+        throw new Error("Failed to look up lead.");
+      }
+      const searchData = await searchRes.json();
+      const leads = searchData.data || [];
+
+      // Find exact match by sourceId or phone number
+      const matchedLead = leads.find((l: any) =>
+        l.sourceId === recipientId ||
+        l.phone === recipientId ||
+        l.phone?.replace(/\D/g, "") === recipientId.replace(/\D/g, "")
+      ) || leads[0];
+
+      if (!matchedLead) {
+        setResponse("Lead not found in database. Please verify the Recipient Number/ID.");
+        setStatusType("error");
+        setLoading(false);
+        return;
+      }
+
+      // 2. Dispatch Reply using Resolved Lead ID
+      const res = await fetch(`/api/leads/${matchedLead.id}/reply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,11 +60,16 @@ export default function SendMessagePage() {
         }),
       });
 
-      const data = await res.text();
-      setResponse(data || "Message sent successfully!");
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || "Failed to send message.");
+      }
+
+      setResponse("Message sent successfully!");
       setStatusType("success");
-    } catch (err) {
-      setResponse("Error sending message. Please check logs.");
+      setText(""); // clear message text input
+    } catch (err: any) {
+      setResponse(err?.message || "Error sending message. Please check logs.");
       setStatusType("error");
     } finally {
       setLoading(false);
@@ -49,12 +77,40 @@ export default function SendMessagePage() {
   };
 
   const reEnableAi = async () => {
+    if (!recipientId) {
+      setResponse("Please fill in recipient ID.");
+      setStatusType("error");
+      return;
+    }
+
     setReEnabling(true);
     setResponse("");
     setStatusType("");
 
     try {
-      const res = await fetch(`/api/leads/${1}/reenableai`, {
+      // 1. Resolve Lead from DB using Search Ingestion API
+      const searchRes = await fetch(`/api/leads?search=${encodeURIComponent(recipientId)}&platform=${platform}`);
+      if (!searchRes.ok) {
+        throw new Error("Failed to look up lead.");
+      }
+      const searchData = await searchRes.json();
+      const leads = searchData.data || [];
+
+      const matchedLead = leads.find((l: any) =>
+        l.sourceId === recipientId ||
+        l.phone === recipientId ||
+        l.phone?.replace(/\D/g, "") === recipientId.replace(/\D/g, "")
+      ) || leads[0];
+
+      if (!matchedLead) {
+        setResponse("Lead not found in database. Please verify the Recipient Number/ID.");
+        setStatusType("error");
+        setReEnabling(false);
+        return;
+      }
+
+      // 2. Dispatch Re-enable call
+      const res = await fetch(`/api/leads/${matchedLead.id}/reenable-ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,11 +120,15 @@ export default function SendMessagePage() {
         }),
       });
 
-      const data = await res.text();
-      setResponse(data || "AI engine successfully re-enabled on lead.");
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || "Failed to re-enable AI.");
+      }
+
+      setResponse("AI engine successfully re-enabled on lead.");
       setStatusType("success");
-    } catch (err) {
-      setResponse("Error re-enabling AI on lead.");
+    } catch (err: any) {
+      setResponse(err?.message || "Error re-enabling AI on lead.");
       setStatusType("error");
     } finally {
       setReEnabling(false);
@@ -190,7 +250,7 @@ export default function SendMessagePage() {
                 onChange={(e) => setText(e.target.value)}
                 disabled={loading || reEnabling}
                 rows={4}
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none disabled:opacity-50"
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none disabled:opacity-50 font-medium"
                 required
               />
             </div>

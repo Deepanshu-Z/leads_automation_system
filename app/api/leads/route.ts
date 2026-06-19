@@ -57,6 +57,13 @@ export async function GET(req: NextRequest) {
             contains: searchInput,
           },
         },
+
+        {
+          sourceId: {
+            contains: searchInput,
+            mode: "insensitive",
+          },
+        },
       ];
     }
     if (status) {

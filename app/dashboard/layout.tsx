@@ -39,24 +39,12 @@ export default function DashboardLayout({
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
-  // Fetch escalations to feed real-time notifications or badge indicators
-  // const { data: escalations = [] } = useEscalations();
-  // console.log("Escalations fetched@@@@@@@@@@@@@@@@@@@:", escalations);
-  // Apply dark class to html document
+  // Force Light Theme
   useEffect(() => {
     const root = window.document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+    root.classList.remove("dark");
+  }, []);
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -108,7 +96,7 @@ export default function DashboardLayout({
               L
             </div>
             {sidebarOpen && (
-              <span className="text-sm font-semibold tracking-wide bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-transparent">
+              <span className="text-sm font-extrabold tracking-wide bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
                 LEADS AUTO
               </span>
             )}
@@ -176,7 +164,7 @@ export default function DashboardLayout({
               sidebarOpen ? "" : "justify-center",
             )}
           >
-            <div className="h-9 w-9 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-primary border border-primary/20 shrink-0">
+            <div className="h-9 w-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 border border-orange-500/20 shrink-0">
               <User size={18} />
             </div>
             {sidebarOpen && (
@@ -221,17 +209,11 @@ export default function DashboardLayout({
           >
             <Menu size={20} />
           </button>
-          <span className="font-bold text-sm bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-transparent">
+          <span className="font-extrabold text-sm bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
             LEADS AUTO
           </span>
           <div className="flex items-center gap-3">
             <NotificationBell notifications={[]} />
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-md hover:bg-muted text-muted-foreground"
-            >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
           </div>
         </header>
 
@@ -244,7 +226,7 @@ export default function DashboardLayout({
             />
             <div className="relative flex-1 flex flex-col max-w-xs w-full bg-card border-r border-border h-full p-4 animate-in slide-in-from-left duration-250">
               <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-lg text-primary">
+                <span className="font-extrabold text-lg text-orange-600">
                   Leads Auto
                 </span>
                 <button
@@ -285,7 +267,7 @@ export default function DashboardLayout({
 
               <div className="pt-4 border-t border-border">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-9 w-9 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-primary">
+                  <div className="h-9 w-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
                     <User size={18} />
                   </div>
                   <div>
@@ -328,14 +310,6 @@ export default function DashboardLayout({
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
-              title="Toggle Theme"
-            >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-            <div className="h-4 w-px bg-border" />
             {/* Real-time notifications bell */}
             <NotificationBell notifications={[]} />
           </div>
