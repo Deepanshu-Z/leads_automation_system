@@ -78,10 +78,10 @@ export namespace $Enums {
   PAYMENT_SENT: 'PAYMENT_SENT',
   PAID: 'PAID',
   ESCALATED: 'ESCALATED',
-  HUMAN_ASSIGNED: 'HUMAN_ASSIGNED',
   CONVERTED: 'CONVERTED',
   CLOSED: 'CLOSED',
-  LOST: 'LOST'
+  LOST: 'LOST',
+  HUMAN_ASSIGNED: 'HUMAN_ASSIGNED'
 };
 
 export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus]
@@ -1752,19 +1752,19 @@ export namespace Prisma {
    */
 
   export type LeadCountOutputType = {
-    conversations: number
-    payments: number
-    escalations: number
     auditLogs: number
+    conversations: number
+    escalations: number
     notifications: number
+    payments: number
   }
 
   export type LeadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversations?: boolean | LeadCountOutputTypeCountConversationsArgs
-    payments?: boolean | LeadCountOutputTypeCountPaymentsArgs
-    escalations?: boolean | LeadCountOutputTypeCountEscalationsArgs
     auditLogs?: boolean | LeadCountOutputTypeCountAuditLogsArgs
+    conversations?: boolean | LeadCountOutputTypeCountConversationsArgs
+    escalations?: boolean | LeadCountOutputTypeCountEscalationsArgs
     notifications?: boolean | LeadCountOutputTypeCountNotificationsArgs
+    payments?: boolean | LeadCountOutputTypeCountPaymentsArgs
   }
 
   // Custom InputTypes
@@ -1781,15 +1781,15 @@ export namespace Prisma {
   /**
    * LeadCountOutputType without action
    */
-  export type LeadCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ConversationWhereInput
+  export type LeadCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
   }
 
   /**
    * LeadCountOutputType without action
    */
-  export type LeadCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PaymentWhereInput
+  export type LeadCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationWhereInput
   }
 
   /**
@@ -1802,15 +1802,15 @@ export namespace Prisma {
   /**
    * LeadCountOutputType without action
    */
-  export type LeadCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuditLogWhereInput
+  export type LeadCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
   /**
    * LeadCountOutputType without action
    */
-  export type LeadCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
+  export type LeadCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
   }
 
 
@@ -1819,16 +1819,16 @@ export namespace Prisma {
    */
 
   export type AgentCountOutputType = {
-    leads: number
     conversations: number
     escalations: number
+    leads: number
     notifications: number
   }
 
   export type AgentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    leads?: boolean | AgentCountOutputTypeCountLeadsArgs
     conversations?: boolean | AgentCountOutputTypeCountConversationsArgs
     escalations?: boolean | AgentCountOutputTypeCountEscalationsArgs
+    leads?: boolean | AgentCountOutputTypeCountLeadsArgs
     notifications?: boolean | AgentCountOutputTypeCountNotificationsArgs
   }
 
@@ -1846,13 +1846,6 @@ export namespace Prisma {
   /**
    * AgentCountOutputType without action
    */
-  export type AgentCountOutputTypeCountLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LeadWhereInput
-  }
-
-  /**
-   * AgentCountOutputType without action
-   */
   export type AgentCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ConversationWhereInput
   }
@@ -1862,6 +1855,13 @@ export namespace Prisma {
    */
   export type AgentCountOutputTypeCountEscalationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EscalationLogWhereInput
+  }
+
+  /**
+   * AgentCountOutputType without action
+   */
+  export type AgentCountOutputTypeCountLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeadWhereInput
   }
 
   /**
@@ -2157,12 +2157,12 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     aiEnabled?: boolean
-    agent?: boolean | Lead$agentArgs<ExtArgs>
-    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
-    payments?: boolean | Lead$paymentsArgs<ExtArgs>
-    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
     auditLogs?: boolean | Lead$auditLogsArgs<ExtArgs>
+    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
+    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
+    agent?: boolean | Lead$agentArgs<ExtArgs>
     notifications?: boolean | Lead$notificationsArgs<ExtArgs>
+    payments?: boolean | Lead$paymentsArgs<ExtArgs>
     _count?: boolean | LeadCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
@@ -2212,12 +2212,12 @@ export namespace Prisma {
 
   export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "platform" | "sourceId" | "status" | "assignedAgentId" | "createdAt" | "updatedAt" | "aiEnabled", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | Lead$agentArgs<ExtArgs>
-    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
-    payments?: boolean | Lead$paymentsArgs<ExtArgs>
-    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
     auditLogs?: boolean | Lead$auditLogsArgs<ExtArgs>
+    conversations?: boolean | Lead$conversationsArgs<ExtArgs>
+    escalations?: boolean | Lead$escalationsArgs<ExtArgs>
+    agent?: boolean | Lead$agentArgs<ExtArgs>
     notifications?: boolean | Lead$notificationsArgs<ExtArgs>
+    payments?: boolean | Lead$paymentsArgs<ExtArgs>
     _count?: boolean | LeadCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LeadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2230,12 +2230,12 @@ export namespace Prisma {
   export type $LeadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Lead"
     objects: {
-      agent: Prisma.$AgentPayload<ExtArgs> | null
-      conversations: Prisma.$ConversationPayload<ExtArgs>[]
-      payments: Prisma.$PaymentPayload<ExtArgs>[]
-      escalations: Prisma.$EscalationLogPayload<ExtArgs>[]
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+      conversations: Prisma.$ConversationPayload<ExtArgs>[]
+      escalations: Prisma.$EscalationLogPayload<ExtArgs>[]
+      agent: Prisma.$AgentPayload<ExtArgs> | null
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      payments: Prisma.$PaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2643,12 +2643,12 @@ export namespace Prisma {
    */
   export interface Prisma__LeadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    agent<T extends Lead$agentArgs<ExtArgs> = {}>(args?: Subset<T, Lead$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    conversations<T extends Lead$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    payments<T extends Lead$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    escalations<T extends Lead$escalationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$escalationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EscalationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditLogs<T extends Lead$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    conversations<T extends Lead$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    escalations<T extends Lead$escalationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$escalationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EscalationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    agent<T extends Lead$agentArgs<ExtArgs> = {}>(args?: Subset<T, Lead$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     notifications<T extends Lead$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    payments<T extends Lead$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Lead$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3090,22 +3090,27 @@ export namespace Prisma {
   }
 
   /**
-   * Lead.agent
+   * Lead.auditLogs
    */
-  export type Lead$agentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Lead$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Agent
+     * Select specific fields to fetch from the AuditLog
      */
-    select?: AgentSelect<ExtArgs> | null
+    select?: AuditLogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Agent
+     * Omit specific fields from the AuditLog
      */
-    omit?: AgentOmit<ExtArgs> | null
+    omit?: AuditLogOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AgentInclude<ExtArgs> | null
-    where?: AgentWhereInput
+    include?: AuditLogInclude<ExtArgs> | null
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    cursor?: AuditLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
   }
 
   /**
@@ -3133,30 +3138,6 @@ export namespace Prisma {
   }
 
   /**
-   * Lead.payments
-   */
-  export type Lead$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Payment
-     */
-    select?: PaymentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Payment
-     */
-    omit?: PaymentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PaymentInclude<ExtArgs> | null
-    where?: PaymentWhereInput
-    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
-    cursor?: PaymentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
-  }
-
-  /**
    * Lead.escalations
    */
   export type Lead$escalationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3181,27 +3162,22 @@ export namespace Prisma {
   }
 
   /**
-   * Lead.auditLogs
+   * Lead.agent
    */
-  export type Lead$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Lead$agentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuditLog
+     * Select specific fields to fetch from the Agent
      */
-    select?: AuditLogSelect<ExtArgs> | null
+    select?: AgentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuditLog
+     * Omit specific fields from the Agent
      */
-    omit?: AuditLogOmit<ExtArgs> | null
+    omit?: AgentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuditLogInclude<ExtArgs> | null
-    where?: AuditLogWhereInput
-    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
-    cursor?: AuditLogWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
   }
 
   /**
@@ -3226,6 +3202,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Lead.payments
+   */
+  export type Lead$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    cursor?: PaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
   }
 
   /**
@@ -3461,9 +3461,9 @@ export namespace Prisma {
     role?: boolean
     isOnline?: boolean
     createdAt?: boolean
-    leads?: boolean | Agent$leadsArgs<ExtArgs>
     conversations?: boolean | Agent$conversationsArgs<ExtArgs>
     escalations?: boolean | Agent$escalationsArgs<ExtArgs>
+    leads?: boolean | Agent$leadsArgs<ExtArgs>
     notifications?: boolean | Agent$notificationsArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
@@ -3500,9 +3500,9 @@ export namespace Prisma {
 
   export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "isOnline" | "createdAt", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    leads?: boolean | Agent$leadsArgs<ExtArgs>
     conversations?: boolean | Agent$conversationsArgs<ExtArgs>
     escalations?: boolean | Agent$escalationsArgs<ExtArgs>
+    leads?: boolean | Agent$leadsArgs<ExtArgs>
     notifications?: boolean | Agent$notificationsArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -3512,9 +3512,9 @@ export namespace Prisma {
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Agent"
     objects: {
-      leads: Prisma.$LeadPayload<ExtArgs>[]
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
       escalations: Prisma.$EscalationLogPayload<ExtArgs>[]
+      leads: Prisma.$LeadPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3919,9 +3919,9 @@ export namespace Prisma {
    */
   export interface Prisma__AgentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    leads<T extends Agent$leadsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversations<T extends Agent$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     escalations<T extends Agent$escalationsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$escalationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EscalationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    leads<T extends Agent$leadsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Agent$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4352,30 +4352,6 @@ export namespace Prisma {
   }
 
   /**
-   * Agent.leads
-   */
-  export type Agent$leadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Lead
-     */
-    select?: LeadSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Lead
-     */
-    omit?: LeadOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LeadInclude<ExtArgs> | null
-    where?: LeadWhereInput
-    orderBy?: LeadOrderByWithRelationInput | LeadOrderByWithRelationInput[]
-    cursor?: LeadWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: LeadScalarFieldEnum | LeadScalarFieldEnum[]
-  }
-
-  /**
    * Agent.conversations
    */
   export type Agent$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4421,6 +4397,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EscalationLogScalarFieldEnum | EscalationLogScalarFieldEnum[]
+  }
+
+  /**
+   * Agent.leads
+   */
+  export type Agent$leadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lead
+     */
+    select?: LeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lead
+     */
+    omit?: LeadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeadInclude<ExtArgs> | null
+    where?: LeadWhereInput
+    orderBy?: LeadOrderByWithRelationInput | LeadOrderByWithRelationInput[]
+    cursor?: LeadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeadScalarFieldEnum | LeadScalarFieldEnum[]
   }
 
   /**
@@ -4680,8 +4680,8 @@ export namespace Prisma {
     platform?: boolean
     status?: boolean
     createdAt?: boolean
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | Conversation$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
@@ -4693,8 +4693,8 @@ export namespace Prisma {
     platform?: boolean
     status?: boolean
     createdAt?: boolean
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | Conversation$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4704,8 +4704,8 @@ export namespace Prisma {
     platform?: boolean
     status?: boolean
     createdAt?: boolean
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | Conversation$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectScalar = {
@@ -4719,25 +4719,25 @@ export namespace Prisma {
 
   export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "agentId" | "platform" | "status" | "createdAt", ExtArgs["result"]["conversation"]>
   export type ConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | Conversation$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ConversationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | Conversation$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
   export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | Conversation$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
 
   export type $ConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Conversation"
     objects: {
-      lead: Prisma.$LeadPayload<ExtArgs>
       agent: Prisma.$AgentPayload<ExtArgs> | null
+      lead: Prisma.$LeadPayload<ExtArgs>
       messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5141,8 +5141,8 @@ export namespace Prisma {
    */
   export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     agent<T extends Conversation$agentArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     messages<T extends Conversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6810,11 +6810,11 @@ export namespace Prisma {
     retryCount: number | null
     failureReason: string | null
     paidAt: Date | null
-    courseName: string | null
-    courseTiming: string | null
-    courseDuration: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    courseDuration: string | null
+    courseName: string | null
+    courseTiming: string | null
   }
 
   export type PaymentMaxAggregateOutputType = {
@@ -6829,11 +6829,11 @@ export namespace Prisma {
     retryCount: number | null
     failureReason: string | null
     paidAt: Date | null
-    courseName: string | null
-    courseTiming: string | null
-    courseDuration: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    courseDuration: string | null
+    courseName: string | null
+    courseTiming: string | null
   }
 
   export type PaymentCountAggregateOutputType = {
@@ -6848,11 +6848,11 @@ export namespace Prisma {
     retryCount: number
     failureReason: number
     paidAt: number
-    courseName: number
-    courseTiming: number
-    courseDuration: number
     createdAt: number
     updatedAt: number
+    courseDuration: number
+    courseName: number
+    courseTiming: number
     _all: number
   }
 
@@ -6883,11 +6883,11 @@ export namespace Prisma {
     retryCount?: true
     failureReason?: true
     paidAt?: true
-    courseName?: true
-    courseTiming?: true
-    courseDuration?: true
     createdAt?: true
     updatedAt?: true
+    courseDuration?: true
+    courseName?: true
+    courseTiming?: true
   }
 
   export type PaymentMaxAggregateInputType = {
@@ -6902,11 +6902,11 @@ export namespace Prisma {
     retryCount?: true
     failureReason?: true
     paidAt?: true
-    courseName?: true
-    courseTiming?: true
-    courseDuration?: true
     createdAt?: true
     updatedAt?: true
+    courseDuration?: true
+    courseName?: true
+    courseTiming?: true
   }
 
   export type PaymentCountAggregateInputType = {
@@ -6921,11 +6921,11 @@ export namespace Prisma {
     retryCount?: true
     failureReason?: true
     paidAt?: true
-    courseName?: true
-    courseTiming?: true
-    courseDuration?: true
     createdAt?: true
     updatedAt?: true
+    courseDuration?: true
+    courseName?: true
+    courseTiming?: true
     _all?: true
   }
 
@@ -7027,11 +7027,11 @@ export namespace Prisma {
     retryCount: number
     failureReason: string | null
     paidAt: Date | null
-    courseName: string | null
-    courseTiming: string | null
-    courseDuration: string | null
     createdAt: Date
     updatedAt: Date
+    courseDuration: string | null
+    courseName: string | null
+    courseTiming: string | null
     _count: PaymentCountAggregateOutputType | null
     _avg: PaymentAvgAggregateOutputType | null
     _sum: PaymentSumAggregateOutputType | null
@@ -7065,11 +7065,11 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
-    courseName?: boolean
-    courseTiming?: boolean
-    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    courseDuration?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -7085,11 +7085,11 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
-    courseName?: boolean
-    courseTiming?: boolean
-    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    courseDuration?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -7105,11 +7105,11 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
-    courseName?: boolean
-    courseTiming?: boolean
-    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    courseDuration?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
@@ -7125,14 +7125,14 @@ export namespace Prisma {
     retryCount?: boolean
     failureReason?: boolean
     paidAt?: boolean
-    courseName?: boolean
-    courseTiming?: boolean
-    courseDuration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    courseDuration?: boolean
+    courseName?: boolean
+    courseTiming?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "retryCount" | "failureReason" | "paidAt" | "courseName" | "courseTiming" | "courseDuration" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "razorpayLinkId" | "razorpayPaymentId" | "shortUrl" | "amount" | "currency" | "status" | "retryCount" | "failureReason" | "paidAt" | "createdAt" | "updatedAt" | "courseDuration" | "courseName" | "courseTiming", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
@@ -7160,11 +7160,11 @@ export namespace Prisma {
       retryCount: number
       failureReason: string | null
       paidAt: Date | null
-      courseName: string | null
-      courseTiming: string | null
-      courseDuration: string | null
       createdAt: Date
       updatedAt: Date
+      courseDuration: string | null
+      courseName: string | null
+      courseTiming: string | null
     }, ExtArgs["result"]["payment"]>
     composites: {}
   }
@@ -7600,11 +7600,11 @@ export namespace Prisma {
     readonly retryCount: FieldRef<"Payment", 'Int'>
     readonly failureReason: FieldRef<"Payment", 'String'>
     readonly paidAt: FieldRef<"Payment", 'DateTime'>
-    readonly courseName: FieldRef<"Payment", 'String'>
-    readonly courseTiming: FieldRef<"Payment", 'String'>
-    readonly courseDuration: FieldRef<"Payment", 'String'>
     readonly createdAt: FieldRef<"Payment", 'DateTime'>
     readonly updatedAt: FieldRef<"Payment", 'DateTime'>
+    readonly courseDuration: FieldRef<"Payment", 'String'>
+    readonly courseName: FieldRef<"Payment", 'String'>
+    readonly courseTiming: FieldRef<"Payment", 'String'>
   }
     
 
@@ -8238,8 +8238,8 @@ export namespace Prisma {
     reason?: boolean
     escalatedAt?: boolean
     resolvedAt?: boolean
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | EscalationLog$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["escalationLog"]>
 
   export type EscalationLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8249,8 +8249,8 @@ export namespace Prisma {
     reason?: boolean
     escalatedAt?: boolean
     resolvedAt?: boolean
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | EscalationLog$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["escalationLog"]>
 
   export type EscalationLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8260,8 +8260,8 @@ export namespace Prisma {
     reason?: boolean
     escalatedAt?: boolean
     resolvedAt?: boolean
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | EscalationLog$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["escalationLog"]>
 
   export type EscalationLogSelectScalar = {
@@ -8275,23 +8275,23 @@ export namespace Prisma {
 
   export type EscalationLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadId" | "agentId" | "reason" | "escalatedAt" | "resolvedAt", ExtArgs["result"]["escalationLog"]>
   export type EscalationLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | EscalationLog$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
   export type EscalationLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | EscalationLog$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
   export type EscalationLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lead?: boolean | LeadDefaultArgs<ExtArgs>
     agent?: boolean | EscalationLog$agentArgs<ExtArgs>
+    lead?: boolean | LeadDefaultArgs<ExtArgs>
   }
 
   export type $EscalationLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EscalationLog"
     objects: {
-      lead: Prisma.$LeadPayload<ExtArgs>
       agent: Prisma.$AgentPayload<ExtArgs> | null
+      lead: Prisma.$LeadPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8694,8 +8694,8 @@ export namespace Prisma {
    */
   export interface Prisma__EscalationLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     agent<T extends EscalationLog$agentArgs<ExtArgs> = {}>(args?: Subset<T, EscalationLog$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    lead<T extends LeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeadDefaultArgs<ExtArgs>>): Prisma__LeadClient<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13678,11 +13678,11 @@ export namespace Prisma {
     retryCount: 'retryCount',
     failureReason: 'failureReason',
     paidAt: 'paidAt',
-    courseName: 'courseName',
-    courseTiming: 'courseTiming',
-    courseDuration: 'courseDuration',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    courseDuration: 'courseDuration',
+    courseName: 'courseName',
+    courseTiming: 'courseTiming'
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
@@ -13920,12 +13920,12 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
     aiEnabled?: BoolFilter<"Lead"> | boolean
-    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
-    conversations?: ConversationListRelationFilter
-    payments?: PaymentListRelationFilter
-    escalations?: EscalationLogListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    conversations?: ConversationListRelationFilter
+    escalations?: EscalationLogListRelationFilter
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     notifications?: NotificationListRelationFilter
+    payments?: PaymentListRelationFilter
   }
 
   export type LeadOrderByWithRelationInput = {
@@ -13940,12 +13940,12 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     aiEnabled?: SortOrder
-    agent?: AgentOrderByWithRelationInput
-    conversations?: ConversationOrderByRelationAggregateInput
-    payments?: PaymentOrderByRelationAggregateInput
-    escalations?: EscalationLogOrderByRelationAggregateInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
+    conversations?: ConversationOrderByRelationAggregateInput
+    escalations?: EscalationLogOrderByRelationAggregateInput
+    agent?: AgentOrderByWithRelationInput
     notifications?: NotificationOrderByRelationAggregateInput
+    payments?: PaymentOrderByRelationAggregateInput
   }
 
   export type LeadWhereUniqueInput = Prisma.AtLeast<{
@@ -13963,12 +13963,12 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
     aiEnabled?: BoolFilter<"Lead"> | boolean
-    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
-    conversations?: ConversationListRelationFilter
-    payments?: PaymentListRelationFilter
-    escalations?: EscalationLogListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    conversations?: ConversationListRelationFilter
+    escalations?: EscalationLogListRelationFilter
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
     notifications?: NotificationListRelationFilter
+    payments?: PaymentListRelationFilter
   }, "id" | "sourceId">
 
   export type LeadOrderByWithAggregationInput = {
@@ -14018,9 +14018,9 @@ export namespace Prisma {
     role?: EnumAgentRoleFilter<"Agent"> | $Enums.AgentRole
     isOnline?: BoolFilter<"Agent"> | boolean
     createdAt?: DateTimeFilter<"Agent"> | Date | string
-    leads?: LeadListRelationFilter
     conversations?: ConversationListRelationFilter
     escalations?: EscalationLogListRelationFilter
+    leads?: LeadListRelationFilter
     notifications?: NotificationListRelationFilter
   }
 
@@ -14032,9 +14032,9 @@ export namespace Prisma {
     role?: SortOrder
     isOnline?: SortOrder
     createdAt?: SortOrder
-    leads?: LeadOrderByRelationAggregateInput
     conversations?: ConversationOrderByRelationAggregateInput
     escalations?: EscalationLogOrderByRelationAggregateInput
+    leads?: LeadOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
   }
 
@@ -14049,9 +14049,9 @@ export namespace Prisma {
     role?: EnumAgentRoleFilter<"Agent"> | $Enums.AgentRole
     isOnline?: BoolFilter<"Agent"> | boolean
     createdAt?: DateTimeFilter<"Agent"> | Date | string
-    leads?: LeadListRelationFilter
     conversations?: ConversationListRelationFilter
     escalations?: EscalationLogListRelationFilter
+    leads?: LeadListRelationFilter
     notifications?: NotificationListRelationFilter
   }, "id" | "email">
 
@@ -14093,8 +14093,8 @@ export namespace Prisma {
     platform?: StringFilter<"Conversation"> | string
     status?: StringFilter<"Conversation"> | string
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
     messages?: MessageListRelationFilter
   }
 
@@ -14105,8 +14105,8 @@ export namespace Prisma {
     platform?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-    lead?: LeadOrderByWithRelationInput
     agent?: AgentOrderByWithRelationInput
+    lead?: LeadOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
   }
 
@@ -14120,8 +14120,8 @@ export namespace Prisma {
     platform?: StringFilter<"Conversation"> | string
     status?: StringFilter<"Conversation"> | string
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
     messages?: MessageListRelationFilter
   }, "id">
 
@@ -14233,11 +14233,11 @@ export namespace Prisma {
     retryCount?: IntFilter<"Payment"> | number
     failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
-    courseName?: StringNullableFilter<"Payment"> | string | null
-    courseTiming?: StringNullableFilter<"Payment"> | string | null
-    courseDuration?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
+    courseDuration?: StringNullableFilter<"Payment"> | string | null
+    courseName?: StringNullableFilter<"Payment"> | string | null
+    courseTiming?: StringNullableFilter<"Payment"> | string | null
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }
 
@@ -14253,11 +14253,11 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrderInput | SortOrder
     paidAt?: SortOrderInput | SortOrder
-    courseName?: SortOrderInput | SortOrder
-    courseTiming?: SortOrderInput | SortOrder
-    courseDuration?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    courseDuration?: SortOrderInput | SortOrder
+    courseName?: SortOrderInput | SortOrder
+    courseTiming?: SortOrderInput | SortOrder
     lead?: LeadOrderByWithRelationInput
   }
 
@@ -14276,11 +14276,11 @@ export namespace Prisma {
     retryCount?: IntFilter<"Payment"> | number
     failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
-    courseName?: StringNullableFilter<"Payment"> | string | null
-    courseTiming?: StringNullableFilter<"Payment"> | string | null
-    courseDuration?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
+    courseDuration?: StringNullableFilter<"Payment"> | string | null
+    courseName?: StringNullableFilter<"Payment"> | string | null
+    courseTiming?: StringNullableFilter<"Payment"> | string | null
     lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }, "id">
 
@@ -14296,11 +14296,11 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrderInput | SortOrder
     paidAt?: SortOrderInput | SortOrder
-    courseName?: SortOrderInput | SortOrder
-    courseTiming?: SortOrderInput | SortOrder
-    courseDuration?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    courseDuration?: SortOrderInput | SortOrder
+    courseName?: SortOrderInput | SortOrder
+    courseTiming?: SortOrderInput | SortOrder
     _count?: PaymentCountOrderByAggregateInput
     _avg?: PaymentAvgOrderByAggregateInput
     _max?: PaymentMaxOrderByAggregateInput
@@ -14323,11 +14323,11 @@ export namespace Prisma {
     retryCount?: IntWithAggregatesFilter<"Payment"> | number
     failureReason?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
-    courseName?: StringNullableWithAggregatesFilter<"Payment"> | string | null
-    courseTiming?: StringNullableWithAggregatesFilter<"Payment"> | string | null
-    courseDuration?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
+    courseDuration?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    courseName?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    courseTiming?: StringNullableWithAggregatesFilter<"Payment"> | string | null
   }
 
   export type EscalationLogWhereInput = {
@@ -14340,8 +14340,8 @@ export namespace Prisma {
     reason?: StringFilter<"EscalationLog"> | string
     escalatedAt?: DateTimeFilter<"EscalationLog"> | Date | string
     resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
-    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }
 
   export type EscalationLogOrderByWithRelationInput = {
@@ -14351,8 +14351,8 @@ export namespace Prisma {
     reason?: SortOrder
     escalatedAt?: SortOrder
     resolvedAt?: SortOrderInput | SortOrder
-    lead?: LeadOrderByWithRelationInput
     agent?: AgentOrderByWithRelationInput
+    lead?: LeadOrderByWithRelationInput
   }
 
   export type EscalationLogWhereUniqueInput = Prisma.AtLeast<{
@@ -14365,8 +14365,8 @@ export namespace Prisma {
     reason?: StringFilter<"EscalationLog"> | string
     escalatedAt?: DateTimeFilter<"EscalationLog"> | Date | string
     resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
-    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
     agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+    lead?: XOR<LeadScalarRelationFilter, LeadWhereInput>
   }, "id">
 
   export type EscalationLogOrderByWithAggregationInput = {
@@ -14680,12 +14680,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    agent?: AgentCreateNestedOneWithoutLeadsInput
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    agent?: AgentCreateNestedOneWithoutLeadsInput
     notifications?: NotificationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateInput = {
@@ -14700,11 +14700,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUpdateInput = {
@@ -14717,12 +14717,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
     notifications?: NotificationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateInput = {
@@ -14737,11 +14737,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadCreateManyInput = {
@@ -14791,9 +14791,9 @@ export namespace Prisma {
     role?: $Enums.AgentRole
     isOnline?: boolean
     createdAt?: Date | string
-    leads?: LeadCreateNestedManyWithoutAgentInput
     conversations?: ConversationCreateNestedManyWithoutAgentInput
     escalations?: EscalationLogCreateNestedManyWithoutAgentInput
+    leads?: LeadCreateNestedManyWithoutAgentInput
     notifications?: NotificationCreateNestedManyWithoutAgentInput
   }
 
@@ -14805,9 +14805,9 @@ export namespace Prisma {
     role?: $Enums.AgentRole
     isOnline?: boolean
     createdAt?: Date | string
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAgentInput
   }
 
@@ -14818,9 +14818,9 @@ export namespace Prisma {
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     isOnline?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUpdateManyWithoutAgentNestedInput
     conversations?: ConversationUpdateManyWithoutAgentNestedInput
     escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
+    leads?: LeadUpdateManyWithoutAgentNestedInput
     notifications?: NotificationUpdateManyWithoutAgentNestedInput
   }
 
@@ -14832,9 +14832,9 @@ export namespace Prisma {
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     isOnline?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAgentNestedInput
   }
 
@@ -14871,8 +14871,8 @@ export namespace Prisma {
     platform: string
     status?: string
     createdAt?: Date | string
-    lead: LeadCreateNestedOneWithoutConversationsInput
     agent?: AgentCreateNestedOneWithoutConversationsInput
+    lead: LeadCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
@@ -14890,8 +14890,8 @@ export namespace Prisma {
     platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
     agent?: AgentUpdateOneWithoutConversationsNestedInput
+    lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
@@ -15005,11 +15005,11 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
-    courseName?: string | null
-    courseTiming?: string | null
-    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    courseDuration?: string | null
+    courseName?: string | null
+    courseTiming?: string | null
     lead: LeadCreateNestedOneWithoutPaymentsInput
   }
 
@@ -15025,11 +15025,11 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
-    courseName?: string | null
-    courseTiming?: string | null
-    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    courseDuration?: string | null
+    courseName?: string | null
+    courseTiming?: string | null
   }
 
   export type PaymentUpdateInput = {
@@ -15042,11 +15042,11 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
     lead?: LeadUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
@@ -15062,11 +15062,11 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PaymentCreateManyInput = {
@@ -15081,11 +15081,11 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
-    courseName?: string | null
-    courseTiming?: string | null
-    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    courseDuration?: string | null
+    courseName?: string | null
+    courseTiming?: string | null
   }
 
   export type PaymentUpdateManyMutationInput = {
@@ -15098,11 +15098,11 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PaymentUncheckedUpdateManyInput = {
@@ -15117,19 +15117,19 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     failureReason?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EscalationLogCreateInput = {
     reason: string
     escalatedAt?: Date | string
     resolvedAt?: Date | string | null
-    lead: LeadCreateNestedOneWithoutEscalationsInput
     agent?: AgentCreateNestedOneWithoutEscalationsInput
+    lead: LeadCreateNestedOneWithoutEscalationsInput
   }
 
   export type EscalationLogUncheckedCreateInput = {
@@ -15145,8 +15145,8 @@ export namespace Prisma {
     reason?: StringFieldUpdateOperationsInput | string
     escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lead?: LeadUpdateOneRequiredWithoutEscalationsNestedInput
     agent?: AgentUpdateOneWithoutEscalationsNestedInput
+    lead?: LeadUpdateOneRequiredWithoutEscalationsNestedInput
   }
 
   export type EscalationLogUncheckedUpdateInput = {
@@ -15536,9 +15536,10 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type AgentNullableScalarRelationFilter = {
-    is?: AgentWhereInput | null
-    isNot?: AgentWhereInput | null
+  export type AuditLogListRelationFilter = {
+    every?: AuditLogWhereInput
+    some?: AuditLogWhereInput
+    none?: AuditLogWhereInput
   }
 
   export type ConversationListRelationFilter = {
@@ -15547,22 +15548,15 @@ export namespace Prisma {
     none?: ConversationWhereInput
   }
 
-  export type PaymentListRelationFilter = {
-    every?: PaymentWhereInput
-    some?: PaymentWhereInput
-    none?: PaymentWhereInput
-  }
-
   export type EscalationLogListRelationFilter = {
     every?: EscalationLogWhereInput
     some?: EscalationLogWhereInput
     none?: EscalationLogWhereInput
   }
 
-  export type AuditLogListRelationFilter = {
-    every?: AuditLogWhereInput
-    some?: AuditLogWhereInput
-    none?: AuditLogWhereInput
+  export type AgentNullableScalarRelationFilter = {
+    is?: AgentWhereInput | null
+    isNot?: AgentWhereInput | null
   }
 
   export type NotificationListRelationFilter = {
@@ -15571,16 +15565,22 @@ export namespace Prisma {
     none?: NotificationWhereInput
   }
 
+  export type PaymentListRelationFilter = {
+    every?: PaymentWhereInput
+    some?: PaymentWhereInput
+    none?: PaymentWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type ConversationOrderByRelationAggregateInput = {
+  export type AuditLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type PaymentOrderByRelationAggregateInput = {
+  export type ConversationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15588,11 +15588,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type AuditLogOrderByRelationAggregateInput = {
+  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type NotificationOrderByRelationAggregateInput = {
+  export type PaymentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15999,11 +15999,11 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrder
     paidAt?: SortOrder
-    courseName?: SortOrder
-    courseTiming?: SortOrder
-    courseDuration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    courseDuration?: SortOrder
+    courseName?: SortOrder
+    courseTiming?: SortOrder
   }
 
   export type PaymentAvgOrderByAggregateInput = {
@@ -16025,11 +16025,11 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrder
     paidAt?: SortOrder
-    courseName?: SortOrder
-    courseTiming?: SortOrder
-    courseDuration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    courseDuration?: SortOrder
+    courseName?: SortOrder
+    courseTiming?: SortOrder
   }
 
   export type PaymentMinOrderByAggregateInput = {
@@ -16044,11 +16044,11 @@ export namespace Prisma {
     retryCount?: SortOrder
     failureReason?: SortOrder
     paidAt?: SortOrder
-    courseName?: SortOrder
-    courseTiming?: SortOrder
-    courseDuration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    courseDuration?: SortOrder
+    courseName?: SortOrder
+    courseTiming?: SortOrder
   }
 
   export type PaymentSumOrderByAggregateInput = {
@@ -16314,10 +16314,11 @@ export namespace Prisma {
     leadId?: SortOrder
   }
 
-  export type AgentCreateNestedOneWithoutLeadsInput = {
-    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
-    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
-    connect?: AgentWhereUniqueInput
+  export type AuditLogCreateNestedManyWithoutLeadInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
   export type ConversationCreateNestedManyWithoutLeadInput = {
@@ -16327,13 +16328,6 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
-  export type PaymentCreateNestedManyWithoutLeadInput = {
-    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
-    createMany?: PaymentCreateManyLeadInputEnvelope
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-  }
-
   export type EscalationLogCreateNestedManyWithoutLeadInput = {
     create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
@@ -16341,11 +16335,10 @@ export namespace Prisma {
     connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
-  export type AuditLogCreateNestedManyWithoutLeadInput = {
-    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
-    createMany?: AuditLogCreateManyLeadInputEnvelope
-    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  export type AgentCreateNestedOneWithoutLeadsInput = {
+    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
+    connect?: AgentWhereUniqueInput
   }
 
   export type NotificationCreateNestedManyWithoutLeadInput = {
@@ -16355,25 +16348,11 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
-  export type ConversationUncheckedCreateNestedManyWithoutLeadInput = {
-    create?: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput> | ConversationCreateWithoutLeadInput[] | ConversationUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutLeadInput | ConversationCreateOrConnectWithoutLeadInput[]
-    createMany?: ConversationCreateManyLeadInputEnvelope
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-  }
-
-  export type PaymentUncheckedCreateNestedManyWithoutLeadInput = {
+  export type PaymentCreateNestedManyWithoutLeadInput = {
     create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
     createMany?: PaymentCreateManyLeadInputEnvelope
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-  }
-
-  export type EscalationLogUncheckedCreateNestedManyWithoutLeadInput = {
-    create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
-    createMany?: EscalationLogCreateManyLeadInputEnvelope
-    connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
   export type AuditLogUncheckedCreateNestedManyWithoutLeadInput = {
@@ -16383,11 +16362,32 @@ export namespace Prisma {
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
+  export type ConversationUncheckedCreateNestedManyWithoutLeadInput = {
+    create?: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput> | ConversationCreateWithoutLeadInput[] | ConversationUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutLeadInput | ConversationCreateOrConnectWithoutLeadInput[]
+    createMany?: ConversationCreateManyLeadInputEnvelope
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  }
+
+  export type EscalationLogUncheckedCreateNestedManyWithoutLeadInput = {
+    create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
+    createMany?: EscalationLogCreateManyLeadInputEnvelope
+    connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
+  }
+
   export type NotificationUncheckedCreateNestedManyWithoutLeadInput = {
     create?: XOR<NotificationCreateWithoutLeadInput, NotificationUncheckedCreateWithoutLeadInput> | NotificationCreateWithoutLeadInput[] | NotificationUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutLeadInput | NotificationCreateOrConnectWithoutLeadInput[]
     createMany?: NotificationCreateManyLeadInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type PaymentUncheckedCreateNestedManyWithoutLeadInput = {
+    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
+    createMany?: PaymentCreateManyLeadInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -16410,14 +16410,18 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type AgentUpdateOneWithoutLeadsNestedInput = {
-    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
-    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
-    upsert?: AgentUpsertWithoutLeadsInput
-    disconnect?: AgentWhereInput | boolean
-    delete?: AgentWhereInput | boolean
-    connect?: AgentWhereUniqueInput
-    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutLeadsInput, AgentUpdateWithoutLeadsInput>, AgentUncheckedUpdateWithoutLeadsInput>
+  export type AuditLogUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutLeadInput | AuditLogUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutLeadInput | AuditLogUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutLeadInput | AuditLogUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
   export type ConversationUpdateManyWithoutLeadNestedInput = {
@@ -16434,20 +16438,6 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
-  export type PaymentUpdateManyWithoutLeadNestedInput = {
-    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
-    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
-    createMany?: PaymentCreateManyLeadInputEnvelope
-    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
-    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
-    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-  }
-
   export type EscalationLogUpdateManyWithoutLeadNestedInput = {
     create?: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput> | EscalationLogCreateWithoutLeadInput[] | EscalationLogUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: EscalationLogCreateOrConnectWithoutLeadInput | EscalationLogCreateOrConnectWithoutLeadInput[]
@@ -16462,18 +16452,14 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
-  export type AuditLogUpdateManyWithoutLeadNestedInput = {
-    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
-    upsert?: AuditLogUpsertWithWhereUniqueWithoutLeadInput | AuditLogUpsertWithWhereUniqueWithoutLeadInput[]
-    createMany?: AuditLogCreateManyLeadInputEnvelope
-    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    update?: AuditLogUpdateWithWhereUniqueWithoutLeadInput | AuditLogUpdateWithWhereUniqueWithoutLeadInput[]
-    updateMany?: AuditLogUpdateManyWithWhereWithoutLeadInput | AuditLogUpdateManyWithWhereWithoutLeadInput[]
-    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  export type AgentUpdateOneWithoutLeadsNestedInput = {
+    create?: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutLeadsInput
+    upsert?: AgentUpsertWithoutLeadsInput
+    disconnect?: AgentWhereInput | boolean
+    delete?: AgentWhereInput | boolean
+    connect?: AgentWhereUniqueInput
+    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutLeadsInput, AgentUpdateWithoutLeadsInput>, AgentUncheckedUpdateWithoutLeadsInput>
   }
 
   export type NotificationUpdateManyWithoutLeadNestedInput = {
@@ -16488,6 +16474,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutLeadInput | NotificationUpdateWithWhereUniqueWithoutLeadInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutLeadInput | NotificationUpdateManyWithWhereWithoutLeadInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type PaymentUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: PaymentCreateManyLeadInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -16506,6 +16506,20 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type AuditLogUncheckedUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutLeadInput | AuditLogUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: AuditLogCreateManyLeadInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutLeadInput | AuditLogUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutLeadInput | AuditLogUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
   export type ConversationUncheckedUpdateManyWithoutLeadNestedInput = {
     create?: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput> | ConversationCreateWithoutLeadInput[] | ConversationUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutLeadInput | ConversationCreateOrConnectWithoutLeadInput[]
@@ -16518,20 +16532,6 @@ export namespace Prisma {
     update?: ConversationUpdateWithWhereUniqueWithoutLeadInput | ConversationUpdateWithWhereUniqueWithoutLeadInput[]
     updateMany?: ConversationUpdateManyWithWhereWithoutLeadInput | ConversationUpdateManyWithWhereWithoutLeadInput[]
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-  }
-
-  export type PaymentUncheckedUpdateManyWithoutLeadNestedInput = {
-    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
-    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
-    createMany?: PaymentCreateManyLeadInputEnvelope
-    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
-    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
-    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
   export type EscalationLogUncheckedUpdateManyWithoutLeadNestedInput = {
@@ -16548,20 +16548,6 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
-  export type AuditLogUncheckedUpdateManyWithoutLeadNestedInput = {
-    create?: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput> | AuditLogCreateWithoutLeadInput[] | AuditLogUncheckedCreateWithoutLeadInput[]
-    connectOrCreate?: AuditLogCreateOrConnectWithoutLeadInput | AuditLogCreateOrConnectWithoutLeadInput[]
-    upsert?: AuditLogUpsertWithWhereUniqueWithoutLeadInput | AuditLogUpsertWithWhereUniqueWithoutLeadInput[]
-    createMany?: AuditLogCreateManyLeadInputEnvelope
-    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
-    update?: AuditLogUpdateWithWhereUniqueWithoutLeadInput | AuditLogUpdateWithWhereUniqueWithoutLeadInput[]
-    updateMany?: AuditLogUpdateManyWithWhereWithoutLeadInput | AuditLogUpdateManyWithWhereWithoutLeadInput[]
-    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
-  }
-
   export type NotificationUncheckedUpdateManyWithoutLeadNestedInput = {
     create?: XOR<NotificationCreateWithoutLeadInput, NotificationUncheckedCreateWithoutLeadInput> | NotificationCreateWithoutLeadInput[] | NotificationUncheckedCreateWithoutLeadInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutLeadInput | NotificationCreateOrConnectWithoutLeadInput[]
@@ -16576,11 +16562,18 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
-  export type LeadCreateNestedManyWithoutAgentInput = {
-    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
-    createMany?: LeadCreateManyAgentInputEnvelope
-    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  export type PaymentUncheckedUpdateManyWithoutLeadNestedInput = {
+    create?: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput> | PaymentCreateWithoutLeadInput[] | PaymentUncheckedCreateWithoutLeadInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutLeadInput | PaymentCreateOrConnectWithoutLeadInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutLeadInput | PaymentUpsertWithWhereUniqueWithoutLeadInput[]
+    createMany?: PaymentCreateManyLeadInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutLeadInput | PaymentUpdateWithWhereUniqueWithoutLeadInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutLeadInput | PaymentUpdateManyWithWhereWithoutLeadInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
   export type ConversationCreateNestedManyWithoutAgentInput = {
@@ -16597,18 +16590,18 @@ export namespace Prisma {
     connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
+  export type LeadCreateNestedManyWithoutAgentInput = {
+    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
+    createMany?: LeadCreateManyAgentInputEnvelope
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  }
+
   export type NotificationCreateNestedManyWithoutAgentInput = {
     create?: XOR<NotificationCreateWithoutAgentInput, NotificationUncheckedCreateWithoutAgentInput> | NotificationCreateWithoutAgentInput[] | NotificationUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAgentInput | NotificationCreateOrConnectWithoutAgentInput[]
     createMany?: NotificationCreateManyAgentInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type LeadUncheckedCreateNestedManyWithoutAgentInput = {
-    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
-    createMany?: LeadCreateManyAgentInputEnvelope
-    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
   }
 
   export type ConversationUncheckedCreateNestedManyWithoutAgentInput = {
@@ -16625,6 +16618,13 @@ export namespace Prisma {
     connect?: EscalationLogWhereUniqueInput | EscalationLogWhereUniqueInput[]
   }
 
+  export type LeadUncheckedCreateNestedManyWithoutAgentInput = {
+    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
+    createMany?: LeadCreateManyAgentInputEnvelope
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  }
+
   export type NotificationUncheckedCreateNestedManyWithoutAgentInput = {
     create?: XOR<NotificationCreateWithoutAgentInput, NotificationUncheckedCreateWithoutAgentInput> | NotificationCreateWithoutAgentInput[] | NotificationUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAgentInput | NotificationCreateOrConnectWithoutAgentInput[]
@@ -16634,20 +16634,6 @@ export namespace Prisma {
 
   export type EnumAgentRoleFieldUpdateOperationsInput = {
     set?: $Enums.AgentRole
-  }
-
-  export type LeadUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
-    upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: LeadCreateManyAgentInputEnvelope
-    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    update?: LeadUpdateWithWhereUniqueWithoutAgentInput | LeadUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: LeadUpdateManyWithWhereWithoutAgentInput | LeadUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
   }
 
   export type ConversationUpdateManyWithoutAgentNestedInput = {
@@ -16678,6 +16664,20 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
+  export type LeadUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
+    upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: LeadCreateManyAgentInputEnvelope
+    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    update?: LeadUpdateWithWhereUniqueWithoutAgentInput | LeadUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: LeadUpdateManyWithWhereWithoutAgentInput | LeadUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
+  }
+
   export type NotificationUpdateManyWithoutAgentNestedInput = {
     create?: XOR<NotificationCreateWithoutAgentInput, NotificationUncheckedCreateWithoutAgentInput> | NotificationCreateWithoutAgentInput[] | NotificationUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAgentInput | NotificationCreateOrConnectWithoutAgentInput[]
@@ -16690,20 +16690,6 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutAgentInput | NotificationUpdateWithWhereUniqueWithoutAgentInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutAgentInput | NotificationUpdateManyWithWhereWithoutAgentInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type LeadUncheckedUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
-    upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: LeadCreateManyAgentInputEnvelope
-    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
-    update?: LeadUpdateWithWhereUniqueWithoutAgentInput | LeadUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: LeadUpdateManyWithWhereWithoutAgentInput | LeadUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
   }
 
   export type ConversationUncheckedUpdateManyWithoutAgentNestedInput = {
@@ -16734,6 +16720,20 @@ export namespace Prisma {
     deleteMany?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
   }
 
+  export type LeadUncheckedUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput> | LeadCreateWithoutAgentInput[] | LeadUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAgentInput | LeadCreateOrConnectWithoutAgentInput[]
+    upsert?: LeadUpsertWithWhereUniqueWithoutAgentInput | LeadUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: LeadCreateManyAgentInputEnvelope
+    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    update?: LeadUpdateWithWhereUniqueWithoutAgentInput | LeadUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: LeadUpdateManyWithWhereWithoutAgentInput | LeadUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
+  }
+
   export type NotificationUncheckedUpdateManyWithoutAgentNestedInput = {
     create?: XOR<NotificationCreateWithoutAgentInput, NotificationUncheckedCreateWithoutAgentInput> | NotificationCreateWithoutAgentInput[] | NotificationUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAgentInput | NotificationCreateOrConnectWithoutAgentInput[]
@@ -16748,16 +16748,16 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
-  export type LeadCreateNestedOneWithoutConversationsInput = {
-    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
-    connect?: LeadWhereUniqueInput
-  }
-
   export type AgentCreateNestedOneWithoutConversationsInput = {
     create?: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutConversationsInput
     connect?: AgentWhereUniqueInput
+  }
+
+  export type LeadCreateNestedOneWithoutConversationsInput = {
+    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
+    connect?: LeadWhereUniqueInput
   }
 
   export type MessageCreateNestedManyWithoutConversationInput = {
@@ -16774,14 +16774,6 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
-  export type LeadUpdateOneRequiredWithoutConversationsNestedInput = {
-    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
-    upsert?: LeadUpsertWithoutConversationsInput
-    connect?: LeadWhereUniqueInput
-    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutConversationsInput, LeadUpdateWithoutConversationsInput>, LeadUncheckedUpdateWithoutConversationsInput>
-  }
-
   export type AgentUpdateOneWithoutConversationsNestedInput = {
     create?: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutConversationsInput
@@ -16790,6 +16782,14 @@ export namespace Prisma {
     delete?: AgentWhereInput | boolean
     connect?: AgentWhereUniqueInput
     update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutConversationsInput, AgentUpdateWithoutConversationsInput>, AgentUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type LeadUpdateOneRequiredWithoutConversationsNestedInput = {
+    create?: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutConversationsInput
+    upsert?: LeadUpsertWithoutConversationsInput
+    connect?: LeadWhereUniqueInput
+    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutConversationsInput, LeadUpdateWithoutConversationsInput>, LeadUncheckedUpdateWithoutConversationsInput>
   }
 
   export type MessageUpdateManyWithoutConversationNestedInput = {
@@ -16876,24 +16876,16 @@ export namespace Prisma {
     update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutPaymentsInput, LeadUpdateWithoutPaymentsInput>, LeadUncheckedUpdateWithoutPaymentsInput>
   }
 
-  export type LeadCreateNestedOneWithoutEscalationsInput = {
-    create?: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
-    connectOrCreate?: LeadCreateOrConnectWithoutEscalationsInput
-    connect?: LeadWhereUniqueInput
-  }
-
   export type AgentCreateNestedOneWithoutEscalationsInput = {
     create?: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
     connectOrCreate?: AgentCreateOrConnectWithoutEscalationsInput
     connect?: AgentWhereUniqueInput
   }
 
-  export type LeadUpdateOneRequiredWithoutEscalationsNestedInput = {
+  export type LeadCreateNestedOneWithoutEscalationsInput = {
     create?: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
     connectOrCreate?: LeadCreateOrConnectWithoutEscalationsInput
-    upsert?: LeadUpsertWithoutEscalationsInput
     connect?: LeadWhereUniqueInput
-    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutEscalationsInput, LeadUpdateWithoutEscalationsInput>, LeadUncheckedUpdateWithoutEscalationsInput>
   }
 
   export type AgentUpdateOneWithoutEscalationsNestedInput = {
@@ -16904,6 +16896,14 @@ export namespace Prisma {
     delete?: AgentWhereInput | boolean
     connect?: AgentWhereUniqueInput
     update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutEscalationsInput, AgentUpdateWithoutEscalationsInput>, AgentUncheckedUpdateWithoutEscalationsInput>
+  }
+
+  export type LeadUpdateOneRequiredWithoutEscalationsNestedInput = {
+    create?: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
+    connectOrCreate?: LeadCreateOrConnectWithoutEscalationsInput
+    upsert?: LeadUpsertWithoutEscalationsInput
+    connect?: LeadWhereUniqueInput
+    update?: XOR<XOR<LeadUpdateToOneWithWhereWithoutEscalationsInput, LeadUpdateWithoutEscalationsInput>, LeadUncheckedUpdateWithoutEscalationsInput>
   }
 
   export type LeadCreateNestedOneWithoutAuditLogsInput = {
@@ -17249,6 +17249,85 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type AuditLogCreateWithoutLeadInput = {
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUncheckedCreateWithoutLeadInput = {
+    id?: number
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt?: Date | string
+  }
+
+  export type AuditLogCreateOrConnectWithoutLeadInput = {
+    where: AuditLogWhereUniqueInput
+    create: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput>
+  }
+
+  export type AuditLogCreateManyLeadInputEnvelope = {
+    data: AuditLogCreateManyLeadInput | AuditLogCreateManyLeadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConversationCreateWithoutLeadInput = {
+    platform: string
+    status?: string
+    createdAt?: Date | string
+    agent?: AgentCreateNestedOneWithoutConversationsInput
+    messages?: MessageCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationUncheckedCreateWithoutLeadInput = {
+    id?: number
+    agentId?: number | null
+    platform: string
+    status?: string
+    createdAt?: Date | string
+    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationCreateOrConnectWithoutLeadInput = {
+    where: ConversationWhereUniqueInput
+    create: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput>
+  }
+
+  export type ConversationCreateManyLeadInputEnvelope = {
+    data: ConversationCreateManyLeadInput | ConversationCreateManyLeadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EscalationLogCreateWithoutLeadInput = {
+    reason: string
+    escalatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    agent?: AgentCreateNestedOneWithoutEscalationsInput
+  }
+
+  export type EscalationLogUncheckedCreateWithoutLeadInput = {
+    id?: number
+    agentId?: number | null
+    reason: string
+    escalatedAt?: Date | string
+    resolvedAt?: Date | string | null
+  }
+
+  export type EscalationLogCreateOrConnectWithoutLeadInput = {
+    where: EscalationLogWhereUniqueInput
+    create: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput>
+  }
+
+  export type EscalationLogCreateManyLeadInputEnvelope = {
+    data: EscalationLogCreateManyLeadInput | EscalationLogCreateManyLeadInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AgentCreateWithoutLeadsInput = {
     name: string
     email: string
@@ -17279,130 +17358,6 @@ export namespace Prisma {
     create: XOR<AgentCreateWithoutLeadsInput, AgentUncheckedCreateWithoutLeadsInput>
   }
 
-  export type ConversationCreateWithoutLeadInput = {
-    platform: string
-    status?: string
-    createdAt?: Date | string
-    agent?: AgentCreateNestedOneWithoutConversationsInput
-    messages?: MessageCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationUncheckedCreateWithoutLeadInput = {
-    id?: number
-    agentId?: number | null
-    platform: string
-    status?: string
-    createdAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationCreateOrConnectWithoutLeadInput = {
-    where: ConversationWhereUniqueInput
-    create: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput>
-  }
-
-  export type ConversationCreateManyLeadInputEnvelope = {
-    data: ConversationCreateManyLeadInput | ConversationCreateManyLeadInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PaymentCreateWithoutLeadInput = {
-    razorpayLinkId?: string | null
-    razorpayPaymentId?: string | null
-    shortUrl?: string | null
-    amount: number
-    currency?: string
-    status?: $Enums.PaymentStatus
-    retryCount?: number
-    failureReason?: string | null
-    paidAt?: Date | string | null
-    courseName?: string | null
-    courseTiming?: string | null
-    courseDuration?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PaymentUncheckedCreateWithoutLeadInput = {
-    id?: number
-    razorpayLinkId?: string | null
-    razorpayPaymentId?: string | null
-    shortUrl?: string | null
-    amount: number
-    currency?: string
-    status?: $Enums.PaymentStatus
-    retryCount?: number
-    failureReason?: string | null
-    paidAt?: Date | string | null
-    courseName?: string | null
-    courseTiming?: string | null
-    courseDuration?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PaymentCreateOrConnectWithoutLeadInput = {
-    where: PaymentWhereUniqueInput
-    create: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput>
-  }
-
-  export type PaymentCreateManyLeadInputEnvelope = {
-    data: PaymentCreateManyLeadInput | PaymentCreateManyLeadInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type EscalationLogCreateWithoutLeadInput = {
-    reason: string
-    escalatedAt?: Date | string
-    resolvedAt?: Date | string | null
-    agent?: AgentCreateNestedOneWithoutEscalationsInput
-  }
-
-  export type EscalationLogUncheckedCreateWithoutLeadInput = {
-    id?: number
-    agentId?: number | null
-    reason: string
-    escalatedAt?: Date | string
-    resolvedAt?: Date | string | null
-  }
-
-  export type EscalationLogCreateOrConnectWithoutLeadInput = {
-    where: EscalationLogWhereUniqueInput
-    create: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput>
-  }
-
-  export type EscalationLogCreateManyLeadInputEnvelope = {
-    data: EscalationLogCreateManyLeadInput | EscalationLogCreateManyLeadInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuditLogCreateWithoutLeadInput = {
-    oldStatus: string
-    newStatus: string
-    reason: string
-    triggeredBy: string
-    createdAt?: Date | string
-  }
-
-  export type AuditLogUncheckedCreateWithoutLeadInput = {
-    id?: number
-    oldStatus: string
-    newStatus: string
-    reason: string
-    triggeredBy: string
-    createdAt?: Date | string
-  }
-
-  export type AuditLogCreateOrConnectWithoutLeadInput = {
-    where: AuditLogWhereUniqueInput
-    create: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput>
-  }
-
-  export type AuditLogCreateManyLeadInputEnvelope = {
-    data: AuditLogCreateManyLeadInput | AuditLogCreateManyLeadInput[]
-    skipDuplicates?: boolean
-  }
-
   export type NotificationCreateWithoutLeadInput = {
     title: string
     message: string
@@ -17428,6 +17383,136 @@ export namespace Prisma {
   export type NotificationCreateManyLeadInputEnvelope = {
     data: NotificationCreateManyLeadInput | NotificationCreateManyLeadInput[]
     skipDuplicates?: boolean
+  }
+
+  export type PaymentCreateWithoutLeadInput = {
+    razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
+    amount: number
+    currency?: string
+    status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
+    paidAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courseDuration?: string | null
+    courseName?: string | null
+    courseTiming?: string | null
+  }
+
+  export type PaymentUncheckedCreateWithoutLeadInput = {
+    id?: number
+    razorpayLinkId?: string | null
+    razorpayPaymentId?: string | null
+    shortUrl?: string | null
+    amount: number
+    currency?: string
+    status?: $Enums.PaymentStatus
+    retryCount?: number
+    failureReason?: string | null
+    paidAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courseDuration?: string | null
+    courseName?: string | null
+    courseTiming?: string | null
+  }
+
+  export type PaymentCreateOrConnectWithoutLeadInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutLeadInput, PaymentUncheckedCreateWithoutLeadInput>
+  }
+
+  export type PaymentCreateManyLeadInputEnvelope = {
+    data: PaymentCreateManyLeadInput | PaymentCreateManyLeadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AuditLogUpsertWithWhereUniqueWithoutLeadInput = {
+    where: AuditLogWhereUniqueInput
+    update: XOR<AuditLogUpdateWithoutLeadInput, AuditLogUncheckedUpdateWithoutLeadInput>
+    create: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput>
+  }
+
+  export type AuditLogUpdateWithWhereUniqueWithoutLeadInput = {
+    where: AuditLogWhereUniqueInput
+    data: XOR<AuditLogUpdateWithoutLeadInput, AuditLogUncheckedUpdateWithoutLeadInput>
+  }
+
+  export type AuditLogUpdateManyWithWhereWithoutLeadInput = {
+    where: AuditLogScalarWhereInput
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutLeadInput>
+  }
+
+  export type AuditLogScalarWhereInput = {
+    AND?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+    OR?: AuditLogScalarWhereInput[]
+    NOT?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+    id?: IntFilter<"AuditLog"> | number
+    leadId?: IntFilter<"AuditLog"> | number
+    oldStatus?: StringFilter<"AuditLog"> | string
+    newStatus?: StringFilter<"AuditLog"> | string
+    reason?: StringFilter<"AuditLog"> | string
+    triggeredBy?: StringFilter<"AuditLog"> | string
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+  }
+
+  export type ConversationUpsertWithWhereUniqueWithoutLeadInput = {
+    where: ConversationWhereUniqueInput
+    update: XOR<ConversationUpdateWithoutLeadInput, ConversationUncheckedUpdateWithoutLeadInput>
+    create: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput>
+  }
+
+  export type ConversationUpdateWithWhereUniqueWithoutLeadInput = {
+    where: ConversationWhereUniqueInput
+    data: XOR<ConversationUpdateWithoutLeadInput, ConversationUncheckedUpdateWithoutLeadInput>
+  }
+
+  export type ConversationUpdateManyWithWhereWithoutLeadInput = {
+    where: ConversationScalarWhereInput
+    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutLeadInput>
+  }
+
+  export type ConversationScalarWhereInput = {
+    AND?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+    OR?: ConversationScalarWhereInput[]
+    NOT?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+    id?: IntFilter<"Conversation"> | number
+    leadId?: IntFilter<"Conversation"> | number
+    agentId?: IntNullableFilter<"Conversation"> | number | null
+    platform?: StringFilter<"Conversation"> | string
+    status?: StringFilter<"Conversation"> | string
+    createdAt?: DateTimeFilter<"Conversation"> | Date | string
+  }
+
+  export type EscalationLogUpsertWithWhereUniqueWithoutLeadInput = {
+    where: EscalationLogWhereUniqueInput
+    update: XOR<EscalationLogUpdateWithoutLeadInput, EscalationLogUncheckedUpdateWithoutLeadInput>
+    create: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput>
+  }
+
+  export type EscalationLogUpdateWithWhereUniqueWithoutLeadInput = {
+    where: EscalationLogWhereUniqueInput
+    data: XOR<EscalationLogUpdateWithoutLeadInput, EscalationLogUncheckedUpdateWithoutLeadInput>
+  }
+
+  export type EscalationLogUpdateManyWithWhereWithoutLeadInput = {
+    where: EscalationLogScalarWhereInput
+    data: XOR<EscalationLogUpdateManyMutationInput, EscalationLogUncheckedUpdateManyWithoutLeadInput>
+  }
+
+  export type EscalationLogScalarWhereInput = {
+    AND?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
+    OR?: EscalationLogScalarWhereInput[]
+    NOT?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
+    id?: IntFilter<"EscalationLog"> | number
+    leadId?: IntFilter<"EscalationLog"> | number
+    agentId?: IntNullableFilter<"EscalationLog"> | number | null
+    reason?: StringFilter<"EscalationLog"> | string
+    escalatedAt?: DateTimeFilter<"EscalationLog"> | Date | string
+    resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
   }
 
   export type AgentUpsertWithoutLeadsInput = {
@@ -17466,32 +17551,33 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutAgentNestedInput
   }
 
-  export type ConversationUpsertWithWhereUniqueWithoutLeadInput = {
-    where: ConversationWhereUniqueInput
-    update: XOR<ConversationUpdateWithoutLeadInput, ConversationUncheckedUpdateWithoutLeadInput>
-    create: XOR<ConversationCreateWithoutLeadInput, ConversationUncheckedCreateWithoutLeadInput>
+  export type NotificationUpsertWithWhereUniqueWithoutLeadInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutLeadInput, NotificationUncheckedUpdateWithoutLeadInput>
+    create: XOR<NotificationCreateWithoutLeadInput, NotificationUncheckedCreateWithoutLeadInput>
   }
 
-  export type ConversationUpdateWithWhereUniqueWithoutLeadInput = {
-    where: ConversationWhereUniqueInput
-    data: XOR<ConversationUpdateWithoutLeadInput, ConversationUncheckedUpdateWithoutLeadInput>
+  export type NotificationUpdateWithWhereUniqueWithoutLeadInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutLeadInput, NotificationUncheckedUpdateWithoutLeadInput>
   }
 
-  export type ConversationUpdateManyWithWhereWithoutLeadInput = {
-    where: ConversationScalarWhereInput
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutLeadInput>
+  export type NotificationUpdateManyWithWhereWithoutLeadInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutLeadInput>
   }
 
-  export type ConversationScalarWhereInput = {
-    AND?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-    OR?: ConversationScalarWhereInput[]
-    NOT?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-    id?: IntFilter<"Conversation"> | number
-    leadId?: IntFilter<"Conversation"> | number
-    agentId?: IntNullableFilter<"Conversation"> | number | null
-    platform?: StringFilter<"Conversation"> | string
-    status?: StringFilter<"Conversation"> | string
-    createdAt?: DateTimeFilter<"Conversation"> | Date | string
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: IntFilter<"Notification"> | number
+    agentId?: IntFilter<"Notification"> | number
+    leadId?: IntFilter<"Notification"> | number
+    title?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    isRead?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutLeadInput = {
@@ -17525,142 +17611,11 @@ export namespace Prisma {
     retryCount?: IntFilter<"Payment"> | number
     failureReason?: StringNullableFilter<"Payment"> | string | null
     paidAt?: DateTimeNullableFilter<"Payment"> | Date | string | null
-    courseName?: StringNullableFilter<"Payment"> | string | null
-    courseTiming?: StringNullableFilter<"Payment"> | string | null
-    courseDuration?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
-  }
-
-  export type EscalationLogUpsertWithWhereUniqueWithoutLeadInput = {
-    where: EscalationLogWhereUniqueInput
-    update: XOR<EscalationLogUpdateWithoutLeadInput, EscalationLogUncheckedUpdateWithoutLeadInput>
-    create: XOR<EscalationLogCreateWithoutLeadInput, EscalationLogUncheckedCreateWithoutLeadInput>
-  }
-
-  export type EscalationLogUpdateWithWhereUniqueWithoutLeadInput = {
-    where: EscalationLogWhereUniqueInput
-    data: XOR<EscalationLogUpdateWithoutLeadInput, EscalationLogUncheckedUpdateWithoutLeadInput>
-  }
-
-  export type EscalationLogUpdateManyWithWhereWithoutLeadInput = {
-    where: EscalationLogScalarWhereInput
-    data: XOR<EscalationLogUpdateManyMutationInput, EscalationLogUncheckedUpdateManyWithoutLeadInput>
-  }
-
-  export type EscalationLogScalarWhereInput = {
-    AND?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
-    OR?: EscalationLogScalarWhereInput[]
-    NOT?: EscalationLogScalarWhereInput | EscalationLogScalarWhereInput[]
-    id?: IntFilter<"EscalationLog"> | number
-    leadId?: IntFilter<"EscalationLog"> | number
-    agentId?: IntNullableFilter<"EscalationLog"> | number | null
-    reason?: StringFilter<"EscalationLog"> | string
-    escalatedAt?: DateTimeFilter<"EscalationLog"> | Date | string
-    resolvedAt?: DateTimeNullableFilter<"EscalationLog"> | Date | string | null
-  }
-
-  export type AuditLogUpsertWithWhereUniqueWithoutLeadInput = {
-    where: AuditLogWhereUniqueInput
-    update: XOR<AuditLogUpdateWithoutLeadInput, AuditLogUncheckedUpdateWithoutLeadInput>
-    create: XOR<AuditLogCreateWithoutLeadInput, AuditLogUncheckedCreateWithoutLeadInput>
-  }
-
-  export type AuditLogUpdateWithWhereUniqueWithoutLeadInput = {
-    where: AuditLogWhereUniqueInput
-    data: XOR<AuditLogUpdateWithoutLeadInput, AuditLogUncheckedUpdateWithoutLeadInput>
-  }
-
-  export type AuditLogUpdateManyWithWhereWithoutLeadInput = {
-    where: AuditLogScalarWhereInput
-    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutLeadInput>
-  }
-
-  export type AuditLogScalarWhereInput = {
-    AND?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
-    OR?: AuditLogScalarWhereInput[]
-    NOT?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
-    id?: IntFilter<"AuditLog"> | number
-    leadId?: IntFilter<"AuditLog"> | number
-    oldStatus?: StringFilter<"AuditLog"> | string
-    newStatus?: StringFilter<"AuditLog"> | string
-    reason?: StringFilter<"AuditLog"> | string
-    triggeredBy?: StringFilter<"AuditLog"> | string
-    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
-  }
-
-  export type NotificationUpsertWithWhereUniqueWithoutLeadInput = {
-    where: NotificationWhereUniqueInput
-    update: XOR<NotificationUpdateWithoutLeadInput, NotificationUncheckedUpdateWithoutLeadInput>
-    create: XOR<NotificationCreateWithoutLeadInput, NotificationUncheckedCreateWithoutLeadInput>
-  }
-
-  export type NotificationUpdateWithWhereUniqueWithoutLeadInput = {
-    where: NotificationWhereUniqueInput
-    data: XOR<NotificationUpdateWithoutLeadInput, NotificationUncheckedUpdateWithoutLeadInput>
-  }
-
-  export type NotificationUpdateManyWithWhereWithoutLeadInput = {
-    where: NotificationScalarWhereInput
-    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutLeadInput>
-  }
-
-  export type NotificationScalarWhereInput = {
-    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    OR?: NotificationScalarWhereInput[]
-    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    id?: IntFilter<"Notification"> | number
-    agentId?: IntFilter<"Notification"> | number
-    leadId?: IntFilter<"Notification"> | number
-    title?: StringFilter<"Notification"> | string
-    message?: StringFilter<"Notification"> | string
-    isRead?: BoolFilter<"Notification"> | boolean
-    createdAt?: DateTimeFilter<"Notification"> | Date | string
-  }
-
-  export type LeadCreateWithoutAgentInput = {
-    name?: string | null
-    email?: string | null
-    phone?: string | null
-    platform: string
-    sourceId: string
-    status?: $Enums.LeadStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    aiEnabled?: boolean
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
-    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
-    notifications?: NotificationCreateNestedManyWithoutLeadInput
-  }
-
-  export type LeadUncheckedCreateWithoutAgentInput = {
-    id?: number
-    name?: string | null
-    email?: string | null
-    phone?: string | null
-    platform: string
-    sourceId: string
-    status?: $Enums.LeadStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    aiEnabled?: boolean
-    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
-    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
-  }
-
-  export type LeadCreateOrConnectWithoutAgentInput = {
-    where: LeadWhereUniqueInput
-    create: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput>
-  }
-
-  export type LeadCreateManyAgentInputEnvelope = {
-    data: LeadCreateManyAgentInput | LeadCreateManyAgentInput[]
-    skipDuplicates?: boolean
+    courseDuration?: StringNullableFilter<"Payment"> | string | null
+    courseName?: StringNullableFilter<"Payment"> | string | null
+    courseTiming?: StringNullableFilter<"Payment"> | string | null
   }
 
   export type ConversationCreateWithoutAgentInput = {
@@ -17715,6 +17670,51 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LeadCreateWithoutAgentInput = {
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    aiEnabled?: boolean
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    notifications?: NotificationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
+  }
+
+  export type LeadUncheckedCreateWithoutAgentInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    aiEnabled?: boolean
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
+  }
+
+  export type LeadCreateOrConnectWithoutAgentInput = {
+    where: LeadWhereUniqueInput
+    create: XOR<LeadCreateWithoutAgentInput, LeadUncheckedCreateWithoutAgentInput>
+  }
+
+  export type LeadCreateManyAgentInputEnvelope = {
+    data: LeadCreateManyAgentInput | LeadCreateManyAgentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type NotificationCreateWithoutAgentInput = {
     title: string
     message: string
@@ -17740,6 +17740,38 @@ export namespace Prisma {
   export type NotificationCreateManyAgentInputEnvelope = {
     data: NotificationCreateManyAgentInput | NotificationCreateManyAgentInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ConversationUpsertWithWhereUniqueWithoutAgentInput = {
+    where: ConversationWhereUniqueInput
+    update: XOR<ConversationUpdateWithoutAgentInput, ConversationUncheckedUpdateWithoutAgentInput>
+    create: XOR<ConversationCreateWithoutAgentInput, ConversationUncheckedCreateWithoutAgentInput>
+  }
+
+  export type ConversationUpdateWithWhereUniqueWithoutAgentInput = {
+    where: ConversationWhereUniqueInput
+    data: XOR<ConversationUpdateWithoutAgentInput, ConversationUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type ConversationUpdateManyWithWhereWithoutAgentInput = {
+    where: ConversationScalarWhereInput
+    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutAgentInput>
+  }
+
+  export type EscalationLogUpsertWithWhereUniqueWithoutAgentInput = {
+    where: EscalationLogWhereUniqueInput
+    update: XOR<EscalationLogUpdateWithoutAgentInput, EscalationLogUncheckedUpdateWithoutAgentInput>
+    create: XOR<EscalationLogCreateWithoutAgentInput, EscalationLogUncheckedCreateWithoutAgentInput>
+  }
+
+  export type EscalationLogUpdateWithWhereUniqueWithoutAgentInput = {
+    where: EscalationLogWhereUniqueInput
+    data: XOR<EscalationLogUpdateWithoutAgentInput, EscalationLogUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type EscalationLogUpdateManyWithWhereWithoutAgentInput = {
+    where: EscalationLogScalarWhereInput
+    data: XOR<EscalationLogUpdateManyMutationInput, EscalationLogUncheckedUpdateManyWithoutAgentInput>
   }
 
   export type LeadUpsertWithWhereUniqueWithoutAgentInput = {
@@ -17775,38 +17807,6 @@ export namespace Prisma {
     aiEnabled?: BoolFilter<"Lead"> | boolean
   }
 
-  export type ConversationUpsertWithWhereUniqueWithoutAgentInput = {
-    where: ConversationWhereUniqueInput
-    update: XOR<ConversationUpdateWithoutAgentInput, ConversationUncheckedUpdateWithoutAgentInput>
-    create: XOR<ConversationCreateWithoutAgentInput, ConversationUncheckedCreateWithoutAgentInput>
-  }
-
-  export type ConversationUpdateWithWhereUniqueWithoutAgentInput = {
-    where: ConversationWhereUniqueInput
-    data: XOR<ConversationUpdateWithoutAgentInput, ConversationUncheckedUpdateWithoutAgentInput>
-  }
-
-  export type ConversationUpdateManyWithWhereWithoutAgentInput = {
-    where: ConversationScalarWhereInput
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutAgentInput>
-  }
-
-  export type EscalationLogUpsertWithWhereUniqueWithoutAgentInput = {
-    where: EscalationLogWhereUniqueInput
-    update: XOR<EscalationLogUpdateWithoutAgentInput, EscalationLogUncheckedUpdateWithoutAgentInput>
-    create: XOR<EscalationLogCreateWithoutAgentInput, EscalationLogUncheckedCreateWithoutAgentInput>
-  }
-
-  export type EscalationLogUpdateWithWhereUniqueWithoutAgentInput = {
-    where: EscalationLogWhereUniqueInput
-    data: XOR<EscalationLogUpdateWithoutAgentInput, EscalationLogUncheckedUpdateWithoutAgentInput>
-  }
-
-  export type EscalationLogUpdateManyWithWhereWithoutAgentInput = {
-    where: EscalationLogScalarWhereInput
-    data: XOR<EscalationLogUpdateManyMutationInput, EscalationLogUncheckedUpdateManyWithoutAgentInput>
-  }
-
   export type NotificationUpsertWithWhereUniqueWithoutAgentInput = {
     where: NotificationWhereUniqueInput
     update: XOR<NotificationUpdateWithoutAgentInput, NotificationUncheckedUpdateWithoutAgentInput>
@@ -17823,6 +17823,36 @@ export namespace Prisma {
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutAgentInput>
   }
 
+  export type AgentCreateWithoutConversationsInput = {
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    escalations?: EscalationLogCreateNestedManyWithoutAgentInput
+    leads?: LeadCreateNestedManyWithoutAgentInput
+    notifications?: NotificationCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutConversationsInput = {
+    id?: number
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutConversationsInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
+  }
+
   export type LeadCreateWithoutConversationsInput = {
     name?: string | null
     email?: string | null
@@ -17833,11 +17863,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    agent?: AgentCreateNestedOneWithoutLeadsInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    agent?: AgentCreateNestedOneWithoutLeadsInput
     notifications?: NotificationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutConversationsInput = {
@@ -17852,45 +17882,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutConversationsInput = {
     where: LeadWhereUniqueInput
     create: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
-  }
-
-  export type AgentCreateWithoutConversationsInput = {
-    name: string
-    email: string
-    passwordHash: string
-    role?: $Enums.AgentRole
-    isOnline?: boolean
-    createdAt?: Date | string
-    leads?: LeadCreateNestedManyWithoutAgentInput
-    escalations?: EscalationLogCreateNestedManyWithoutAgentInput
-    notifications?: NotificationCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentUncheckedCreateWithoutConversationsInput = {
-    id?: number
-    name: string
-    email: string
-    passwordHash: string
-    role?: $Enums.AgentRole
-    isOnline?: boolean
-    createdAt?: Date | string
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentCreateOrConnectWithoutConversationsInput = {
-    where: AgentWhereUniqueInput
-    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
   }
 
   export type MessageCreateWithoutConversationInput = {
@@ -17920,6 +17920,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AgentUpsertWithoutConversationsInput = {
+    update: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
+    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
+    where?: AgentWhereInput
+  }
+
+  export type AgentUpdateToOneWithWhereWithoutConversationsInput = {
+    where?: AgentWhereInput
+    data: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type AgentUpdateWithoutConversationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
+    leads?: LeadUpdateManyWithoutAgentNestedInput
+    notifications?: NotificationUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutConversationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAgentNestedInput
+  }
+
   export type LeadUpsertWithoutConversationsInput = {
     update: XOR<LeadUpdateWithoutConversationsInput, LeadUncheckedUpdateWithoutConversationsInput>
     create: XOR<LeadCreateWithoutConversationsInput, LeadUncheckedCreateWithoutConversationsInput>
@@ -17941,11 +17977,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
     notifications?: NotificationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutConversationsInput = {
@@ -17960,46 +17996,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
-  }
-
-  export type AgentUpsertWithoutConversationsInput = {
-    update: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
-    create: XOR<AgentCreateWithoutConversationsInput, AgentUncheckedCreateWithoutConversationsInput>
-    where?: AgentWhereInput
-  }
-
-  export type AgentUpdateToOneWithWhereWithoutConversationsInput = {
-    where?: AgentWhereInput
-    data: XOR<AgentUpdateWithoutConversationsInput, AgentUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type AgentUpdateWithoutConversationsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUpdateManyWithoutAgentNestedInput
-    escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
-    notifications?: NotificationUpdateManyWithoutAgentNestedInput
-  }
-
-  export type AgentUncheckedUpdateWithoutConversationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAgentNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -18035,8 +18035,8 @@ export namespace Prisma {
     platform: string
     status?: string
     createdAt?: Date | string
-    lead: LeadCreateNestedOneWithoutConversationsInput
     agent?: AgentCreateNestedOneWithoutConversationsInput
+    lead: LeadCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutMessagesInput = {
@@ -18068,8 +18068,8 @@ export namespace Prisma {
     platform?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
     agent?: AgentUpdateOneWithoutConversationsNestedInput
+    lead?: LeadUpdateOneRequiredWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutMessagesInput = {
@@ -18091,10 +18091,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    agent?: AgentCreateNestedOneWithoutLeadsInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogCreateNestedManyWithoutLeadInput
-    auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
+    agent?: AgentCreateNestedOneWithoutLeadsInput
     notifications?: NotificationCreateNestedManyWithoutLeadInput
   }
 
@@ -18110,9 +18110,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
-    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
   }
 
@@ -18142,10 +18142,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
-    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
     notifications?: NotificationUpdateManyWithoutLeadNestedInput
   }
 
@@ -18161,10 +18161,40 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
-    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
+  }
+
+  export type AgentCreateWithoutEscalationsInput = {
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutAgentInput
+    leads?: LeadCreateNestedManyWithoutAgentInput
+    notifications?: NotificationCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutEscalationsInput = {
+    id?: number
+    name: string
+    email: string
+    passwordHash: string
+    role?: $Enums.AgentRole
+    isOnline?: boolean
+    createdAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutEscalationsInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
   }
 
   export type LeadCreateWithoutEscalationsInput = {
@@ -18177,11 +18207,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    agent?: AgentCreateNestedOneWithoutLeadsInput
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
+    agent?: AgentCreateNestedOneWithoutLeadsInput
     notifications?: NotificationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutEscalationsInput = {
@@ -18196,10 +18226,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutEscalationsInput = {
@@ -18207,34 +18237,40 @@ export namespace Prisma {
     create: XOR<LeadCreateWithoutEscalationsInput, LeadUncheckedCreateWithoutEscalationsInput>
   }
 
-  export type AgentCreateWithoutEscalationsInput = {
-    name: string
-    email: string
-    passwordHash: string
-    role?: $Enums.AgentRole
-    isOnline?: boolean
-    createdAt?: Date | string
-    leads?: LeadCreateNestedManyWithoutAgentInput
-    conversations?: ConversationCreateNestedManyWithoutAgentInput
-    notifications?: NotificationCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentUncheckedCreateWithoutEscalationsInput = {
-    id?: number
-    name: string
-    email: string
-    passwordHash: string
-    role?: $Enums.AgentRole
-    isOnline?: boolean
-    createdAt?: Date | string
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAgentInput
-  }
-
-  export type AgentCreateOrConnectWithoutEscalationsInput = {
-    where: AgentWhereUniqueInput
+  export type AgentUpsertWithoutEscalationsInput = {
+    update: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
     create: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
+    where?: AgentWhereInput
+  }
+
+  export type AgentUpdateToOneWithWhereWithoutEscalationsInput = {
+    where?: AgentWhereInput
+    data: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
+  }
+
+  export type AgentUpdateWithoutEscalationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutAgentNestedInput
+    leads?: LeadUpdateManyWithoutAgentNestedInput
+    notifications?: NotificationUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutEscalationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type LeadUpsertWithoutEscalationsInput = {
@@ -18258,11 +18294,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
     notifications?: NotificationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutEscalationsInput = {
@@ -18277,46 +18313,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
-  }
-
-  export type AgentUpsertWithoutEscalationsInput = {
-    update: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
-    create: XOR<AgentCreateWithoutEscalationsInput, AgentUncheckedCreateWithoutEscalationsInput>
-    where?: AgentWhereInput
-  }
-
-  export type AgentUpdateToOneWithWhereWithoutEscalationsInput = {
-    where?: AgentWhereInput
-    data: XOR<AgentUpdateWithoutEscalationsInput, AgentUncheckedUpdateWithoutEscalationsInput>
-  }
-
-  export type AgentUpdateWithoutEscalationsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUpdateManyWithoutAgentNestedInput
-    conversations?: ConversationUpdateManyWithoutAgentNestedInput
-    notifications?: NotificationUpdateManyWithoutAgentNestedInput
-  }
-
-  export type AgentUncheckedUpdateWithoutEscalationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
-    isOnline?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAgentNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadCreateWithoutAuditLogsInput = {
@@ -18329,11 +18329,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    agent?: AgentCreateNestedOneWithoutLeadsInput
     conversations?: ConversationCreateNestedManyWithoutLeadInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    agent?: AgentCreateNestedOneWithoutLeadsInput
     notifications?: NotificationCreateNestedManyWithoutLeadInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutAuditLogsInput = {
@@ -18349,9 +18349,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     aiEnabled?: boolean
     conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutAuditLogsInput = {
@@ -18380,11 +18380,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
     conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
     notifications?: NotificationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutAuditLogsInput = {
@@ -18400,9 +18400,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
     conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
   }
 
   export type AgentCreateWithoutNotificationsInput = {
@@ -18412,9 +18412,9 @@ export namespace Prisma {
     role?: $Enums.AgentRole
     isOnline?: boolean
     createdAt?: Date | string
-    leads?: LeadCreateNestedManyWithoutAgentInput
     conversations?: ConversationCreateNestedManyWithoutAgentInput
     escalations?: EscalationLogCreateNestedManyWithoutAgentInput
+    leads?: LeadCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutNotificationsInput = {
@@ -18425,9 +18425,9 @@ export namespace Prisma {
     role?: $Enums.AgentRole
     isOnline?: boolean
     createdAt?: Date | string
-    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutAgentInput
     escalations?: EscalationLogUncheckedCreateNestedManyWithoutAgentInput
+    leads?: LeadUncheckedCreateNestedManyWithoutAgentInput
   }
 
   export type AgentCreateOrConnectWithoutNotificationsInput = {
@@ -18445,11 +18445,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    agent?: AgentCreateNestedOneWithoutLeadsInput
-    conversations?: ConversationCreateNestedManyWithoutLeadInput
-    payments?: PaymentCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogCreateNestedManyWithoutLeadInput
+    conversations?: ConversationCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogCreateNestedManyWithoutLeadInput
+    agent?: AgentCreateNestedOneWithoutLeadsInput
+    payments?: PaymentCreateNestedManyWithoutLeadInput
   }
 
   export type LeadUncheckedCreateWithoutNotificationsInput = {
@@ -18464,10 +18464,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     aiEnabled?: boolean
-    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
-    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLeadInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutLeadInput
+    escalations?: EscalationLogUncheckedCreateNestedManyWithoutLeadInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutLeadInput
   }
 
   export type LeadCreateOrConnectWithoutNotificationsInput = {
@@ -18493,9 +18493,9 @@ export namespace Prisma {
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     isOnline?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUpdateManyWithoutAgentNestedInput
     conversations?: ConversationUpdateManyWithoutAgentNestedInput
     escalations?: EscalationLogUpdateManyWithoutAgentNestedInput
+    leads?: LeadUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutNotificationsInput = {
@@ -18506,9 +18506,9 @@ export namespace Prisma {
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     isOnline?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutAgentNestedInput
     escalations?: EscalationLogUncheckedUpdateManyWithoutAgentNestedInput
+    leads?: LeadUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type LeadUpsertWithoutNotificationsInput = {
@@ -18532,11 +18532,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    agent?: AgentUpdateOneWithoutLeadsNestedInput
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    agent?: AgentUpdateOneWithoutLeadsNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutNotificationsInput = {
@@ -18551,10 +18551,19 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+  }
+
+  export type AuditLogCreateManyLeadInput = {
+    id?: number
+    oldStatus: string
+    newStatus: string
+    reason: string
+    triggeredBy: string
+    createdAt?: Date | string
   }
 
   export type ConversationCreateManyLeadInput = {
@@ -18562,6 +18571,23 @@ export namespace Prisma {
     agentId?: number | null
     platform: string
     status?: string
+    createdAt?: Date | string
+  }
+
+  export type EscalationLogCreateManyLeadInput = {
+    id?: number
+    agentId?: number | null
+    reason: string
+    escalatedAt?: Date | string
+    resolvedAt?: Date | string | null
+  }
+
+  export type NotificationCreateManyLeadInput = {
+    id?: number
+    agentId: number
+    title: string
+    message: string
+    isRead?: boolean
     createdAt?: Date | string
   }
 
@@ -18576,138 +18602,11 @@ export namespace Prisma {
     retryCount?: number
     failureReason?: string | null
     paidAt?: Date | string | null
-    courseName?: string | null
-    courseTiming?: string | null
-    courseDuration?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-  }
-
-  export type EscalationLogCreateManyLeadInput = {
-    id?: number
-    agentId?: number | null
-    reason: string
-    escalatedAt?: Date | string
-    resolvedAt?: Date | string | null
-  }
-
-  export type AuditLogCreateManyLeadInput = {
-    id?: number
-    oldStatus: string
-    newStatus: string
-    reason: string
-    triggeredBy: string
-    createdAt?: Date | string
-  }
-
-  export type NotificationCreateManyLeadInput = {
-    id?: number
-    agentId: number
-    title: string
-    message: string
-    isRead?: boolean
-    createdAt?: Date | string
-  }
-
-  export type ConversationUpdateWithoutLeadInput = {
-    platform?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    agent?: AgentUpdateOneWithoutConversationsNestedInput
-    messages?: MessageUpdateManyWithoutConversationNestedInput
-  }
-
-  export type ConversationUncheckedUpdateWithoutLeadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    agentId?: NullableIntFieldUpdateOperationsInput | number | null
-    platform?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
-  }
-
-  export type ConversationUncheckedUpdateManyWithoutLeadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    agentId?: NullableIntFieldUpdateOperationsInput | number | null
-    platform?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PaymentUpdateWithoutLeadInput = {
-    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
-    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
-    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    amount?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
-    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-    retryCount?: IntFieldUpdateOperationsInput | number
-    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PaymentUncheckedUpdateWithoutLeadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
-    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
-    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    amount?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
-    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-    retryCount?: IntFieldUpdateOperationsInput | number
-    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PaymentUncheckedUpdateManyWithoutLeadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
-    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
-    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    amount?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
-    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-    retryCount?: IntFieldUpdateOperationsInput | number
-    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
-    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    courseName?: NullableStringFieldUpdateOperationsInput | string | null
-    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
-    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EscalationLogUpdateWithoutLeadInput = {
-    reason?: StringFieldUpdateOperationsInput | string
-    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    agent?: AgentUpdateOneWithoutEscalationsNestedInput
-  }
-
-  export type EscalationLogUncheckedUpdateWithoutLeadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    agentId?: NullableIntFieldUpdateOperationsInput | number | null
-    reason?: StringFieldUpdateOperationsInput | string
-    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type EscalationLogUncheckedUpdateManyWithoutLeadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    agentId?: NullableIntFieldUpdateOperationsInput | number | null
-    reason?: StringFieldUpdateOperationsInput | string
-    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    courseDuration?: string | null
+    courseName?: string | null
+    courseTiming?: string | null
   }
 
   export type AuditLogUpdateWithoutLeadInput = {
@@ -18736,6 +18635,54 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ConversationUpdateWithoutLeadInput = {
+    platform?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agent?: AgentUpdateOneWithoutConversationsNestedInput
+    messages?: MessageUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateManyWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EscalationLogUpdateWithoutLeadInput = {
+    reason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    agent?: AgentUpdateOneWithoutEscalationsNestedInput
+  }
+
+  export type EscalationLogUncheckedUpdateWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type EscalationLogUncheckedUpdateManyWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type NotificationUpdateWithoutLeadInput = {
     title?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
@@ -18762,17 +18709,57 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type LeadCreateManyAgentInput = {
-    id?: number
-    name?: string | null
-    email?: string | null
-    phone?: string | null
-    platform: string
-    sourceId: string
-    status?: $Enums.LeadStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    aiEnabled?: boolean
+  export type PaymentUpdateWithoutLeadInput = {
+    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PaymentUncheckedUpdateWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutLeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    razorpayLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    retryCount?: IntFieldUpdateOperationsInput | number
+    failureReason?: NullableStringFieldUpdateOperationsInput | string | null
+    paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    courseName?: NullableStringFieldUpdateOperationsInput | string | null
+    courseTiming?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ConversationCreateManyAgentInput = {
@@ -18791,6 +18778,19 @@ export namespace Prisma {
     resolvedAt?: Date | string | null
   }
 
+  export type LeadCreateManyAgentInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    phone?: string | null
+    platform: string
+    sourceId: string
+    status?: $Enums.LeadStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    aiEnabled?: boolean
+  }
+
   export type NotificationCreateManyAgentInput = {
     id?: number
     leadId: number
@@ -18798,54 +18798,6 @@ export namespace Prisma {
     message: string
     isRead?: boolean
     createdAt?: Date | string
-  }
-
-  export type LeadUpdateWithoutAgentInput = {
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    sourceId?: StringFieldUpdateOperationsInput | string
-    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    conversations?: ConversationUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
-    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
-    notifications?: NotificationUpdateManyWithoutLeadNestedInput
-  }
-
-  export type LeadUncheckedUpdateWithoutAgentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    sourceId?: StringFieldUpdateOperationsInput | string
-    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
-    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
-    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
-    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
-  }
-
-  export type LeadUncheckedUpdateManyWithoutAgentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    sourceId?: StringFieldUpdateOperationsInput | string
-    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ConversationUpdateWithoutAgentInput = {
@@ -18894,6 +18846,54 @@ export namespace Prisma {
     reason?: StringFieldUpdateOperationsInput | string
     escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type LeadUpdateWithoutAgentInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
+    auditLogs?: AuditLogUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUpdateManyWithoutLeadNestedInput
+    notifications?: NotificationUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUpdateManyWithoutLeadNestedInput
+  }
+
+  export type LeadUncheckedUpdateWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLeadNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutLeadNestedInput
+    escalations?: EscalationLogUncheckedUpdateManyWithoutLeadNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutLeadNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutLeadNestedInput
+  }
+
+  export type LeadUncheckedUpdateManyWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platform?: StringFieldUpdateOperationsInput | string
+    sourceId?: StringFieldUpdateOperationsInput | string
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiEnabled?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type NotificationUpdateWithoutAgentInput = {

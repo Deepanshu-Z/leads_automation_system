@@ -19,12 +19,12 @@ model Lead {
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   aiEnabled       Boolean         @default(true)
-  agent           Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
-  conversations   Conversation[]
-  payments        Payment[]
-  escalations     EscalationLog[]
   auditLogs       AuditLog[]
+  conversations   Conversation[]
+  escalations     EscalationLog[]
+  agent           Agent?          @relation("AgentLeads", fields: [assignedAgentId], references: [id])
   notifications   Notification[]
+  payments        Payment[]
 
   @@index([phone])
   @@index([email])
@@ -32,78 +32,63 @@ model Lead {
 }
 
 model Agent {
-  id           Int       @id @default(autoincrement())
-  name         String
-  email        String    @unique
-  passwordHash String
-  role         AgentRole @default(AGENT)
-  isOnline     Boolean   @default(false)
-  createdAt    DateTime  @default(now())
-
-  leads         Lead[]          @relation("AgentLeads")
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  passwordHash  String
+  role          AgentRole       @default(AGENT)
+  isOnline      Boolean         @default(false)
+  createdAt     DateTime        @default(now())
   conversations Conversation[]
   escalations   EscalationLog[]
+  leads         Lead[]          @relation("AgentLeads")
   notifications Notification[]
 }
 
 model Conversation {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   leadId    Int
   agentId   Int?
   platform  String
-  status    String   @default("active")
-  createdAt DateTime @default(now())
-
-  lead     Lead      @relation(fields: [leadId], references: [id])
-  agent    Agent?    @relation(fields: [agentId], references: [id])
-  messages Message[]
+  status    String    @default("active")
+  createdAt DateTime  @default(now())
+  agent     Agent?    @relation(fields: [agentId], references: [id])
+  lead      Lead      @relation(fields: [leadId], references: [id])
+  messages  Message[]
 
   @@index([leadId])
   @@index([status])
 }
 
 model Message {
-  id             Int         @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   conversationId Int
-  role           MessageRole @default(USER)
+  role           MessageRole  @default(USER)
   content        String
   intent         String?
   confidence     Float?
-  createdAt      DateTime    @default(now())
-
-  conversation Conversation @relation(fields: [conversationId], references: [id])
+  createdAt      DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
 }
 
 model Payment {
-  id Int @id @default(autoincrement())
-
-  leadId Int
-
-  razorpayLinkId String?
-
+  id                Int           @id @default(autoincrement())
+  leadId            Int
+  razorpayLinkId    String?
   razorpayPaymentId String?
-
-  shortUrl String?
-
-  amount Float
-
-  currency String @default("INR")
-
-  status PaymentStatus @default(PENDING)
-
-  retryCount Int @default(0)
-
-  failureReason String?
-
-  paidAt         DateTime?
-  courseName     String?
-  courseTiming   String?
-  courseDuration String?
-  createdAt      DateTime  @default(now())
-
-  updatedAt DateTime @updatedAt
-
-  lead Lead @relation(fields: [leadId], references: [id])
+  shortUrl          String?
+  amount            Float
+  currency          String        @default("INR")
+  status            PaymentStatus @default(PENDING)
+  retryCount        Int           @default(0)
+  failureReason     String?
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  courseDuration    String?
+  courseName        String?
+  courseTiming      String?
+  lead              Lead          @relation(fields: [leadId], references: [id])
 
   @@index([leadId])
   @@map("Payment")
@@ -116,9 +101,8 @@ model EscalationLog {
   reason      String
   escalatedAt DateTime  @default(now())
   resolvedAt  DateTime?
-
-  lead  Lead   @relation(fields: [leadId], references: [id])
-  agent Agent? @relation(fields: [agentId], references: [id])
+  agent       Agent?    @relation(fields: [agentId], references: [id])
+  lead        Lead      @relation(fields: [leadId], references: [id])
 
   @@index([leadId])
 }
@@ -155,32 +139,23 @@ model AuditLog {
   oldStatus   String
   newStatus   String
   reason      String
-  triggeredBy String // "ai" / "agent" / "system" / "razorpay"
+  triggeredBy String
   createdAt   DateTime @default(now())
-
-  lead Lead @relation(fields: [leadId], references: [id])
+  lead        Lead     @relation(fields: [leadId], references: [id])
 
   @@index([leadId])
 }
 
 model Notification {
-  id Int @id @default(autoincrement())
-
-  agentId Int
-
-  leadId Int
-
-  title String
-
-  message String
-
-  isRead Boolean @default(false)
-
+  id        Int      @id @default(autoincrement())
+  agentId   Int
+  leadId    Int
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
-
-  agent Agent @relation(fields: [agentId], references: [id])
-
-  lead Lead @relation(fields: [leadId], references: [id])
+  agent     Agent    @relation(fields: [agentId], references: [id])
+  lead      Lead     @relation(fields: [leadId], references: [id])
 
   @@index([agentId])
   @@index([leadId])
@@ -190,17 +165,17 @@ model Notification {
 enum LeadStatus {
   NEW
   CONTACTED
-  ENGAGED // ← new
+  ENGAGED
   QUALIFIED
-  INFO_COLLECTED // ← new
+  INFO_COLLECTED
   READY_TO_PAY
-  PAYMENT_SENT // ← new
-  PAID // ← new
-  ESCALATED // ← new
-  HUMAN_ASSIGNED
+  PAYMENT_SENT
+  PAID
+  ESCALATED
   CONVERTED
-  CLOSED // ← new
+  CLOSED
   LOST
+  HUMAN_ASSIGNED
 }
 
 enum AgentRole {

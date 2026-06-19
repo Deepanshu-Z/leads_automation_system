@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useLead(leadId: string) {
   console.log("YOUR LEAD ID IS : ", leadId);
+  console.log("ACTUALLY FETCHING AT:", new Date().toISOString());
+
   return useQuery({
     queryKey: ["lead", leadId],
 

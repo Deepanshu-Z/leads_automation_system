@@ -42,8 +42,8 @@ export default function DashboardLayout({
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   // Fetch escalations to feed real-time notifications or badge indicators
-  const { data: escalations = [] } = useEscalations();
-
+  // const { data: escalations = [] } = useEscalations();
+  // console.log("Escalations fetched@@@@@@@@@@@@@@@@@@@:", escalations);
   // Apply dark class to html document
   useEffect(() => {
     const root = window.document.documentElement;
@@ -72,7 +72,7 @@ export default function DashboardLayout({
       name: "Escalation Queue",
       href: "/dashboard/leads/escalations",
       icon: ShieldAlert,
-      badge: escalations.length > 0 ? escalations.length : undefined,
+      // badge: escalations.length > 0 ? escalations.length : undefined,
     },
     { name: "Broadcast Msg", href: "/dashboard/send-message", icon: Send },
     {
@@ -98,7 +98,7 @@ export default function DashboardLayout({
       <aside
         className={cn(
           "hidden md:flex flex-col border-r border-border bg-card transition-all duration-300 relative z-20",
-          sidebarOpen ? "w-64" : "w-20"
+          sidebarOpen ? "w-64" : "w-20",
         )}
       >
         {/* LOGO AREA */}
@@ -117,7 +117,11 @@ export default function DashboardLayout({
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors"
           >
-            {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+            {sidebarOpen ? (
+              <ChevronLeft size={16} />
+            ) : (
+              <ChevronRight size={16} />
+            )}
           </button>
         </div>
 
@@ -134,24 +138,26 @@ export default function DashboardLayout({
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative",
                   isActive
                     ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 <item.icon
                   size={18}
                   className={cn(
                     "shrink-0",
-                    isActive ? "text-white" : "text-muted-foreground group-hover:text-foreground"
+                    isActive
+                      ? "text-white"
+                      : "text-muted-foreground group-hover:text-foreground",
                   )}
                 />
                 {sidebarOpen && (
                   <span className="truncate flex-1">{item.name}</span>
                 )}
-                {item.badge && sidebarOpen && (
+                {/* {item.badge && sidebarOpen && (
                   <span className="bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                     {item.badge}
                   </span>
-                )}
+                )} */}
                 {!sidebarOpen && (
                   <div className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                     {item.name}
@@ -164,7 +170,12 @@ export default function DashboardLayout({
 
         {/* USER PROFILE INFO PANEL */}
         <div className="p-4 border-t border-border bg-muted/40">
-          <div className={cn("flex items-center gap-3", sidebarOpen ? "" : "justify-center")}>
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              sidebarOpen ? "" : "justify-center",
+            )}
+          >
             <div className="h-9 w-9 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-primary border border-primary/20 shrink-0">
               <User size={18} />
             </div>
@@ -233,7 +244,9 @@ export default function DashboardLayout({
             />
             <div className="relative flex-1 flex flex-col max-w-xs w-full bg-card border-r border-border h-full p-4 animate-in slide-in-from-left duration-250">
               <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-lg text-primary">Leads Auto</span>
+                <span className="font-bold text-lg text-primary">
+                  Leads Auto
+                </span>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="p-2 rounded-md hover:bg-muted text-muted-foreground"
@@ -255,16 +268,16 @@ export default function DashboardLayout({
                         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                         isActive
                           ? "bg-primary text-primary-foreground shadow-sm"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground",
                       )}
                     >
                       <item.icon size={18} />
                       <span>{item.name}</span>
-                      {item.badge && (
+                      {/* {item.badge && (
                         <span className="ml-auto bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                           {item.badge}
                         </span>
-                      )}
+                      )} */}
                     </Link>
                   );
                 })}
