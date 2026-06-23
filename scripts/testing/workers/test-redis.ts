@@ -12,8 +12,9 @@ async function testConnection() {
     return;
   }
 
+  const isTls = process.env.REDIS_URL.startsWith("rediss://");
   const redis = new IORedis(process.env.REDIS_URL, {
-    tls: { rejectUnauthorized: false },
+    ...(isTls ? { tls: { rejectUnauthorized: false } } : {}),
   });
 
   try {

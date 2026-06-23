@@ -2,9 +2,10 @@ import { Worker } from "bullmq";
 import IORedis from "ioredis";
 import "dotenv/config";
 
+const isTls = process.env.REDIS_URL?.startsWith("rediss://");
 const connection = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
-  tls: { rejectUnauthorized: false },
+  ...(isTls ? { tls: { rejectUnauthorized: false } } : {}),
   enableAutoPipelining: true,
 });
 

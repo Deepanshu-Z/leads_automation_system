@@ -1,9 +1,10 @@
 import "dotenv/config";
 import IORedis from "ioredis";
 
+const isTls = process.env.REDIS_URL?.startsWith("rediss://");
 const redis = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
-  tls: { rejectUnauthorized: false },
+  ...(isTls ? { tls: { rejectUnauthorized: false } } : {}),
   enableAutoPipelining: true,
 });
 
