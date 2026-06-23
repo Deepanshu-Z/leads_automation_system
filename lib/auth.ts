@@ -27,7 +27,7 @@ export const authOptions = {
         }
         console.log("Looking for agent with email", credentials.email);
         console.log("Looking for agent with password", credentials.password);
-        console.log("PRISMA CLIENT: ", prisma);
+        console.log("PRISMA CLIENT: agent!! ", prisma.agent);
         const agent = await prisma.agent.findUnique({
           where: {
             email: credentials.email,
