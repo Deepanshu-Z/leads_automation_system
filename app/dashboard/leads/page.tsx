@@ -173,7 +173,7 @@ export default function LeadsPage() {
                       {lead.name || "Anonymous User"}
                     </td>
                     <td className="px-6 py-4 text-muted-foreground font-mono text-xs">
-                      {lead.phone || "N/A"}
+                      {lead.sourceId || "N/A"}
                     </td>
                     <td className="px-6 py-4 text-muted-foreground truncate max-w-[180px]">
                       {lead.email || "N/A"}
