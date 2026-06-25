@@ -65,9 +65,7 @@ export const messageWorker = new Worker(
 
       console.log(`📨 Processing message from ${senderId}`);
 
-      // =====================================
       // CALL PYTHON AI API
-      // =====================================
 
       const response = await fetch(
         `${BASE_URL}/process`,

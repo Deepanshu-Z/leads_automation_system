@@ -151,23 +151,57 @@
 
 /* Glassmorphism effect utility */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.dark .glass {
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+.glass-dark {
+  background: rgba(0, 0, 0, 0.30);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Glowing outline and shadow animations */
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(249, 115, 22, 0.35);
+  box-shadow: 0 20px 60px -15px rgba(249, 115, 22, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Glowing outline and shadow animations (orange brand) */
 .glow-primary {
-  box-shadow: 0 0 20px -5px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 20px -5px rgba(249, 115, 22, 0.20);
 }
 .glow-primary:hover {
-  box-shadow: 0 0 25px -3px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 35px -3px rgba(249, 115, 22, 0.45);
+}
+
+/* Animated gradient border */
+@keyframes border-spin {
+  to { --angle: 360deg; }
+}
+
+/* Orange shimmer text */
+.text-shimmer {
+  background: linear-gradient(90deg, #f97316, #fbbf24, #f97316);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
 }
